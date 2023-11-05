@@ -14,6 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const dynamodb_1 = __importDefault(require("@cyclic.sh/dynamodb"));
+const util_1 = require("./util");
 const app = (0, express_1.default)();
 const port = process.env.PORT || 3000;
 const opts = {};
@@ -39,8 +40,8 @@ app.post("/:col/:key", (req, res) => __awaiter(void 0, void 0, void 0, function*
     res.json(item).end();
 }));
 // Delete an item
-app.delete("/:col/:key", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const col = req.params.col;
+app.delete("/break/:key", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const col = "break";
     const key = req.params.key;
     console.log(`from collection: ${col} delete key: ${key} with params ${JSON.stringify(req.params)}`);
     const item = yield dynamodb_1.default.collection(col).delete(key, opts, opts);
@@ -48,8 +49,8 @@ app.delete("/:col/:key", (req, res) => __awaiter(void 0, void 0, void 0, functio
     res.json(item).end();
 }));
 // Get a single item
-app.get("/:col/:key", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const col = req.params.col;
+app.get("/break/:key", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const col = "break";
     const key = req.params.key;
     console.log(`from collection: ${col} get key: ${key} with params ${JSON.stringify(req.params)}`);
     const item = yield dynamodb_1.default.collection(col).get(key);
@@ -57,12 +58,16 @@ app.get("/:col/:key", (req, res) => __awaiter(void 0, void 0, void 0, function* 
     res.json(item).end();
 }));
 // Get a full listing
-app.get("/:col", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const col = req.params.col;
+app.get("/break", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const col = "break";
     console.log(`list collection: ${col} with params: ${JSON.stringify(req.params)}`);
     const items = yield dynamodb_1.default.collection(col).list();
     console.log(JSON.stringify(items, null, 2));
     res.json(items).end();
+}));
+app.get("/help", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    (0, util_1.help)();
+    res.json([]).end();
 }));
 // Catch all handler for all other request.
 app.use("*", (req, res) => {
@@ -70,5 +75,5 @@ app.use("*", (req, res) => {
 });
 // Start the server
 app.listen(port, () => {
-    console.log(`index.js listening on ${port}`);
+    console.log(`listening on http://localhost:${port}/index.html`);
 });

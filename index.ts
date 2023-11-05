@@ -1,5 +1,6 @@
 import express, { Express } from "express"
 import db from "@cyclic.sh/dynamodb"
+import { help } from "./util"
 
 const app: Express = express()
 const port = process.env.PORT || 3000
@@ -35,8 +36,8 @@ app.post("/:col/:key", async (req, res) => {
 })
 
 // Delete an item
-app.delete("/:col/:key", async (req, res) => {
-  const col = req.params.col
+app.delete("/break/:key", async (req, res) => {
+  const col = "break"
   const key = req.params.key
   console.log(
     `from collection: ${col} delete key: ${key} with params ${JSON.stringify(
@@ -49,8 +50,8 @@ app.delete("/:col/:key", async (req, res) => {
 })
 
 // Get a single item
-app.get("/:col/:key", async (req, res) => {
-  const col = req.params.col
+app.get("/break/:key", async (req, res) => {
+  const col = "break"
   const key = req.params.key
   console.log(
     `from collection: ${col} get key: ${key} with params ${JSON.stringify(
@@ -63,14 +64,19 @@ app.get("/:col/:key", async (req, res) => {
 })
 
 // Get a full listing
-app.get("/:col", async (req, res) => {
-  const col = req.params.col
+app.get("/break", async (req, res) => {
+  const col = "break"
   console.log(
     `list collection: ${col} with params: ${JSON.stringify(req.params)}`
   )
   const items = await db.collection(col).list()
   console.log(JSON.stringify(items, null, 2))
   res.json(items).end()
+})
+
+app.get("/help", async (req, res) => {
+  help()
+  res.json([]).end()
 })
 
 // Catch all handler for all other request.
@@ -80,5 +86,5 @@ app.use("*", (req, res) => {
 
 // Start the server
 app.listen(port, () => {
-  console.log(`index.js listening on ${port}`)
+  console.log(`listening on http://localhost:${port}/index.html`)
 })

@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "scripts": {
     "build": "npx tsc",
-    "dev": "env-cmd nodemon dist/index.js",
+    "dev": "concurrently \"npx tsc -w\" \"node --watch dist/index.js\"",
     "repl": "env-cmd node",
     "prettify": "prettier --cache true --write --trailing-comma es5 --no-semi *.[jt]s dist/**/*.{css,html} *.json",
     "deps": "npx yarn-check --skip-unused"
@@ -23,6 +23,7 @@
   "devDependencies": {
     "@types/express": "^4.17.20",
     "@types/node": "^20.8.10",
+    "concurrently": "^8.2.2",
     "typescript": "^5.2.2"
   }
 }
