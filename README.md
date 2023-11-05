@@ -4,10 +4,12 @@ scoreboard for tailuge/billiards running on [cyclic.sh](https://tailuge-billiard
 
 ## dev
 
+```shell
 yarn deps
 yarn build
 yarn prettify
 yarn dev
+```
 
 ## deployed
 
