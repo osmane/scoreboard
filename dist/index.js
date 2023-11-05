@@ -15,9 +15,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const dynamodb_1 = __importDefault(require("@cyclic.sh/dynamodb"));
 const util_1 = require("./util");
+const dbfactory_1 = require("./db/dbfactory");
 const app = (0, express_1.default)();
 const port = process.env.PORT || 3000;
 const opts = {};
+const store = dbfactory_1.DbFactory.getDb();
 app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({ extended: true }));
 var options = {
@@ -67,7 +69,9 @@ app.get("/break", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 }));
 app.get("/help", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     (0, util_1.help)();
-    res.json([]).end();
+    const items = yield store.list("games");
+    console.log(JSON.stringify(items, null, 2));
+    res.json(items).end();
 }));
 // Catch all handler for all other request.
 app.use("*", (req, res) => {

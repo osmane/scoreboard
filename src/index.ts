@@ -1,10 +1,13 @@
 import express, { Express } from "express"
 import db from "@cyclic.sh/dynamodb"
 import { help } from "./util"
+import { DbFactory } from "./db/dbfactory"
 
 const app: Express = express()
 const port = process.env.PORT || 3000
 const opts = {}
+
+const store:Db = DbFactory.getDb()
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
@@ -31,6 +34,7 @@ app.post("/:col/:key", async (req, res) => {
     )}`
   )
   const item = await db.collection(col).set(key, req.body, opts)
+  
   console.log(JSON.stringify(item, null, 2))
   res.json(item).end()
 })
@@ -76,7 +80,9 @@ app.get("/break", async (req, res) => {
 
 app.get("/help", async (req, res) => {
   help()
-  res.json([]).end()
+  const items = await store.list("games")
+  console.log(JSON.stringify(items, null, 2))
+  res.json(items).end()
 })
 
 // Catch all handler for all other request.
