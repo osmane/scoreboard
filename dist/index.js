@@ -19,8 +19,17 @@ const port = process.env.PORT || 3000;
 const opts = {};
 app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({ extended: true }));
+var options = {
+    dotfiles: "ignore",
+    etag: false,
+    extensions: ["htm", "html", "css", "js", "ico", "jpg", "jpeg", "png", "svg"],
+    index: ["index.html"],
+    maxAge: "1m",
+    redirect: false,
+};
+app.use(express_1.default.static("dist", options));
 // Create or Update an item
-app.post('/:col/:key', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+app.post("/:col/:key", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     console.log(req.body);
     const col = req.params.col;
     const key = req.params.key;
@@ -30,7 +39,7 @@ app.post('/:col/:key', (req, res) => __awaiter(void 0, void 0, void 0, function*
     res.json(item).end();
 }));
 // Delete an item
-app.delete('/:col/:key', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+app.delete("/:col/:key", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const col = req.params.col;
     const key = req.params.key;
     console.log(`from collection: ${col} delete key: ${key} with params ${JSON.stringify(req.params)}`);
@@ -39,7 +48,7 @@ app.delete('/:col/:key', (req, res) => __awaiter(void 0, void 0, void 0, functio
     res.json(item).end();
 }));
 // Get a single item
-app.get('/:col/:key', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+app.get("/:col/:key", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const col = req.params.col;
     const key = req.params.key;
     console.log(`from collection: ${col} get key: ${key} with params ${JSON.stringify(req.params)}`);
@@ -48,7 +57,7 @@ app.get('/:col/:key', (req, res) => __awaiter(void 0, void 0, void 0, function* 
     res.json(item).end();
 }));
 // Get a full listing
-app.get('/:col', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+app.get("/:col", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const col = req.params.col;
     console.log(`list collection: ${col} with params: ${JSON.stringify(req.params)}`);
     const items = yield dynamodb_1.default.collection(col).list();
@@ -56,8 +65,8 @@ app.get('/:col', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     res.json(items).end();
 }));
 // Catch all handler for all other request.
-app.use('*', (req, res) => {
-    res.json({ msg: 'no route handler found' }).end();
+app.use("*", (req, res) => {
+    res.json({ msg: "no route handler found" }).end();
 });
 // Start the server
 app.listen(port, () => {
