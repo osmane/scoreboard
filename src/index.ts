@@ -2,8 +2,9 @@ import express, { Express } from "express"
 import { DbFactory } from "./db/dbfactory"
 import { Shortener } from "./shortener"
 import cors from "cors"
+import crypto from "crypto"
 
-let corsOptions = {
+const corsOptions = {
   origin: [
     "https://tailuge.github.io/",
     "http://localhost:8080",
@@ -18,6 +19,8 @@ const store: Db = DbFactory.getDb()
 const shortener = new Shortener(store)
 const app: Express = express()
 const port = process.env.PORT || 3000
+const uuid = "d41686e6bd4348519fafc3b040bf6827842b271b"
+const delexp = /delete............./gi
 
 const options = {
   dotfiles: "ignore",
@@ -33,7 +36,11 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(express.static("dist", options))
 app.use((req: any, _: any, next: any) => {
-  console.log(req.originalUrl, req.params, req.body)
+  console.log(
+    req.originalUrl.toString().replace(delexp, "del"),
+    req.params,
+    req.body
+  )
   next()
 })
 
@@ -53,10 +60,12 @@ app.post("/break/:key", async (req, res) => {
   res.json(item).end()
 })
 
-app.delete("/break/:key", async (req, res) => {
-  const col = "break"
+app.delete("/delete/:auth/:col/:key", async (req, res) => {
+  console.log("next available key", await shortener.keyFountain())
+  const id = crypto.createHash("sha1").update(req.params.auth).digest("hex")
+  const col = req.params.col
   const key = req.params.key
-  const item = await store.delete(col, key)
+  const item = id === uuid ? await store.delete(col, key) : false
   res.json(item).end()
 })
 
