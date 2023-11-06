@@ -1,8 +1,9 @@
 import express, { Express } from "express"
 import { DbFactory } from "./db/dbfactory"
+import { Shortener } from "./shortener"
 
 const store: Db = DbFactory.getDb()
-
+const shortener = new Shortener(store)
 const app: Express = express()
 const port = process.env.PORT || 3000
 
@@ -19,9 +20,23 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(express.static("dist", options))
 
-app.post("/:col/:key", async (req, res) => {
+app.post("/shorten", async (req, res) => {
   console.log(`post request`, req.body)
-  const col = req.params.col
+  const key = await shortener.shorten(req.body.input)
+  console.log(key)
+  res.json(key).end()
+})
+
+app.get("/replay/:key", async (req, res) => {
+  console.log(`request ${JSON.stringify(req.params)}`)
+  const key = req.params.key
+  const item = await shortener.replay(key)
+  res.json(item).end()
+})
+
+app.post("/break/:key", async (req, res) => {
+  console.log(`post request`, req.body)
+  const col = "break"
   const key = req.params.key
   const item = await store.set(col, key, req.body)
   console.log(JSON.stringify(item, null, 2))
