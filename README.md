@@ -1,6 +1,6 @@
 # scoreboard
 
-scoreboard for tailuge/billiards running on [cyclic.sh](https://tailuge-billiards.cyclic.app/)
+[scoreboard](https://tailuge-billiards.cyclic.app/) for tailuge/billiards running on [cyclic.sh](https://app.cyclic.sh/#/app/tailuge-scoreboard/overview)
 
 ## dev
 

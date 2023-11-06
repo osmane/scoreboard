@@ -2,6 +2,8 @@ import express, { Express } from "express"
 import { DbFactory } from "./db/dbfactory"
 import { Shortener } from "./shortener"
 
+console.log("Starting express")
+
 const store: Db = DbFactory.getDb()
 const shortener = new Shortener(store)
 const app: Express = express()
