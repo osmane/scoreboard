@@ -3,6 +3,7 @@ import { DbFactory } from "./db/dbfactory"
 export class Shortener {
   readonly collection = "short"
   readonly store: Db
+  readonly url = "https://tailuge.github.io/billiards/dist/"
 
   constructor(store: Db) {
     this.store = store
@@ -20,14 +21,15 @@ export class Shortener {
 
   async shorten(data: any) {
     const key = (await this.keyFountain()).toString()
-    console.log(key, "here", data)
+    console.log("next free key: ", key)
     await this.store.set(this.collection, key, data)
     return key
   }
 
   async replay(key: string) {
-    const params = await this.store.get(this.collection, key)
-    console.log(params)
-    return params?.props
+    const item = await this.store.get(this.collection, key)
+    console.log(item)
+    const fullUrl = this.url + item.props.input
+    return fullUrl
   }
 }

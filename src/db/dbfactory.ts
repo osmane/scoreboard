@@ -4,10 +4,10 @@ import { LocalDb } from "./localdb"
 export class DbFactory {
   static getDb() {
     if (process.env.CYCLIC_DB) {
-      console.log("Cyclic DB")
+      console.log("using Cyclic DB")
       return new CyclicDb()
     }
-    console.log("Local DB")
+    console.log("using Local DB")
     return new LocalDb()
   }
 }

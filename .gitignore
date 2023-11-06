@@ -129,3 +129,4 @@ out
 # only store ts files not js
 
 dist/*.js
+dist/*/*.js

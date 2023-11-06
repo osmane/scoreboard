@@ -10,7 +10,7 @@ export class LocalDb implements Db {
 
   async get(collection: string, key: string): Promise<DbItem> {
     return new Promise<DbItem>((res, _) => {
-      res(this.store.get(key))
+      res({ collection: collection, key: key, props: this.store.get(key) })
       return
     })
   }

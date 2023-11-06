@@ -2,7 +2,7 @@ import express, { Express } from "express"
 import { DbFactory } from "./db/dbfactory"
 import { Shortener } from "./shortener"
 
-console.log("Starting express")
+console.log("starting express")
 
 const store: Db = DbFactory.getDb()
 const shortener = new Shortener(store)
@@ -21,23 +21,21 @@ const options = {
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(express.static("dist", options))
+app.use((req: any, _: any, next: any) => {
+  console.log(req.originalUrl, req.params, req.body)
+  next()
+})
 
 app.post("/shorten", async (req, res) => {
-  console.log(`post request`, req.body)
-  const key = await shortener.shorten(req.body.input)
-  console.log(key)
+  const key = await shortener.shorten({ input: req.body.input })
   res.json(key).end()
 })
 
 app.get("/replay/:key", async (req, res) => {
-  console.log(`request ${JSON.stringify(req.params)}`)
-  const key = req.params.key
-  const item = await shortener.replay(key)
-  res.json(item).end()
+  res.redirect(await shortener.replay(req.params.key))
 })
 
 app.post("/break/:key", async (req, res) => {
-  console.log(`post request`, req.body)
   const col = "break"
   const key = req.params.key
   const item = await store.set(col, key, req.body)
@@ -46,32 +44,26 @@ app.post("/break/:key", async (req, res) => {
 })
 
 app.delete("/break/:key", async (req, res) => {
-  console.log(`request ${JSON.stringify(req.params)}`)
   const col = "break"
   const key = req.params.key
   const item = await store.delete(col, key)
-  console.log(JSON.stringify(item, null, 2))
   res.json(item).end()
 })
 
 app.get("/break/:key", async (req, res) => {
-  console.log(`request ${JSON.stringify(req.params)}`)
   const col = "break"
   const key = req.params.key
   const item = await store.get(col, key)
-  console.log(JSON.stringify(item, null, 2))
   res.json(item).end()
 })
 
-app.get("/break", async (req, res) => {
-  console.log(`request ${JSON.stringify(req.params)}`)
+app.get("/break", async (_, res) => {
   const col = "break"
   const items = await store.list(col)
-  console.log(JSON.stringify(items, null, 2))
   res.json(items).end()
 })
 
-app.use("*", (req, res) => {
+app.use("*", (_, res) => {
   res.json({ msg: "no route handler found" }).end()
 })
 
