@@ -4,7 +4,12 @@ import { Shortener } from "./shortener"
 import cors from "cors"
 
 let corsOptions = {
-  origin: ["https://tailuge.github.io/", "http://localhost:8080", "http://localhost:8000", "http://localhost:3000"],
+  origin: [
+    "https://tailuge.github.io/",
+    "http://localhost:8080",
+    "http://localhost:8000",
+    "http://localhost:3000",
+  ],
 }
 
 console.log("starting express")
@@ -33,13 +38,7 @@ app.use((req: any, _: any, next: any) => {
 })
 
 app.post("/shorten", async (req, res) => {
-  const key = await shortener.shorten({ input: req.body.input })
-  const response = {
-    input: req.body.input,
-    key: key,
-    shortUrl: await shortener.replay(key),
-  }
-  res.json(response).end()
+  res.json(await shortener.shorten({ input: req.body.input })).end()
 })
 
 app.get("/replay/:key", async (req, res) => {
