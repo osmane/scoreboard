@@ -18,16 +18,28 @@ class CyclicDb {
     constructor() {
         this.opts = {};
     }
+    delete(collection, key) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return dynamodb_1.default.collection(collection).delete(key, {}, this.opts);
+        });
+    }
+    get(collection, key) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return dynamodb_1.default.collection(collection).get(key);
+        });
+    }
     set(collection, key, props) {
-        return dynamodb_1.default.collection(collection).set(key, props, this.opts);
+        return __awaiter(this, void 0, void 0, function* () {
+            return dynamodb_1.default.collection(collection).set(key, props, this.opts);
+        });
     }
     list(collection) {
         return __awaiter(this, void 0, void 0, function* () {
             return dynamodb_1.default
                 .collection(collection)
                 .list()
-                .then((i) => {
-                return i.results;
+                .then((items) => {
+                return items.results;
             })
                 .catch((_) => {
                 return [];

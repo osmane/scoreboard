@@ -13,69 +13,52 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
-const dynamodb_1 = __importDefault(require("@cyclic.sh/dynamodb"));
-const util_1 = require("./util");
 const dbfactory_1 = require("./db/dbfactory");
+const store = dbfactory_1.DbFactory.getDb();
 const app = (0, express_1.default)();
 const port = process.env.PORT || 3000;
-const opts = {};
-const store = dbfactory_1.DbFactory.getDb();
-app.use(express_1.default.json());
-app.use(express_1.default.urlencoded({ extended: true }));
-var options = {
+const options = {
     dotfiles: "ignore",
     etag: false,
-    extensions: ["htm", "html", "css", "js", "ico", "jpg", "jpeg", "png", "svg"],
+    extensions: ["html", "css", "js", "ico", "jpg", "jpeg", "png"],
     index: ["index.html"],
-    maxAge: "1m",
+    maxAge: "1h",
     redirect: false,
 };
+app.use(express_1.default.json());
+app.use(express_1.default.urlencoded({ extended: true }));
 app.use(express_1.default.static("dist", options));
-// Create or Update an item
 app.post("/:col/:key", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log(req.body);
+    console.log(`post request`, req.body);
     const col = req.params.col;
     const key = req.params.key;
-    console.log(`from collection: ${col} delete key: ${key} with params ${JSON.stringify(req.params)}`);
-    //  const item = await db.collection(col).set(key, req.body, opts)
     const item = yield store.set(col, key, req.body);
     console.log(JSON.stringify(item, null, 2));
     res.json(item).end();
 }));
-// Delete an item
 app.delete("/break/:key", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    console.log(`request ${JSON.stringify(req.params)}`);
     const col = "break";
     const key = req.params.key;
-    console.log(`from collection: ${col} delete key: ${key} with params ${JSON.stringify(req.params)}`);
-    const item = yield dynamodb_1.default.collection(col).delete(key, opts, opts);
+    const item = yield store.delete(col, key);
     console.log(JSON.stringify(item, null, 2));
     res.json(item).end();
 }));
-// Get a single item
 app.get("/break/:key", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    console.log(`request ${JSON.stringify(req.params)}`);
     const col = "break";
     const key = req.params.key;
-    console.log(`from collection: ${col} get key: ${key} with params ${JSON.stringify(req.params)}`);
-    const item = yield dynamodb_1.default.collection(col).get(key);
+    const item = yield store.get(col, key);
     console.log(JSON.stringify(item, null, 2));
     res.json(item).end();
 }));
-// Get a full listing
 app.get("/break", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    console.log(`request ${JSON.stringify(req.params)}`);
     const col = "break";
-    console.log(`list collection: ${col} with params: ${JSON.stringify(req.params)}`);
-    //const items = await db.collection(col).list()
     const items = yield store.list(col);
     console.log(JSON.stringify(items, null, 2));
     res.json(items).end();
 }));
-app.get("/help", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    (0, util_1.help)();
-    const items = yield store.list("games");
-    console.log(JSON.stringify(items, null, 2));
-    res.json(items).end();
-}));
-// Catch all handler for all other request.
 app.use("*", (req, res) => {
     res.json({ msg: "no route handler found" }).end();
 });
