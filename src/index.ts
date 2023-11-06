@@ -44,6 +44,7 @@ app.use((req: any, _: any, next: any) => {
   next()
 })
 
+app.options("/shorten", cors(corsOptions))
 app.post("/shorten", async (req, res) => {
   res.json(await shortener.shorten({ input: req.body.input })).end()
 })
