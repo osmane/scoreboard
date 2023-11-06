@@ -1,6 +1,11 @@
 import express, { Express } from "express"
 import { DbFactory } from "./db/dbfactory"
 import { Shortener } from "./shortener"
+import cors from "cors"
+
+let corsOptions = {
+  origin: ["https://tailuge.github.io/", "http://localhost:8080", "http://localhost:8000", "http://localhost:3000"],
+}
 
 console.log("starting express")
 
@@ -18,6 +23,7 @@ const options = {
   redirect: false,
 }
 
+app.use(cors(corsOptions))
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(express.static("dist", options))
