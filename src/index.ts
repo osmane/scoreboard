@@ -6,7 +6,7 @@ import crypto from "crypto"
 
 const corsOptions = {
   origin: [
-    "https://tailuge.github.io/",
+    "https://tailuge.github.io",
     "http://localhost:8080",
     "http://localhost:8000",
     "http://localhost:3000",
