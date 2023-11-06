@@ -5,6 +5,7 @@ export class Shortener {
   readonly store: Db
   readonly replayUrl = "https://tailuge.github.io/billiards/dist/"
   readonly shortUrl = "https://tailuge-billiards.cyclic.app/replay/"
+  readonly notFound = "https://tailuge-billiards.cyclic.app/notfound.html"
 
   constructor(store: Db) {
     this.store = store
@@ -33,8 +34,9 @@ export class Shortener {
 
   async replay(key: string) {
     const item = await this.store.get(this.collection, key)
-    console.log(item)
-    const fullUrl = this.replayUrl + item.props.input
-    return fullUrl
+    if (item?.props && item.props?.input) {
+      return this.replayUrl + item.props.input
+    }
+    return this.notFound
   }
 }
