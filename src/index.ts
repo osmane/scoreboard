@@ -28,7 +28,12 @@ app.use((req: any, _: any, next: any) => {
 
 app.post("/shorten", async (req, res) => {
   const key = await shortener.shorten({ input: req.body.input })
-  res.json(key).end()
+  const response = {
+    input: req.body.input,
+    key: key,
+    shortUrl: await shortener.replay(key),
+  }
+  res.json(response).end()
 })
 
 app.get("/replay/:key", async (req, res) => {
