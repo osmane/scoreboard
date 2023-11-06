@@ -33,8 +33,8 @@ app.post("/:col/:key", async (req, res) => {
       req.params
     )}`
   )
-  const item = await db.collection(col).set(key, req.body, opts)
-  
+//  const item = await db.collection(col).set(key, req.body, opts)
+  const item = await store.set(col,key,req.body)
   console.log(JSON.stringify(item, null, 2))
   res.json(item).end()
 })
@@ -73,7 +73,8 @@ app.get("/break", async (req, res) => {
   console.log(
     `list collection: ${col} with params: ${JSON.stringify(req.params)}`
   )
-  const items = await db.collection(col).list()
+  //const items = await db.collection(col).list()
+  const items = await store.list(col)
   console.log(JSON.stringify(items, null, 2))
   res.json(items).end()
 })

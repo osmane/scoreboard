@@ -3,27 +3,19 @@ import db from "@cyclic.sh/dynamodb"
 export class CyclicDb implements Db {
   readonly opts = {}
 
-  list(collection: string): Promise<string[]> {
+  set(collection: string, key: string, props: any): Promise<DbItem> {
+    return db.collection(collection).set(key, props, this.opts)
+  }
+
+  async list(collection: string): Promise<DbItem[]> {
     return db
       .collection(collection)
       .list()
       .then((i) => {
-        return [i.results.values.toString()]
+        return i.results
       })
       .catch((_) => {
-        return [""]
-      })
-  }
-
-  async set(collection: string, key: string, value: string): Promise<boolean> {
-    return db
-      .collection(collection)
-      .set(key, value, this.opts)
-      .then((_) => {
-        return true
-      })
-      .catch((_) => {
-        return false
+        return []
       })
   }
 }

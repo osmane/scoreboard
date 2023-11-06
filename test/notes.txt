@@ -1,0 +1,33 @@
+curl -i -v https://tailuge-billiards.cyclic.app/break/mydog --data '{"breed":"German Shepard", "gender": "male"}'     -XPOST -H 'Content-Type: application/json'
+
+{"collection":"break",
+ "key":"mydog",
+ "props":{"breed":"German Shepard","gender":"male"}}
+
+
+curl -i -v https://tailuge-billiards.cyclic.app/break/mydog
+
+{"collection":"break",
+ "key":"mydog",
+ "props":{
+        "updated":"2023-11-06T07:48:12.582Z",
+        "created":"2023-11-06T07:48:12.582Z",
+        "breed":"German Shepard",
+        "gender":"male"}}
+
+
+curl -i -v https://tailuge-billiards.cyclic.app/break
+
+{"results":[
+    {"collection":"break",
+     "key":"mydog",
+     "props":{"updated":"2023-11-06T07:48:12.582Z"}},
+    {"collection":"break",
+     "key":"rin tin tin",
+     "props":{"updated":"2023-11-06T07:46:22.562Z"}}]}
+
+
+curl -i -v https://tailuge-billiards.cyclic.app/break/abc  -XDELETE
+
+true
+

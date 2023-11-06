@@ -37,7 +37,8 @@ app.post("/:col/:key", (req, res) => __awaiter(void 0, void 0, void 0, function*
     const col = req.params.col;
     const key = req.params.key;
     console.log(`from collection: ${col} delete key: ${key} with params ${JSON.stringify(req.params)}`);
-    const item = yield dynamodb_1.default.collection(col).set(key, req.body, opts);
+    //  const item = await db.collection(col).set(key, req.body, opts)
+    const item = yield store.set(col, key, req.body);
     console.log(JSON.stringify(item, null, 2));
     res.json(item).end();
 }));
@@ -63,7 +64,8 @@ app.get("/break/:key", (req, res) => __awaiter(void 0, void 0, void 0, function*
 app.get("/break", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const col = "break";
     console.log(`list collection: ${col} with params: ${JSON.stringify(req.params)}`);
-    const items = yield dynamodb_1.default.collection(col).list();
+    //const items = await db.collection(col).list()
+    const items = yield store.list(col);
     console.log(JSON.stringify(items, null, 2));
     res.json(items).end();
 }));
