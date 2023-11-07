@@ -1,3 +1,5 @@
+import { Db, DbItem } from "./db"
+
 export class LocalDb implements Db {
   readonly store = new Map<string, any>()
 

@@ -1,4 +1,4 @@
-import { DbFactory } from "./db/dbfactory"
+import { Db } from "./db/db"
 
 export class Shortener {
   readonly collection = "short"

@@ -3,6 +3,7 @@ import { DbFactory } from "./db/dbfactory"
 import { Shortener } from "./shortener"
 import cors from "cors"
 import crypto from "crypto"
+import { Db } from "./db/db"
 
 const corsOptions = {
   origin: [
@@ -87,7 +88,8 @@ app.use("*", (_, res) => {
   res.json({ msg: "no route handler found" }).end()
 })
 
-// Start the server
-app.listen(port, () => {
+const server = app.listen(port, () => {
   console.log(`listening on http://localhost:${port}/index.html`)
 })
+
+export default server

@@ -1,4 +1,5 @@
 import db from "@cyclic.sh/dynamodb"
+import { Db, DbItem } from "./db"
 
 export class CyclicDb implements Db {
   readonly opts = {}
