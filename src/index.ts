@@ -31,7 +31,7 @@ app.use(cors(corsOptions))
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(express.static("dist", options))
-app.use((req: any, _: any, next: any) => {
+app.use((req, _, next) => {
   console.log(
     req.originalUrl.toString().replace(delexp, "..."),
     req.params,

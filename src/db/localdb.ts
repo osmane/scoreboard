@@ -8,7 +8,11 @@ export class LocalDb implements Db {
   }
 
   async get(collection: string, key: string): Promise<DbItem> {
-    return Promise.resolve({ collection: collection, key: key, props: this.store.get(key) })
+    return Promise.resolve({
+      collection: collection,
+      key: key,
+      props: this.store.get(key),
+    })
   }
 
   async set(collection: string, key: string, props: any): Promise<DbItem> {
