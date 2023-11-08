@@ -2,6 +2,7 @@ import express, { Express } from "express"
 import cors from "cors"
 import { ShortenService } from "./services/shortener/shortenservice"
 import { AdminService } from "./services/admin/adminservice"
+import { UsageService } from "./services/usage/usageservice"
 
 const corsOptions = {
   origin: [
@@ -44,6 +45,8 @@ const shortenService = new ShortenService(app)
 shortenService.register()
 const adminService = new AdminService(app)
 adminService.register()
+const usageService = new UsageService(app)
+usageService.register()
 
 app.use("*", (_, res) => {
   res.json({ msg: "no route handler found" }).end()

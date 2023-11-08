@@ -22,6 +22,9 @@ describe("shortenService", () => {
     expect(response.body.shortUrl).toBe(
       "https://tailuge-billiards.cyclic.app/replay/1"
     )
+
+    await request(server).post("/shorten").send({ input: "otherlongurl" })
+
     const replayresponse = await request(server).get("/replay/1")
     expect(replayresponse.redirect).toBe(true)
     expect(replayresponse.header.location).toBe(

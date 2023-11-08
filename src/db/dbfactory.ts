@@ -1,13 +1,14 @@
 import { CyclicDb } from "./cyclicdb"
+//import { Db } from "./db"
 import { LocalDb } from "./localdb"
 
 export class DbFactory {
+  static store
+
   static getDb() {
-    if (process.env.CYCLIC_DB) {
-      console.log("using Cyclic DB")
-      return new CyclicDb()
+    if (!DbFactory.store) {
+      DbFactory.store = process.env.CYCLIC_DB ? new CyclicDb() : new LocalDb()
     }
-    console.log("using Local DB")
-    return new LocalDb()
+    return DbFactory.store
   }
 }
