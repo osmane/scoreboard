@@ -6,14 +6,12 @@ export class LocalDb implements Db {
   async delete(_: string, key: string): Promise<boolean> {
     return new Promise<boolean>((res, _) => {
       res(this.store.delete(key))
-      return
     })
   }
 
   async get(collection: string, key: string): Promise<DbItem> {
     return new Promise<DbItem>((res, _) => {
       res({ collection: collection, key: key, props: this.store.get(key) })
-      return
     })
   }
 
@@ -21,7 +19,6 @@ export class LocalDb implements Db {
     this.store.set(key, props)
     return new Promise<DbItem>((res, _) => {
       res({ collection: collection, key: key, props: props })
-      return
     })
   }
 
@@ -32,7 +29,6 @@ export class LocalDb implements Db {
     })
     return new Promise<DbItem[]>((res, _) => {
       res(result)
-      return
     })
   }
 }

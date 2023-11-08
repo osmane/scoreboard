@@ -14,19 +14,26 @@ export class AdminService {
 
   register() {
     this.app.delete("/admin/delete/:auth/:col/:key", async (req, res) => {
-      const id = crypto.createHash("sha1").update(req.params.auth).digest("hex")
       const col = req.params.col
       const key = req.params.key
-      const item =
-        id === AdminService.uuid ? await this.store.delete(col, key) : false
+      const item = this.validate(req.params.auth)
+        ? await this.store.delete(col, key)
+        : false
       res.json(item).end()
     })
 
     this.app.get("/admin/list/:auth/:col", async (req, res) => {
-      const id = crypto.createHash("sha1").update(req.params.auth).digest("hex")
       const col = req.params.col
-      const item = id === AdminService.uuid ? await this.store.list(col) : []
+      const item = this.validate(req.params.auth)
+        ? await this.store.list(col)
+        : []
       res.json(item).end()
     })
+  }
+
+  validate(id: string) {
+    return (
+      AdminService.uuid === crypto.createHash("sha1").update(id).digest("hex")
+    )
   }
 }
