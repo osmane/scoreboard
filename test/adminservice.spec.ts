@@ -17,11 +17,17 @@ describe("adminService", () => {
     expect(response.statusCode).toBe(200)
     expect(response.body).toStrictEqual([])
   })
+
   test("delete not found", async () => {
     const response = await request(server).delete(
       "/admin/delete/test/other/key"
     )
     expect(response.statusCode).toBe(200)
     expect(response.body).toStrictEqual(false)
+  })
+
+  test("get ok", async () => {
+    const response = await request(server).get("/admin/get/test/other/somekey")
+    expect(response.statusCode).toBe(200)
   })
 })

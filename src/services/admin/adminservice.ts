@@ -22,6 +22,15 @@ export class AdminService {
       res.json(item).end()
     })
 
+    this.app.get("/admin/get/:auth/:col/:key", async (req, res) => {
+      const col = req.params.col
+      const key = req.params.key
+      const item = this.validate(req.params.auth)
+        ? await this.store.get(col, key)
+        : {}
+      res.json(item).end()
+    })
+
     this.app.get("/admin/list/:auth/:col", async (req, res) => {
       const col = req.params.col
       const item = this.validate(req.params.auth)

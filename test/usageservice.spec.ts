@@ -15,6 +15,6 @@ describe("usageService", () => {
     const items = await DbFactory.getDb().list(UsageService.collection)
     expect(items).toHaveLength(1)
     expect(items[0].props.mode).toBe("a")
-    expect(items[0].props.time).toBeGreaterThan(0)
+    expect(parseInt(items[0].key)).toBeLessThan(new Date().getTime())
   })
 })

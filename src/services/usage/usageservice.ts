@@ -13,11 +13,11 @@ export class UsageService {
 
   register() {
     this.app.get("/usage/:mode/:ruletype", async (req, res) => {
-      const item = {
-        time: Math.floor(new Date().getTime() / 1000),
-        ...req.params,
-      }
-      this.store.set(UsageService.collection, "entry", item)
+      this.store.set(
+        UsageService.collection,
+        new Date().getTime().toString(),
+        req.params
+      )
       res.json("thankyou")
     })
   }
