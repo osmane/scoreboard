@@ -1,13 +1,19 @@
-import request from 'supertest';
-import server from '../src/index';
+import request from "supertest"
+import server from "../src/index"
 
-afterAll(()=>{
-    server.close()
+afterAll(async () => {
+  await server.close()
 })
 
-describe('Test the root path', () => {
-    test('Get root responds', async () => {
-        const response = await request(server).get('/');
-        expect(response.statusCode).toBe(200);
-    });
-});
+describe("service root", () => {
+  test("root responds with html", async () => {
+    const response = await request(server).get("/")
+    expect(response.statusCode).toBe(200)
+    expect(response.header["content-type"]).toBe("text/html; charset=UTF-8")
+  })
+
+  test("unknown route", async () => {
+    const response = await request(server).get("/xyz")
+    expect(response.statusCode).toBe(200)
+  })
+})

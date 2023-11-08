@@ -1,4 +1,4 @@
-import { Db } from "./db/db"
+import { Db } from "../../db/db"
 
 export class Shortener {
   readonly collection = "short"

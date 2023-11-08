@@ -3,7 +3,7 @@ import { Db, DbItem } from "./db"
 export class LocalDb implements Db {
   readonly store = new Map<string, any>()
 
-  async delete(collection: string, key: string): Promise<boolean> {
+  async delete(_: string, key: string): Promise<boolean> {
     return new Promise<boolean>((res, _) => {
       res(this.store.delete(key))
       return

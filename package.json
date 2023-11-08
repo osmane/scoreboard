@@ -7,10 +7,10 @@
     "build": "npx tsc",
     "dev": "concurrently \"npx tsc -w\" \"node --watch dist/index.js\"",
     "start": "node dist/index.js",
-    "prettify": "prettier --cache true --write --trailing-comma es5 --no-semi  src/*.ts src/**/*.ts dist/**/*.{css,html} *.json",
+    "prettify": "prettier --cache true --write --trailing-comma es5 --no-semi  {src,test}/*.ts {src,test}/**/*.ts dist/**/*.{css,html} *.j*",
     "deps": "npx yarn-check --skip-unused",
-    "test": "jest",
-    "coverage": "jest --coverage"
+    "test": "jest --maxWorkers=1",
+    "coverage": "jest --maxWorkers=1 --coverage"
   },
   "keywords": [],
   "author": "tailuge",
@@ -24,8 +24,8 @@
   "devDependencies": {
     "@types/cors": "^2.8.16",
     "@types/express": "^4.17.21",
-    "@types/jest": "^29.5.7",
-    "@types/node": "^20.8.10",
+    "@types/jest": "^29.5.8",
+    "@types/node": "^20.9.0",
     "@types/supertest": "^2.0.16",
     "concurrently": "^8.2.2",
     "jest": "^29.7.0",
