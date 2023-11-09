@@ -7,6 +7,6 @@ export interface DbItem {
 export interface Db {
   delete(collection: string, key: string): Promise<boolean>
   set(collection: string, key: string, props: any): Promise<DbItem>
-  get(collection: string, key: string): Promise<DbItem>
+  get(collection: string, key: string): Promise<DbItem | null>
   list(collection: string): Promise<DbItem[]>
 }

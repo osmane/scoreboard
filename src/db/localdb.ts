@@ -7,12 +7,16 @@ export class LocalDb implements Db {
     return Promise.resolve(this.store.delete(key))
   }
 
-  async get(collection: string, key: string): Promise<DbItem> {
-    return Promise.resolve({
-      collection: collection,
-      key: key,
-      props: this.store.get(key),
-    })
+  async get(collection: string, key: string): Promise<DbItem | null> {
+    const item = this.store.get(key)
+    if (item) {
+      return Promise.resolve({
+        collection: collection,
+        key: key,
+        props: item,
+      })
+    }
+    return Promise.resolve(null)
   }
 
   async set(collection: string, key: string, props: any): Promise<DbItem> {

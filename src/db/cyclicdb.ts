@@ -8,7 +8,7 @@ export class CyclicDb implements Db {
     return db.collection(collection).delete(key, {}, this.opts)
   }
 
-  async get(collection: string, key: string): Promise<DbItem> {
+  async get(collection: string, key: string): Promise<DbItem | null> {
     return db.collection(collection).get(key)
   }
 

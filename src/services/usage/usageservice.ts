@@ -13,12 +13,25 @@ export class UsageService {
 
   register() {
     this.app.get("/usage/:mode/:ruletype", async (req, res) => {
-      this.store.set(
-        UsageService.collection,
-        new Date().getTime().toString(),
-        req.params
-      )
+      const key = new Date().toISOString().split(":")[0]
+      const mode = req.params.mode
+      const ruletype = req.params.ruletype
+      const item = (await this.store.get(UsageService.collection, key)) ?? {
+        props: {},
+      }
+      const props = item.props
+      props[mode] = (props[mode] ?? 0) + 1
+      props[ruletype] = (props[ruletype] ?? 0) + 1
+      this.store.set(UsageService.collection, key, props)
       res.json("thankyou")
+    })
+
+    this.app.get("/usage", async (_, res) => {
+      const items = await this.store.list(UsageService.collection)
+      const values = await Promise.all(
+        items.map((item) => this.store.get(UsageService.collection, item.key!))
+      )
+      res.json(values)
     })
   }
 }
