@@ -130,3 +130,7 @@ out
 
 dist/*.js
 dist/**/*.js
+
+# local db
+
+test/directdb*

@@ -22,6 +22,8 @@ export class UsageService {
       const props = item.props
       props[mode] = (props[mode] ?? 0) + 1
       props[ruletype] = (props[ruletype] ?? 0) + 1
+      delete props["created"]
+      delete props["updated"]
       this.store.set(UsageService.collection, key, props)
       res.json("thankyou")
     })
