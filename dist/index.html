@@ -31,5 +31,24 @@
       <a href="./replay/10">🎱</a>
       <a href="./replay/11">🎱</a>
     </p>
+
+    <pre id="usage"></pre>
+
+    <script type="module">
+      import asciiChart from "https://cdn.jsdelivr.net/npm/ascii-chart@1.3.3/+esm"
+
+      var response = await fetch("/usage")
+      var data = await response.json()
+
+      data = data.map((item) => item.props.play ?? 0)
+
+      const ascii = asciiChart(data, {
+        width: 64,
+        height: 16,
+        pointChar: "█",
+      })
+
+      document.getElementById("usage").innerHTML = ascii
+    </script>
   </body>
 </html>
