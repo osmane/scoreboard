@@ -6,20 +6,29 @@
     <meta charset="utf-8" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="description" content="billiards scoreboard" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-    <meta http-equiv="Permissions-Policy" content="interest-cohort=()" />
     <link rel="stylesheet" type="text/css" href="index.css" />
   </head>
 
   <body>
-    <h1>scoreboard</h1>
+    <h1>Billiards</h1>
+    <h2>Play</h2>
     <p>
       <a href="https://tailuge.github.io/billiards/dist/?ruletype=snooker"
-        >Play</a
+        >Snooker</a
+      >
+      <a href="https://tailuge.github.io/billiards/dist/?ruletype=nineball"
+        >9-Ball</a
+      >
+      <a href="https://tailuge.github.io/billiards/dist/?ruletype=threecushion"
+        >3-Cushion</a
+      >
+      <a href="https://tailuge.github.io/billiards/dist/?ruletype=fourteenone"
+        >Straight</a
       >
     </p>
+    <h2>Recent breaks</h2>
     <p>
-      breaks :<a href="./replay/1">🎱</a>
+      <a href="./replay/1">🎱</a>
       <a href="./replay/2">🎱</a>
       <a href="./replay/3">🎱</a>
       <a href="./replay/4">🎱</a>
@@ -32,23 +41,84 @@
       <a href="./replay/11">🎱</a>
     </p>
 
-    <pre id="usage"></pre>
+    <div class="chart">
+      <canvas id="chart"></canvas>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/luxon@^2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-luxon@^1"></script>
 
     <script type="module">
-      import asciiChart from "https://cdn.jsdelivr.net/npm/ascii-chart@1.3.3/+esm"
-
-      var response = await fetch("/usage")
-      var data = await response.json()
-
-      data = data.map((item) => item.props.play ?? 0)
-
-      const ascii = asciiChart(data, {
-        width: 64,
-        height: 16,
-        pointChar: "█",
-      })
-
-      document.getElementById("usage").innerHTML = ascii
+      const response = await fetch("https://tailuge-billiards.cyclic.app/usage")
+      const data = await response.json()
+      const labels = data.map((item) => Date.parse(item.props.created))
+      const snooker = data.map((item) => item.props.snooker ?? 0)
+      const nineball = data.map((item) => item.props.nineball ?? 0)
+      const fourteenone = data.map((item) => item.props.fourteenone ?? 0)
+      const threecushion = data.map((item) => item.props.threecushion ?? 0)
+      const total = data.map(
+        (item) => (item.props.play ?? 0) + (item.props.replay ?? 0)
+      )
+      const multidata = {
+        labels: labels,
+        datasets: [
+          {
+            label: "Total games",
+            data: total,
+          },
+          {
+            label: "Snooker",
+            data: snooker,
+          },
+          {
+            label: "3-Cushion",
+            data: threecushion,
+          },
+          {
+            label: "9-ball",
+            data: nineball,
+          },
+          {
+            label: "Straight pool",
+            data: fourteenone,
+          },
+        ],
+      }
+      const config = {
+        type: "bar",
+        data: multidata,
+        options: {
+          responsive: true,
+          plugins: {
+            title: {
+              text: "usage",
+              display: true,
+            },
+          },
+          scales: {
+            x: {
+              type: "time",
+              time: {
+                // Luxon format string
+                //tooltipFormat: "DD T",
+              },
+              title: {
+                display: true,
+                text: "Date",
+              },
+            },
+            y: {
+              title: {
+                display: true,
+                text: "Games",
+              },
+            },
+          },
+        },
+      }
+      const ctx = document.getElementById("chart")
+      new Chart(ctx, config)
     </script>
   </body>
 </html>
