@@ -53,20 +53,16 @@
       const response = await fetch("https://tailuge-billiards.cyclic.app/usage")
       const data = await response.json()
       const labels = data.map((item) => Date.parse(item.props.created))
-      const snooker = data.map((item) => item.props.snooker ?? 0)
-      const nineball = data.map((item) => item.props.nineball ?? 0)
-      const fourteenone = data.map((item) => item.props.fourteenone ?? 0)
-      const threecushion = data.map((item) => item.props.threecushion ?? 0)
+      const snooker = data.map((item) => item.props.snooker ?? null)
+      const nineball = data.map((item) => item.props.nineball ?? null)
+      const fourteenone = data.map((item) => item.props.fourteenone ?? null)
+      const threecushion = data.map((item) => item.props.threecushion ?? null)
       const total = data.map(
         (item) => (item.props.play ?? 0) + (item.props.replay ?? 0)
       )
       const multidata = {
         labels: labels,
         datasets: [
-          {
-            label: "Total games",
-            data: total,
-          },
           {
             label: "Snooker",
             data: snooker,
@@ -83,25 +79,23 @@
             label: "Straight pool",
             data: fourteenone,
           },
+          {
+            label: "Total games",
+            data: total,
+            borderWidth: 0.5,
+          },
         ],
       }
       const config = {
-        type: "bar",
+        type: "line",
         data: multidata,
         options: {
           responsive: true,
-          plugins: {
-            title: {
-              text: "usage",
-              display: true,
-            },
-          },
           scales: {
             x: {
               type: "time",
               time: {
-                // Luxon format string
-                //tooltipFormat: "DD T",
+                unit: 'day',
               },
               title: {
                 display: true,
