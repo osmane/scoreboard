@@ -121,10 +121,9 @@
       new Chart(ctx, config)
     </script>
 
-    <script type="module">    
-      const count = await await fetch(
-        "https://tailuge-billiards.cyclic.app/usage"
-      ).json() 
+    <script type="module">
+      const res = await fetch("https://tailuge-billiards.cyclic.app/replay")
+      const count = await res.json()
       const breaks = document.getElementById("breaks")
 
       for (let i = 1; i < count; i++) {
