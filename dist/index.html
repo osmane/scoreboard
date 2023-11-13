@@ -6,40 +6,46 @@
     <meta charset="utf-8" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="description" content="billiards scoreboard" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sakura.css/css/sakura.css" type="text/css">
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/sakura.css/css/sakura.css"
+      type="text/css"
+    />
   </head>
 
   <body>
     <h1>Billiards</h1>
     <h2>Play</h2>
-    <p>
-      <a href="https://tailuge.github.io/billiards/dist/?ruletype=snooker"
-        >Snooker</a
-      >
-      <a href="https://tailuge.github.io/billiards/dist/?ruletype=nineball"
-        >9-Ball</a
-      >
-      <a href="https://tailuge.github.io/billiards/dist/?ruletype=threecushion"
-        >3-Cushion</a
-      >
-      <a href="https://tailuge.github.io/billiards/dist/?ruletype=fourteenone"
-        >Straight</a
-      >
-    </p>
+
+    <ul>
+      <li>
+        <a href="https://tailuge.github.io/billiards/dist/?ruletype=snooker"
+          >Snooker</a
+        >
+      </li>
+      <li>
+        <a href="https://tailuge.github.io/billiards/dist/?ruletype=nineball"
+          >9-Ball</a
+        >
+      </li>
+      <li>
+        <a
+          href="https://tailuge.github.io/billiards/dist/?ruletype=threecushion"
+          >3-Cushion</a
+        >
+      </li>
+      <li>
+        <a href="https://tailuge.github.io/billiards/dist/?ruletype=fourteenone"
+          >Straight</a
+        >
+      </li>
+    </ul>
+
     <h2>Recent breaks</h2>
-    <p>
-      <a href="./replay/1">🎱</a>
-      <a href="./replay/2">🎱</a>
-      <a href="./replay/3">🎱</a>
-      <a href="./replay/4">🎱</a>
-      <a href="./replay/5">🎱</a>
-      <a href="./replay/6">🎱</a>
-      <a href="./replay/7">🎱</a>
-      <a href="./replay/8">🎱</a>
-      <a href="./replay/9">🎱</a>
-      <a href="./replay/10">🎱</a>
-      <a href="./replay/11">🎱</a>
-    </p>
+
+    <div id="breaks"></div>
+
+    <h3>Server stats</h3>
 
     <div class="chart">
       <canvas id="chart"></canvas>
@@ -95,7 +101,7 @@
             x: {
               type: "time",
               time: {
-                unit: 'day',
+                unit: "day",
               },
               title: {
                 display: true,
@@ -113,6 +119,20 @@
       }
       const ctx = document.getElementById("chart")
       new Chart(ctx, config)
+    </script>
+
+    <script type="module">    
+      const count = await await fetch(
+        "https://tailuge-billiards.cyclic.app/usage"
+      ).json() 
+      const breaks = document.getElementById("breaks")
+
+      for (let i = 1; i < count; i++) {
+        const node = document.createElement("a")
+        node.href = `./replay/${i}`
+        node.innerHTML = "🎱"
+        breaks.appendChild(node)
+      }
     </script>
   </body>
 </html>

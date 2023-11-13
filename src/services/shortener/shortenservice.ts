@@ -20,5 +20,9 @@ export class ShortenService {
     this.app.get("/replay/:key", async (req, res) => {
       res.redirect(await this.shortener.replay(req.params.key))
     })
+
+    this.app.get("/replay", async (_, res) => {
+      res.json(await this.shortener.keyFountain())
+    })
   }
 }

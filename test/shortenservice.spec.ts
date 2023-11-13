@@ -31,4 +31,10 @@ describe("shortenService", () => {
       "https://tailuge.github.io/billiards/dist/longurl"
     )
   })
+
+  test("next key ok", async () => {
+    const response = await request(server).get("/replay")
+    expect(response.statusCode).toBe(200)
+    expect(response.body).toBeGreaterThan(0)
+  })
 })
