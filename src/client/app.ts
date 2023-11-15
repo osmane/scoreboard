@@ -64,7 +64,7 @@ export async function start() {
     responsive: true,
     scales: {
       x: {
-        type: "time" as any,
+        type: "time" as const,
         time: {
           unit: "day",
         },
