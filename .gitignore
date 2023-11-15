@@ -126,10 +126,9 @@ out
 .yarn/install-state.gz
 .pnp.*
 
-# only store ts files not js
+# dist is built on deploy
 
-dist/*.js
-dist/**/*.js
+dist/
 
 # local db
 

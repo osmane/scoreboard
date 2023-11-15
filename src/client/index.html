@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>billiards scoreboard</title>
+    <link rel="icon" type="image/png" href="favicon.png" />
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="description" content="billiards scoreboard" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/sakura.css/css/sakura.css"
+      type="text/css"
+    />
+  </head>
+
+  <body>
+    <h1>Billiards</h1>
+    <h2>Play</h2>
+
+    <ul>
+      <li>
+        <a href="https://tailuge.github.io/billiards/dist/?ruletype=snooker"
+          >Snooker</a
+        >
+      </li>
+      <li>
+        <a href="https://tailuge.github.io/billiards/dist/?ruletype=nineball"
+          >9-Ball</a
+        >
+      </li>
+      <li>
+        <a
+          href="https://tailuge.github.io/billiards/dist/?ruletype=threecushion"
+          >3-Cushion</a
+        >
+      </li>
+      <li>
+        <a href="https://tailuge.github.io/billiards/dist/?ruletype=fourteenone"
+          >Straight</a
+        >
+      </li>
+    </ul>
+
+    <h2>Recent breaks</h2>
+
+    <div id="breaks"></div>
+
+    <h3>Server stats</h3>
+
+    <div class="chart">
+      <canvas id="chart"></canvas>
+    </div>
+
+    <script type="module" src="app.ts"></script>
+  </body>
+</html>
