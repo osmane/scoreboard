@@ -1,12 +1,10 @@
-body {
-  margin: 0 auto;
-  background-color: #000;
-  color: #f7f2f2;
-  text-align: center;
-}
-
 .chart {
   margin: auto;
   height: 10%;
   width: 60%;
+}
+
+iframe {
+  width: 100%;
+  height: 300px;
 }
