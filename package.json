@@ -7,7 +7,7 @@
     "build:frontend": "npx parcel build src/client/*.html",
     "dev": "concurrently \"npx tsc -w\" \"npx parcel watch src/client/*.html\" \"node --watch dist/index.js\"",
     "start": "node dist/index.js",
-    "prettify": "prettier --cache true --write --trailing-comma es5 --no-semi  {src,test}/*.ts {src,test}/**/*.ts *.j*",
+    "prettify": "prettier --cache true --write --trailing-comma es5 --no-semi  {src,test}/*.ts {src,test}/**/*.{ts,html} *.j*",
     "deps": "npx yarn-check --skip-unused",
     "test": "jest --maxWorkers=1",
     "coverage": "jest --maxWorkers=1 --coverage"

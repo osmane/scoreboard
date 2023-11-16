@@ -22,6 +22,7 @@ export class HiscoreService {
       const initials = req.body.initials
       const score = req.body.score
       const start = req.body.start
+      const now = req.body.now
       const hash = crypto.createHash("md5").update(state).digest("hex")
 
       const check = await this.validate(hash, start)
@@ -33,6 +34,7 @@ export class HiscoreService {
           shortUrl: shortened.shortUrl,
           score: score,
           date: start,
+          elapsed: now - start,
           initials: initials,
           ruletype: ruletype,
         }

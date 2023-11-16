@@ -56,6 +56,7 @@ async function submitHiscore() {
       initials: initials.value || "...",
       score: breakState.score,
       start: breakState.start,
+      now: breakState.now,
     }),
   })
   const result = await res.json()
