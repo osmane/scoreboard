@@ -3,6 +3,7 @@ import cors from "cors"
 import { ShortenService } from "./services/shortener/shortenservice"
 import { AdminService } from "./services/admin/adminservice"
 import { UsageService } from "./services/usage/usageservice"
+import { HiscoreService } from "./services/hiscore/hiscoreservice"
 
 const corsOptions = {
   origin: [
@@ -48,9 +49,11 @@ const adminService = new AdminService(app)
 adminService.register()
 const usageService = new UsageService(app)
 usageService.register()
+const hiscoreService = new HiscoreService(app)
+hiscoreService.register()
 
 app.use("*", (_, res) => {
-  res.json({ msg: "no route handler found" }).end()
+  res.json({ msg: "page not found" }).end()
 })
 
 const server = app.listen(port, () => {

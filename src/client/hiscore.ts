@@ -4,6 +4,7 @@ start()
 
 async function start() {
   showReplay()
+  actionHandler()
   reportInfo()
 }
 
@@ -31,4 +32,32 @@ function parse(s) {
   } catch (_) {
     return JSON.parse(JSONCrush.uncrush(s))
   }
+}
+
+function actionHandler() {
+  const submit = document.getElementById("submit")! as HTMLButtonElement
+  submit.onclick = () => {
+    submitHiscore()
+  }
+}
+
+async function submitHiscore() {
+  const params = new URLSearchParams(location.search)
+  const replay = params.get("state")!
+  const breakState = parse(decodeURIComponent(replay))
+  const initials = document.getElementById("initials")! as HTMLInputElement
+  const res = await fetch(`./hiscore${location.search}`, {
+    method: "POST",
+    mode: "cors",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      initials: initials.value || "...",
+      score: breakState.score,
+      start: breakState.start,
+    }),
+  })
+  const result = await res.json()
+  console.log(result)
 }

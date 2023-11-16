@@ -20,18 +20,10 @@
     <h4>Congratulations!</h4>
     <p id="info"></p> 
     <p>Add your initials and upload break to leaderboard</p>
-    <input type="text" placeholder="XYZ" autofocus maxlength="3" />
-    <button type="button">upload</button>
-    <button type="button" disabled>share</button>
-
+    <input id="initials" type="text" placeholder="XYZ" autofocus maxlength="3" />
+    <button id="submit" type="button">upload</button>
     <h4>Leaderboard</h4>
-    <ul>
-      <li>32 ABA</li>
-      <li>33 CBC</li>
-      <li>34 *You*</li>
-      <li>35 DBD</li>
-      <li>36 XBX</li>
-    </ul>
+    <div id="leaderboard"></div>
     <script type="module" src="hiscore.ts">
     </script>
   </body>
