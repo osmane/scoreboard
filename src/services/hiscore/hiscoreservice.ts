@@ -28,7 +28,7 @@ export class HiscoreService {
       if (check.valid) {
         // shorten
         const paramString = `?ruletype=${ruletype}&state=${state}`
-        const shortened = await this.shortener.shorten(paramString)
+        const shortened = await this.shortener.shorten({ input: paramString })
         const info = {
           shortUrl: shortened.shortUrl,
           score: score,
@@ -42,7 +42,7 @@ export class HiscoreService {
           hash,
           info
         )
-        console.log(storeditem)
+        console.log("stored hiscore:", storeditem)
       }
       res.json(check)
     })

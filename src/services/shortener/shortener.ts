@@ -24,7 +24,8 @@ export class Shortener {
   async shorten(data: any) {
     const key = (await this.keyFountain()).toString()
     console.log("next free key: ", key)
-    await this.store.set(this.collection, key, data)
+    const result = await this.store.set(this.collection, key, data)
+    console.log(result)
     return {
       input: data.input,
       key: key,
