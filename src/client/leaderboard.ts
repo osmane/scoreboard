@@ -7,6 +7,7 @@ start()
 
 async function start() {
   showLeaderboard()
+  scrollIntoView()
 }
 
 async function showLeaderboard() {
@@ -25,7 +26,7 @@ async function showLeaderboard() {
 function row(item, index) {
   console.log(item)
   const link = `<a href="${item.props.shortUrl}">📺</a>`
-  const trclass = item.key === id ? `class="highlight"` : ""
+  const trclass = item.key === id ? `class="highlight" id="highlight"` : ""
   return `<tr ${trclass}>
   ${cell(icon(index))}
   ${cell(index)}
@@ -46,4 +47,11 @@ function icon(index: number) {
 }
 function cell(value) {
   return `<td>${value}</td>`
+}
+
+function scrollIntoView() {
+  const element = document.getElementById("highlight")
+  if (element) {
+    element.scrollIntoView()
+  }
 }

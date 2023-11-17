@@ -23,7 +23,9 @@ function reportInfo() {
     .toISOString()
     .substring(14, 19)
   const info = document.getElementById("info")!
-  info.innerHTML = `${ruletype} break of ${breakState.score} in ${elapsed}`
+  const breakMessage = `${ruletype} break of ${breakState.score} in ${elapsed}`
+  const clearanceMessage = `${ruletype} clearance in ${elapsed}`
+  info.innerHTML = breakState.wholeGame ? clearanceMessage : breakMessage
 }
 
 function parse(s) {
