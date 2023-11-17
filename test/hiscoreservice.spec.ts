@@ -25,14 +25,18 @@ describe("hiscoreService", () => {
   test("add new high score", async () => {
     const response = await request(server)
       .post(`/hiscore${newbreak}`)
-      .send({ initials: "abc", score: 8, start: Date.now()-20000, now:Date.now() })
+      .send({
+        initials: "abc",
+        score: 8,
+        start: Date.now() - 20000,
+        now: Date.now(),
+      })
     expect(response.status).toBe(200)
     expect(response.body.valid).toBe(true)
+    console.log(response.body)
 
     const highscores = await request(server).get("/allscores")
-    console.log(highscores.body)
     expect(highscores.status).toBe(200)
-    console.log(highscores.body)
     expect(highscores.body).toHaveLength(1)
   })
 })

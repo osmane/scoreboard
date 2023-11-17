@@ -38,7 +38,7 @@ export class HiscoreService {
           initials: initials,
           ruletype: ruletype,
         }
-
+        check["id"] = hash
         const storeditem = await this.store.set(
           HiscoreService.collection,
           hash,

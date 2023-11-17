@@ -13,10 +13,10 @@ export class Leaderboard {
   }
 
   sort(a, b) {
-    if (a.props.score > b.props.score) {
+    if (a.props.score < b.props.score) {
       return 1
     }
-    if (a.props.score < b.props.score) {
+    if (a.props.score > b.props.score) {
       return -1
     }
     if (a.props?.time < b.props?.time) {

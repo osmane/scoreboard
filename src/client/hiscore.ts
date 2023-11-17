@@ -60,5 +60,9 @@ async function submitHiscore() {
     }),
   })
   const result = await res.json()
-  console.log(result)
+  const submit = document.getElementById("submit")! as HTMLButtonElement
+  submit.innerHTML = result.reason
+  if (result.valid) {
+    location.href = `./leaderboard.html?id=${result.id}`
+  }
 }
