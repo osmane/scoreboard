@@ -1,5 +1,5 @@
 import request from "supertest"
-import server from "../src/index"
+import server from "../src/server"
 import { DbFactory } from "../src/db/dbfactory"
 import { LocalDb } from "../src/db/localdb"
 
@@ -25,7 +25,7 @@ describe("hiscoreService", () => {
   test("add new high score", async () => {
     const response = await request(server)
       .post(`/hiscore${newbreak}`)
-      .send({ initials: "abc", score: 8, start: Date.now() })
+      .send({ initials: "abc", score: 8, start: Date.now()-20000, now:Date.now() })
     expect(response.status).toBe(200)
     expect(response.body.valid).toBe(true)
 

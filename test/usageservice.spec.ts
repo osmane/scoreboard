@@ -1,5 +1,5 @@
 import request from "supertest"
-import server from "../src/index"
+import server from "../src/server"
 import { DbFactory } from "../src/db/dbfactory"
 import { UsageService } from "../src/services/usage/usageservice"
 

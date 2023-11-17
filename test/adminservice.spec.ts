@@ -1,5 +1,5 @@
 import request from "supertest"
-import server from "../src/index"
+import server from "../src/server"
 import { AdminService } from "../src/services/admin/adminservice"
 import crypto from "crypto"
 
