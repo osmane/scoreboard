@@ -6,21 +6,36 @@ const id = params.get("id")
 start()
 
 async function start() {
-  showLeaderboard(document.getElementById("snooker")!, "snooker", false)
-  showLeaderboard(document.getElementById("nineball")!, "nineball", false)
+  showAll()
+  scrollIntoView()
+}
+
+async function showAll() {
+  const res = await fetch("https://tailuge-billiards.cyclic.app/allscores")
+  const json = await res.json()
+  showLeaderboard(json, document.getElementById("snooker")!, "snooker", false)
+  showLeaderboard(json, document.getElementById("nineball")!, "nineball", false)
   showLeaderboard(
+    json,
     document.getElementById("threecushion")!,
     "threecushion",
     false
   )
-  showLeaderboard(document.getElementById("fourteenone")!, "fourteenone", false)
-  showLeaderboard(document.getElementById("snookerspeed")!, "snooker", true)
-  scrollIntoView()
+  showLeaderboard(
+    json,
+    document.getElementById("fourteenone")!,
+    "fourteenone",
+    false
+  )
+  showLeaderboard(
+    json,
+    document.getElementById("snookerspeed")!,
+    "snooker",
+    true
+  )
 }
 
-async function showLeaderboard(element, ruletype, wholeGame) {
-  const res = await fetch("https://tailuge-billiards.cyclic.app/allscores")
-  const json = await res.json()
+async function showLeaderboard(json, element, ruletype, wholeGame) {
   const leaderboard = new Leaderboard(json).ordered(ruletype, wholeGame)
   const table = `<table>
   ${leaderboard.map((item, i) => row(item, i + 1)).join("")}

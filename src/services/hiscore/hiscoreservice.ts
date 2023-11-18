@@ -23,6 +23,7 @@ export class HiscoreService {
       const score = req.body.score
       const start = req.body.start
       const now = req.body.now
+      const wholeGame = req.body?.wholeGame ?? false
       const hash = crypto.createHash("md5").update(state).digest("hex")
 
       const check = await this.validate(hash, start)
@@ -37,6 +38,7 @@ export class HiscoreService {
           elapsed: now - start,
           initials: initials,
           ruletype: ruletype,
+          wholeGame: wholeGame,
         }
         check["id"] = hash
         const storeditem = await this.store.set(
