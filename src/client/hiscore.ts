@@ -59,6 +59,7 @@ async function submitHiscore() {
       score: breakState.score,
       start: breakState.start,
       now: breakState.now,
+      wholeGame: breakState.wholeGame,
     }),
   })
   const result = await res.json()

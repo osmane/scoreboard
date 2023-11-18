@@ -6,16 +6,22 @@ const id = params.get("id")
 start()
 
 async function start() {
-  showLeaderboard()
+  showLeaderboard(document.getElementById("snooker")!, "snooker", false)
+  showLeaderboard(document.getElementById("nineball")!, "nineball", false)
+  showLeaderboard(
+    document.getElementById("threecushion")!,
+    "threecushion",
+    false
+  )
+  showLeaderboard(document.getElementById("fourteenone")!, "fourteenone", false)
+  showLeaderboard(document.getElementById("snookerspeed")!, "snooker", true)
   scrollIntoView()
 }
 
-async function showLeaderboard() {
+async function showLeaderboard(element, ruletype, wholeGame) {
   const res = await fetch("https://tailuge-billiards.cyclic.app/allscores")
   const json = await res.json()
-  console.log(json)
-  const leaderboard = new Leaderboard(json).ordered("snooker")
-  const element = document.getElementById("leaderboard")!
+  const leaderboard = new Leaderboard(json).ordered(ruletype, wholeGame)
   const table = `<table>
   ${leaderboard.map((item, i) => row(item, i + 1)).join("")}
   </table>`

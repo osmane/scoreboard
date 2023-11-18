@@ -6,9 +6,13 @@ export class Leaderboard {
     this.items = items
   }
 
-  ordered(ruletype: string): DbItem[] {
+  ordered(ruletype: string, wholeGame: boolean): DbItem[] {
     return this.items
-      .filter((item) => item.props.ruletype === ruletype)
+      .filter(
+        (item) =>
+          item.props.ruletype === ruletype &&
+          (item.props?.wholeGame ?? false) === wholeGame
+      )
       .sort((a, b) => this.sort(a, b))
   }
 
