@@ -13,35 +13,44 @@ async function start() {
 async function showAll() {
   const res = await fetch("https://tailuge-billiards.cyclic.app/allscores")
   const json = await res.json()
-  showLeaderboard(json, document.getElementById("snooker")!, "snooker", false)
-  showLeaderboard(json, document.getElementById("nineball")!, "nineball", false)
-  showLeaderboard(
-    json,
-    document.getElementById("threecushion")!,
-    "threecushion",
-    false
-  )
-  showLeaderboard(
-    json,
-    document.getElementById("fourteenone")!,
-    "fourteenone",
-    false
-  )
-  showLeaderboard(
-    json,
-    document.getElementById("snookerspeed")!,
-    "snooker",
-    true
-  )
+  console.log(json)
+  const elements = document.getElementsByClassName("leaderboard")
+  for (let i = 0; i < elements.length; i++) {
+    generate(json, elements.item(i) as HTMLDivElement)
+  }
+}
+
+function generate(json, element: HTMLDivElement) {
+  const ruletype = element?.getAttribute("data-ruletype")
+  const wholeGame = element?.getAttribute("data-wholeGame") === "true"
+  showLeaderboard(json, element, ruletype, wholeGame)
 }
 
 async function showLeaderboard(json, element, ruletype, wholeGame) {
   const leaderboard = new Leaderboard(json).ordered(ruletype, wholeGame)
   const table = `<table>
+  <caption>${ruletype} ${
+    wholeGame ? " total clearance" : " high break"
+  }</caption>
+  ${thead()}
+  <tbody>
   ${leaderboard.map((item, i) => row(item, i + 1)).join("")}
+  </tbody>
   </table>`
-  console.log(table)
   element.innerHTML = table
+}
+
+function thead() {
+  return `<thead>
+    <tr>
+    <th></th>
+    <th>rank</th>
+    <th>score</th>
+    <th>time</th>
+    <th></th>
+    <th></th>
+    </tr>
+    </thead>`
 }
 
 function row(item, index) {

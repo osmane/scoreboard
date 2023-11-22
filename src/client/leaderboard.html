@@ -6,46 +6,40 @@
     <meta charset="utf-8" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="description" content="billiards leaderboard" />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/sakura.css/css/sakura.css"
-      type="text/css"
-    />
-    <link rel="stylesheet" type="text/css" href="index.css" />
+    <link rel="stylesheet" type="text/css" href="leaderboard.css" />
   </head>
 
   <body>
-    <h1>Leaderboard</h1>
-    <h4>
-      <a href="https://tailuge.github.io/billiards/dist/?ruletype=snooker"
-        >Snooker</a
-      >
-    </h4>
-    <div id="snooker"></div>
-    <h4>
-      <a href="https://tailuge.github.io/billiards/dist/?ruletype=nineball"
-        >9-ball</a
-      >
-    </h4>
-    <div id="nineball"></div>
-    <h4>
-      <a href="https://tailuge.github.io/billiards/dist/?ruletype=threecushion"
-        >3-Cushion</a
-      >
-    </h4>
-    <div id="threecushion"></div>
-    <h4>
-      <a href="https://tailuge.github.io/billiards/dist/?ruletype=fourteenone"
-        >14-1</a
-      >
-    </h4>
-    <div id="fourteenone"></div>
-    <h4>
-      <a href="https://tailuge.github.io/billiards/dist/?ruletype=snooker"
-        >Snooker speedrun</a
-      >
-    </h4>
-    <div id="snookerspeed"></div>
+    <div
+      class="leaderboard"
+      data-ruletype="snooker"
+      data-wholeGame="false"
+    ></div>
+    <div
+      class="leaderboard"
+      data-ruletype="nineball"
+      data-wholeGame="false"
+    ></div>
+    <div
+      class="leaderboard"
+      data-ruletype="threecushion"
+      data-wholeGame="false"
+    ></div>
+    <div
+      class="leaderboard"
+      data-ruletype="fourteenone"
+      data-wholeGame="false"
+    ></div>
+    <div
+      class="leaderboard"
+      data-ruletype="snooker"
+      data-wholeGame="true"
+    ></div>
+    <div
+      class="leaderboard"
+      data-ruletype="nineball"
+      data-wholeGame="true"
+    ></div>
     <script type="module" src="leaderboard.ts"></script>
   </body>
 </html>

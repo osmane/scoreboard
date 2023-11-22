@@ -12,3 +12,10 @@ iframe {
 .highlight {
   background: lightgoldenrodyellow;
 }
+
+table {
+  border-collapse: collapse;
+}
+th, td {
+  border: 1px solid #fafafa;
+}

@@ -14,7 +14,7 @@
 yarn deps
 yarn build
 yarn prettify
-yarn dev
+yarn serve
 ```
 
 ## test
