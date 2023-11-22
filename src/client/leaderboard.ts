@@ -27,11 +27,12 @@ function generate(json, element: HTMLDivElement) {
 }
 
 async function showLeaderboard(json, element, ruletype, wholeGame) {
+  const link = "https://tailuge.github.io/billiards/dist/?ruletype=" + ruletype
   const leaderboard = new Leaderboard(json).ordered(ruletype, wholeGame)
   const table = `<table>
-  <caption>${ruletype} ${
-    wholeGame ? " total clearance" : " high break"
-  }</caption>
+  <caption>${ruletype} ${wholeGame ? " total clearance" : " high break"}
+  <a class="pill" href="${link}">⬀</a>
+  </caption>
   ${thead()}
   <tbody>
   ${leaderboard.map((item, i) => row(item, i + 1)).join("")}

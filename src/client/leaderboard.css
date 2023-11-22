@@ -7,7 +7,7 @@ body {
 }
 
 .leaderboard {
-  width: 180pt;
+  width: 200pt;
   border: 1px solid black;
   border-radius: 4px;
   padding: 4px;
@@ -46,4 +46,17 @@ table {
 }
 th, td {
   border: 1px solid #fafafa;
+}
+
+a.pill {
+  outline: none;
+  background: white;
+  border-radius: 4px;
+  text-decoration: none;
+  border-color: white;
+  border-width: 1px;
+  margin: 1px;
+  padding: 2px;
+  font-size: smaller;
+  border-top-style: groove;
 }
