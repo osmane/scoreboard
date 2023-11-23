@@ -31,7 +31,7 @@ async function showLeaderboard(json, element, ruletype, wholeGame) {
   const leaderboard = new Leaderboard(json).ordered(ruletype, wholeGame)
   const table = `<table>
   <caption>${ruletype} ${wholeGame ? " total clearance" : " high break"}
-  <a class="pill" href="${link}">⬀</a>
+  <a class="pill" href="${link}">&</a>
   </caption>
   ${thead()}
   <tbody>

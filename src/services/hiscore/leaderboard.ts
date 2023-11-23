@@ -20,6 +20,7 @@ export class Leaderboard {
           (item.props?.wholeGame ?? false) === wholeGame
       )
       .sort((a, b) => this.sort(a, b))
+      .slice(0, 10)
   }
 
   sort(a, b) {

@@ -1,20 +1,15 @@
-
-
 body {
-  display: flex;
-  flex-wrap: wrap;
   background-color: rgb(245, 245, 245);
-  font-family: 'LT Binary Neue', sans-serif;
+  font-family: "Vector Battle", sans-serif;
+  color: #ffffff;
 }
 
 .leaderboard {
-  width: 240pt;
-  border: 1px solid black;
+  border: 0px solid black;
   border-radius: 4px;
   padding: 4px;
   margin: 4px;
-  background-color: white;
-  box-shadow: 2px 2px 2px lightgray;
+  background-color: transparent;
 }
 
 caption {
@@ -22,7 +17,8 @@ caption {
   margin: auto;
 }
 
-thead, th {
+thead,
+th {
   font-weight: lighter;
 }
 
@@ -38,28 +34,57 @@ iframe {
 }
 
 .highlight {
-  background: lightgoldenrodyellow;
+  background: rgba(250, 250, 210, 0.253);
 }
 
 table {
   border-collapse: collapse;
   margin: 0 auto;
 }
-th, td {
-  border: 1px solid #fafafa;
+th,
+td {
+  border: 0px solid #fafafa;
   padding-right: 10px;
   padding-left: 10px;
 }
 
+th {
+  color: rgb(97, 97, 97);
+}
 a.pill {
   outline: none;
-  background: white;
   border-radius: 4px;
   text-decoration: none;
-  border-color: white;
-  border-width: 1px;
   margin: 1px;
   padding: 2px;
-  font-size: smaller;
-  border-top-style: groove;
+  color: goldenrod;
+}
+
+#nightSky {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  position: fixed; /* Sit on top of the page content */
+  width: 100%; /* Full width (cover the whole page) */
+  height: 100%; /* Full height (cover the whole page) */
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5); /* Black background with opacity */
+  z-index: -2; /* Specify a stack order in case you're using a different order for other elements */
+}
+
+#all {
+  width: 95%;
+  margin: auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  transform: perspective(75em) rotateX(15deg);
+  transition: 9.4s ease-in-out transform;
+
+  &:hover {
+    transform: translate3d(0px, 0px, -300px);
+  }
 }
