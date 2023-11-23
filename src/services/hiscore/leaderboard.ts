@@ -8,6 +8,12 @@ export class Leaderboard {
 
   ordered(ruletype: string, wholeGame: boolean): DbItem[] {
     return this.items
+      .map((item) => {
+        if (item.props.score === 0) {
+          item.props.score = 9
+        }
+        return item
+      })
       .filter(
         (item) =>
           item.props.ruletype === ruletype &&
