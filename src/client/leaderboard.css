@@ -4,10 +4,11 @@ body {
   display: flex;
   flex-wrap: wrap;
   background-color: rgb(245, 245, 245);
+  font-family: 'LT Binary Neue', sans-serif;
 }
 
 .leaderboard {
-  width: 200pt;
+  width: 240pt;
   border: 1px solid black;
   border-radius: 4px;
   padding: 4px;
@@ -46,6 +47,8 @@ table {
 }
 th, td {
   border: 1px solid #fafafa;
+  padding-right: 10px;
+  padding-left: 10px;
 }
 
 a.pill {
