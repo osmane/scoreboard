@@ -81,10 +81,4 @@ a.pill {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
-  transform: perspective(75em) rotateX(15deg);
-  transition: 9.4s ease-in-out transform;
-
-  &:hover {
-    transform: translate3d(0px, 0px, -300px);
-  }
 }
