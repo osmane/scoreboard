@@ -57,13 +57,14 @@ function thead() {
 function row(item, index) {
   console.log(item)
   const link = `<a href="${item.props.shortUrl}">📺</a>`
+  const linkInitials = `<a href="${item.props.shortUrl}">${item.props.initials}</a>`
   const trclass = item.key === id ? `class="highlight" id="highlight"` : ""
   return `<tr ${trclass}>
   ${cell(icon(index))}
   ${cell(index)}
   ${cell(item.props.score)}
   ${cell(new Date(item.props.elapsed).toISOString().substring(14, 19))}
-  ${cell(item.props.initials)}
+  ${cell(linkInitials)}
   ${cell(link)}
   </tr>`
 }
