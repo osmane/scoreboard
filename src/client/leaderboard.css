@@ -90,6 +90,16 @@ p {
 
 a {
   text-decoration: none;
+  color: white;
+  font-weight: bold;
+}
+
+a:link {
+  color: white;
+}
+
+a:any-link {
+  color: white;
 }
 
 a:visited {
