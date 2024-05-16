@@ -6,7 +6,7 @@
 [![Tests](https://github.com/tailuge/scoreboard/actions/workflows/main.yml/badge.svg)](https://github.com/tailuge/scoreboard/actions/workflows/main.yml)
 [![Open in Gitpod](https://img.shields.io/badge/Gitpod-Open%20in%20Gitpod-%230092CF.svg)](https://gitpod.io/#https://github.com/tailuge/scoreboard)
 
-[scoreboard](https://tailuge-billiards.cyclic.app/) for [tailuge/billiards](https://github.com/tailuge/billiards) running on [cyclic.sh](https://app.cyclic.sh/#/app/tailuge-scoreboard/overview)
+[scoreboard](https://scoreboard-mauve.vercel.app/) for [tailuge/billiards](https://github.com/tailuge/billiards) running on [vercel.com](https://vercel.com/tailuges-projects/scoreboard)
 
 ## dev
 
@@ -26,4 +26,4 @@ yarn coverage
 
 ## deployed
 
-cyclic.sh [admin](https://app.cyclic.sh/#/app/tailuge-scoreboard/overview)
+vercel.com [admin](https://vercel.com/tailuges-projects/scoreboard)
