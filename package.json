@@ -13,7 +13,7 @@
     "coverage": "jest --maxWorkers=1 --coverage"
   },
   "keywords": [
-    "parcel",
+    "next",
     "vercel.com",
     "billiards",
     "express"
