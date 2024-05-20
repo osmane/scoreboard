@@ -6,8 +6,9 @@ export const config = {
 }
 
 export default async function handler(request: NextRequest) {
-
-  const body = await kv.get('mykey');
+  const searchParams = request.nextUrl.searchParams
+  const id = searchParams.get('id')
+  const body = await kv.get(`url${id}`);
   console.log(body)
   return new Response(JSON.stringify(body), {
     status: 200    
