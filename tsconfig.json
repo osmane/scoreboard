@@ -15,6 +15,7 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "paths": {
+      "@/*": ["./src/*"],
       "@lib/*": ["lib/*"],
       "@components": ["components/index"],
       "@components/*": ["components/*"]

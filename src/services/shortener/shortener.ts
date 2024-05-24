@@ -1,30 +1,30 @@
 import { Db } from "../../db/db"
 
 export class Shortener {
-  readonly collection = "short"
   readonly store: Db
   readonly replayUrl = "https://tailuge.github.io/billiards/dist/"
-  readonly shortUrl = "https://tailuge-billiards.cyclic.app/replay/"
-  readonly notFound = "https://tailuge-billiards.cyclic.app/notfound.html"
+  readonly shortUrl = "https://scoreboard-mauve.vercel.app/api/replay/"
+  readonly notFound = "https://scoreboard-mauve.vercel.app/notfound.html"
+  readonly prefix = "urlkey" 
 
   constructor(store: Db) {
     this.store = store
   }
 
+
   async keyFountain() {
-    const items = await this.store.list(this.collection)
-    return (
-      1 +
-      items
-        .map((item) => Number.parseInt(item.key ?? "0"))
-        .reduce((a, b) => Math.max(a, b), 0)
-    )
+     const id = await this.store.incr("idfountain")
+     return id
+  }
+
+  dbKey(id) {
+    return `prefix${id}`
   }
 
   async shorten(data: any) {
     const key = (await this.keyFountain()).toString()
     console.log("next free key: ", key)
-    const result = await this.store.set(this.collection, key, data)
+    const result = await this.store.set(this.dbKey(key), data)
     console.log(result)
     return {
       input: data.input,
@@ -34,9 +34,12 @@ export class Shortener {
   }
 
   async replay(key: string) {
-    const item = await this.store.get(this.collection, key)
-    if (item?.props && item.props?.input) {
-      return this.replayUrl + item.props.input
+    const full = this.dbKey(key)
+    console.log(full)
+    const item = await this.store.get(full)
+    console.log(item)
+    if (item?.input) {
+      return this.replayUrl + item.input
     }
     return this.notFound
   }

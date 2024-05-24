@@ -1,12 +1,11 @@
 export interface DbItem {
-  collection?: string
-  key?: string
-  props?: any
+  input?: string
 }
 
 export interface Db {
-  delete(collection: string, key: string): Promise<boolean>
-  set(collection: string, key: string, props: any): Promise<DbItem>
-  get(collection: string, key: string): Promise<DbItem | null>
-  list(collection: string): Promise<DbItem[]>
+  incr(key: string): Promise<number>
+  set(key: string, value: any)
+  //<any>(key: string, value: any, opts?: SetCommandOptions) => Promise<any>
+  get(key: string): Promise<DbItem | null>
+  //<TData>(key: string) => Promise<TData | null>
 }

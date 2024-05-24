@@ -1,13 +1,12 @@
-//import { CyclicDb } from "./cyclicdb"
-//import { Db } from "./db"
-import { LocalDb } from "./localdb"
+import { Db } from "./db"
+import { kv } from '@vercel/kv'
 
 export class DbFactory {
-  static store
+  static store: Db
 
   static getDb() {
     if (!DbFactory.store) {
-      DbFactory.store = process.env.CYCLIC_DB ? new LocalDb() : new LocalDb()
+      DbFactory.store = kv
     }
     return DbFactory.store
   }
