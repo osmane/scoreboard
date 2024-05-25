@@ -6,7 +6,7 @@
 [![Tests](https://github.com/tailuge/scoreboard/actions/workflows/main.yml/badge.svg)](https://github.com/tailuge/scoreboard/actions/workflows/main.yml)
 [![Open in Gitpod](https://img.shields.io/badge/Gitpod-Open%20in%20Gitpod-%230092CF.svg)](https://gitpod.io/#https://github.com/tailuge/scoreboard)
 
-[scoreboard](https://scoreboard-mauve.vercel.app/) for [tailuge/billiards](https://github.com/tailuge/billiards) running on [vercel.com](https://vercel.com/tailuges-projects/scoreboard)
+[scoreboard](https://scoreboard-tailuge.vercel.app/) for [tailuge/billiards](https://github.com/tailuge/billiards) running on [vercel.com](https://vercel.com/tailuges-projects/scoreboard)
 
 ## dev
 

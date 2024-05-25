@@ -3,8 +3,8 @@ import { Db } from "../../db/db"
 export class Shortener {
   readonly store: Db
   readonly replayUrl = "https://tailuge.github.io/billiards/dist/"
-  readonly shortUrl = "https://scoreboard-mauve.vercel.app/api/replay/"
-  readonly notFound = "https://scoreboard-mauve.vercel.app/notfound.html"
+  readonly shortUrl = "https://scoreboard-tailuge.vercel.app/api/replay/"
+  readonly notFound = "https://scoreboard-tailuge.vercel.app/notfound.html"
   readonly prefix = "urlkey" 
 
   constructor(store: Db) {
