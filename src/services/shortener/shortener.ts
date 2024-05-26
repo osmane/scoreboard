@@ -18,7 +18,7 @@ export class Shortener {
   }
 
   dbKey(id) {
-    return `prefix${id}`
+    return `${this.prefix}${id}`
   }
 
   async shorten(data: any) {
