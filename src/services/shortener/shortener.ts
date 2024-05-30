@@ -5,16 +5,15 @@ export class Shortener {
   readonly replayUrl = "https://tailuge.github.io/billiards/dist/"
   readonly shortUrl = "https://scoreboard-tailuge.vercel.app/api/replay/"
   readonly notFound = "https://scoreboard-tailuge.vercel.app/notfound.html"
-  readonly prefix = "urlkey" 
+  readonly prefix = "urlkey"
 
   constructor(store: Db) {
     this.store = store
   }
 
-
   async keyFountain() {
-     const id = await this.store.incr("idfountain")
-     return id
+    const id = await this.store.incr("idfountain")
+    return id
   }
 
   dbKey(id) {

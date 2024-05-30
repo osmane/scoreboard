@@ -11,5 +11,4 @@ export class LocalDb implements Db {
     throw new Error("Method not implemented.")
   }
   readonly store = new Map<string, any>()
-
 }

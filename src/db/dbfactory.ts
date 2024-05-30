@@ -1,5 +1,5 @@
 import { Db } from "./db"
-import { kv } from '@vercel/kv'
+import { kv } from "@vercel/kv"
 
 export class DbFactory {
   static store: Db

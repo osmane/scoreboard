@@ -1,1 +1,61 @@
-Hi
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>High Break!</title>
+    <link rel="icon" type="image/png" href="golden-cup.png" />
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="description" content="billiards scoreboard" />
+  </head>
+
+  <body>
+    <h1>New Billiards High Score</h1>
+    <iframe id="embed"></iframe>
+    <h2>Congratulations!</h2>
+    <p id="info"></p>
+    <p>Add your initials and upload break to leaderboard</p>
+    <input
+      id="initials"
+      type="text"
+      placeholder="XYZ"
+      autofocus
+      maxlength="3"
+    />
+    <button id="submit" type="button">upload</button>
+  </body>
+
+  <script type="module">
+    async function postData(url = "", data = {}) {
+      const response = await fetch(url, {
+        method: "POST",
+        mode: "cors",
+        cache: "no-cache",
+        credentials: "same-origin",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        redirect: "follow",
+        referrerPolicy: "no-referrer",
+        body: JSON.stringify(data),
+      })
+      return response.json()
+    }
+
+    async function hiscore() {
+      const params = new URLSearchParams(window.location.search)
+      console.log(params)
+      console.log(params.get("ruletype"))
+      //        console.log(params.get('state'))
+      console.log(window.location.origin)
+      const url = new URL("/api/hiscore", window.location.origin)
+      const input = document.getElementById("initials")
+      params.append("id", input.value)
+      url.search = params.toString()
+      await postData(url)
+    }
+
+    const button = document.getElementById("submit")
+
+    button.onclick = hiscore
+  </script>
+</html>
