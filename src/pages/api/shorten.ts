@@ -1,12 +1,12 @@
 import type { NextRequest } from "next/server"
-import { Shortener } from "@/services/shortener/shortener"
-import { DbFactory } from "@/db/dbfactory"
+import { kv } from "@vercel/kv"
+import { Shortener } from "@/services/shortener"
 
 export const config = {
   runtime: "edge",
 }
 
-const shortener = new Shortener(DbFactory.getDb())
+const shortener = new Shortener(kv)
 
 export default async function handler(request: NextRequest) {
   const json = await request.json()

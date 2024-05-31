@@ -1,13 +1,14 @@
-import { Db } from "../../db/db"
+import { VercelKV } from "@vercel/kv"
+import { dbdata } from "./dbdata"
 
 export class Shortener {
-  readonly store: Db
+  readonly store: VercelKV
   readonly replayUrl = "https://tailuge.github.io/billiards/dist/"
   readonly shortUrl = "https://scoreboard-tailuge.vercel.app/api/replay/"
   readonly notFound = "https://scoreboard-tailuge.vercel.app/notfound.html"
   readonly prefix = "urlkey"
 
-  constructor(store: Db) {
+  constructor(store: VercelKV) {
     this.store = store
   }
 
@@ -35,7 +36,7 @@ export class Shortener {
   async replay(key: string) {
     const full = this.dbKey(key)
     console.log(full)
-    const item = await this.store.get(full)
+    const item: dbdata = await this.store.get(full)
     console.log(item)
     if (item?.input) {
       return this.replayUrl + item.input
