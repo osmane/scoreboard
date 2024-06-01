@@ -20,5 +20,5 @@ export default async function handler(request: NextRequest) {
 
   await scoretable.add(ruletype, score, player, url.search)
 
-  return Response.redirect("/leaderboard.html")
+  return Response.redirect(url.origin + "/leaderboard.html")
 }
