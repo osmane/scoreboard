@@ -1,1 +1,43 @@
-Hi
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>High Break!</title>
+    <link rel="icon" type="image/png" href="golden-cup.png" />
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="description" content="billiards scoreboard" />
+  </head>
+
+  <body>
+    <h1>Leaderboard</h1>
+  </body>
+
+  <script type="module">
+    async function getData(url = "", data = {}) {
+      const response = await fetch(url, {
+        method: "GET",
+        mode: "cors",
+        cache: "no-cache",
+        credentials: "same-origin",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        redirect: "follow",
+        referrerPolicy: "no-referrer"
+      })
+      return response.json()
+    }
+
+    async function hiscore(ruletype) {
+      const params = new URLSearchParams()
+      const url = new URL("/api/topten", window.location.origin)
+      params.append("ruletype", ruletype)
+      url.search = params.toString()
+      const data = await getData(url)
+      console.log(data)
+    }
+
+    hiscore("snooker")
+    
+  </script>
+</html>
