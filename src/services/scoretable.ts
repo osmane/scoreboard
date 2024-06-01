@@ -8,28 +8,24 @@ export class ScoreTable {
     this.store = store
   }
 
-  async keyFountain() {
-    const id = await this.store.incr("idfountain")
-    return id
+  dbKey(ruletype) {
+    return `${this.prefix}${ruletype}`
   }
 
-  dbKey(id) {
-    return `${this.prefix}${id}`
-  }
-
-  async add(gametype: string, score: number, name: string, data: any) {
-    const value = { name: name, data: data }
-    return await this.store.zadd(this.dbKey(gametype), {
+  async add(ruletype: string, score: number, name: string, data: any) {
+    const value = { name: name, score:score, data: data }
+    await this.store.zadd(this.dbKey(ruletype), {
       score: score,
-      member: data,
+      member: value,
     })
+    return this.trim(ruletype)
   }
 
-  async trim(gametype: string) {
-    return await this.store.zremrangebyscore(this.dbKey(gametype), 0, -11)
+  async trim(ruletype: string) {
+    return await this.store.zremrangebyscore(this.dbKey(ruletype), 0, -11)
   }
 
-  async topTen(gametype: string) {
-    return await this.store.zrange(this.dbKey(gametype),0,9)
+  async topTen(ruletype: string) {
+    return (await this.store.zrange(this.dbKey(ruletype),0,9)).reverse()
   }
 }

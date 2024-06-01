@@ -11,19 +11,21 @@ const scoretable = new ScoreTable(kv)
 
 export default async function handler(request: NextRequest) {
   const url = request.nextUrl
-  const state = JSONCrush.uncrush(
-    decodeURIComponent(url.searchParams.get("state"))
-  )
-  const json = JSON.parse(state)
-  console.log(state)
-  console.log(url.searchParams.get("ruletype"))
-  console.log(url.searchParams.get("id"))
+  const raw = url.searchParams.get("state")
+  const json = JSON.parse(JSONCrush.uncrush(
+    decodeURIComponent(raw)
+  ))
+  const ruletype = url.searchParams.get("ruletype")
+  const score = json?.score
+  const player = url.searchParams.get("id")
+  console.log(`adding ${ruletype} hiscore of ${score} for player ${player}`)
 
   await scoretable.add(
-    url.searchParams.get("ruletype"),
-    json?.score,
-    url.searchParams.get("id"),
-    state
+    ruletype,
+    score,
+    player,
+    raw
   )
+
   return new Response("OK")
 }
