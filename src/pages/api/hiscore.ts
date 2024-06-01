@@ -24,7 +24,7 @@ export default async function handler(request: NextRequest) {
     ruletype,
     score,
     player,
-    raw
+    url.search
   )
 
   return new Response("OK")
