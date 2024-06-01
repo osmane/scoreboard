@@ -11,5 +11,6 @@ const scoretable = new ScoreTable(kv)
 
 export default async function handler(request: NextRequest) {
   const url = request.nextUrl
-  return await scoretable.topTen(url.searchParams.get("ruletype"))
+  const data = await scoretable.topTen(url.searchParams.get("ruletype"))
+  return new Response(JSON.stringify(data))
 }

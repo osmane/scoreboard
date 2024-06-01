@@ -1,8 +1,15 @@
 import { VercelKV } from "@vercel/kv"
 
+interface ScoreData {
+  name: string
+  score: number
+  data: string
+}
+
 export class ScoreTable {
   readonly store: VercelKV
   readonly prefix = "hiscore"
+  readonly replayUrl = "https://tailuge.github.io/billiards/dist/"
 
   constructor(store: VercelKV) {
     this.store = store
@@ -13,10 +20,10 @@ export class ScoreTable {
   }
 
   async add(ruletype: string, score: number, name: string, data: any) {
-    const value = { name: name, score:score, data: data }
+    const scoreData: ScoreData = { name: name, score: score, data: data }
     await this.store.zadd(this.dbKey(ruletype), {
       score: score,
-      member: value,
+      member: scoreData,
     })
     return this.trim(ruletype)
   }
@@ -26,6 +33,11 @@ export class ScoreTable {
   }
 
   async topTen(ruletype: string) {
-    return (await this.store.zrange(this.dbKey(ruletype),0,9)).reverse()
+    const data = (await this.store.zrange(this.dbKey(ruletype), 0, 9)).reverse()
+    data.forEach((row) => {
+      const r = row as ScoreData
+      r.data = this.replayUrl + r.data
+    })
+    return data
   }
 }

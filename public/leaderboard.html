@@ -10,6 +10,8 @@
 
   <body>
     <h1>Leaderboard</h1>
+
+    <ol id="scoreboard"></ol>
   </body>
 
   <script type="module">
@@ -23,7 +25,7 @@
           "Content-Type": "application/json",
         },
         redirect: "follow",
-        referrerPolicy: "no-referrer"
+        referrerPolicy: "no-referrer",
       })
       return response.json()
     }
@@ -35,9 +37,19 @@
       url.search = params.toString()
       const data = await getData(url)
       console.log(data)
+      let scoreboard = document.getElementById("scoreboard")
+
+      let ul = `<ol>${data
+        .map(
+          (data) =>
+            `<li>${data.name} ${data.score} <a href="${data.data}">replay</a></li>`
+        )
+        .join("")}
+                  </ol>`
+
+      scoreboard.innerHTML = ul
     }
 
     hiscore("snooker")
-    
   </script>
 </html>
