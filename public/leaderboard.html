@@ -11,7 +11,12 @@
   <body>
     <h1>Leaderboard</h1>
 
-    <ol id="scoreboard"></ol>
+    <h2>Snooker</h2>
+    <ol id="snooker"></ol>
+    <h2>9-ball</h2>
+    <ol id="nineball"></ol>
+    <h2>Three Cushion Billiards</h2>
+    <ol id="threecushion"></ol>
   </body>
 
   <script type="module">
@@ -37,12 +42,12 @@
       url.search = params.toString()
       const data = await getData(url)
       console.log(data)
-      let scoreboard = document.getElementById("scoreboard")
+      let scoreboard = document.getElementById(ruletype)
 
       let ul = `<ol>${data
         .map(
           (data) =>
-            `<li>${data.name} ${data.score} <a href="${data.data}">replay</a></li>`
+            `<li><b>${data.name}</b> scored ${data.score} <a href="${data.data}">replay</a></li>`
         )
         .join("")}
                   </ol>`
@@ -51,5 +56,7 @@
     }
 
     hiscore("snooker")
+    hiscore("nineball")
+
   </script>
 </html>
