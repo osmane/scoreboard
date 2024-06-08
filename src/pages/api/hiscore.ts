@@ -14,7 +14,8 @@ export default async function handler(request: NextRequest) {
   const raw = url.searchParams.get("state")
   const json = JSON.parse(JSONCrush.uncrush(decodeURIComponent(raw)))
   const ruletype = url.searchParams.get("ruletype")
-  const score = json?.score
+  const base = new Date("2024").valueOf()
+  const score = json?.score + ((new Date()).valueOf()-base)/base
   const player = url.searchParams.get("id")
   console.log(`adding ${ruletype} hiscore of ${score} for player ${player}`)
 
