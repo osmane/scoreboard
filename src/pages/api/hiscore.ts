@@ -16,7 +16,7 @@ export default async function handler(request: NextRequest) {
   const ruletype = url.searchParams.get("ruletype")
   const base = new Date("2024").valueOf()
   const score = json?.score + ((new Date()).valueOf()-base)/base
-  const player = url.searchParams.get("id")
+  const player = url.searchParams.get("id") || "***"
   console.log(`adding ${ruletype} hiscore of ${score} for player ${player}`)
 
   await scoretable.add(ruletype, score, player, url.search)

@@ -37,6 +37,7 @@ export class ScoreTable {
     data.forEach((row) => {
       const r = row as ScoreData
       r.data = this.replayUrl + r.data
+      r.score = Math.floor(r.score)
     })
     return data
   }
