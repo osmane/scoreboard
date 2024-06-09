@@ -34,5 +34,9 @@ export default async function handler(request: NextRequest) {
 }
 
 function urlState(row: ScoreData) {
-  return new URLSearchParams(row.data).get("state")
+  try {
+    return new URLSearchParams(row.data).get("state")
+  } catch (_) {
+    return null
+  }
 }
