@@ -11,9 +11,10 @@ const scoretable = new ScoreTable(kv)
 
 export default async function handler(request: NextRequest) {
   const url = request.nextUrl
-  console.log(url)
-  console.log(url.searchParams)
-  const raw = url.searchParams.get("state")
+  const body = await request.text()
+  console.log(`body = ${body}`)
+  console.log(`url.searchParams = ${url.searchParams}`)
+  const raw = new URLSearchParams(body).get("state")
   const json = JSON.parse(JSONCrush.uncrush(decodeURIComponent(raw)))
   const ruletype = url.searchParams.get("ruletype")
   const base = new Date("2024").valueOf()

@@ -42,16 +42,14 @@
     }
 
     async function hiscore() {
-      const params = new URLSearchParams(window.location.search)
-      console.log(params)
-      console.log(params.get("ruletype"))
-      //        console.log(params.get('state'))
-      console.log(window.location.origin)
-      const url = new URL("/api/hiscore", window.location.origin)
       const input = document.getElementById("initials")
-      params.append("id", input.value)
-      url.search = params.toString()
-      await postData(url)
+      const params = new URLSearchParams(window.location.search)
+      const url = new URL("/api/hiscore", window.location.origin)
+      const details = new URLSearchParams()
+      details.append("ruletype",params.get("ruletype"))
+      details.append("id",input.value)
+      url.search = details.toString()
+      await postData(url,params.toString())
       window.location.href = "/leaderboard.html"
     }
 
