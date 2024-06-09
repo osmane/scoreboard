@@ -14,14 +14,22 @@ export default async function handler(request: NextRequest) {
   const body = await request.text()
   console.log(`body = ${body}`)
   console.log(`url.searchParams = ${url.searchParams}`)
-  const raw = new URLSearchParams(body).get("state")
+  var raw = ""
+  try {
+    const sp = new URLSearchParams(body)
+    console.log(sp)
+    raw = sp.get("state")
+  } catch (e) {
+    console.log(e)
+  }
+  console.log(raw)
   const json = JSON.parse(JSONCrush.uncrush(decodeURIComponent(raw)))
+  console.log(json)
   const ruletype = url.searchParams.get("ruletype")
   const base = new Date("2024").valueOf()
   const score = json?.score + (new Date().valueOf() - base) / base
   const player = url.searchParams.get("id") || "***"
   console.log(`Recieved ${ruletype} hiscore of ${score} for player ${player}`)
-
   const data = await scoretable.topTen(url.searchParams.get("ruletype"))
 
   if (
