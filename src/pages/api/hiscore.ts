@@ -14,16 +14,9 @@ export default async function handler(request: NextRequest) {
   const body = await request.text()
   console.log(`body = ${body}`)
   console.log(`url.searchParams = ${url.searchParams}`)
-  var raw = ""
-  try {
-    const sp = new URLSearchParams(body)
-    console.log(sp)
-    raw = sp.get("state")
-  } catch (e) {
-    console.log(e)
-  }
+  const raw = new URLSearchParams(body).get("state")
   console.log(raw)
-  const json = JSON.parse(JSONCrush.uncrush(decodeURIComponent(raw)))
+  const json = JSON.parse(JSONCrush.uncrush(raw))
   console.log(json)
   const ruletype = url.searchParams.get("ruletype")
   const base = new Date("2024").valueOf()
