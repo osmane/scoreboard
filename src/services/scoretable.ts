@@ -1,6 +1,6 @@
 import { VercelKV } from "@vercel/kv"
 
-interface ScoreData {
+export interface ScoreData {
   name: string
   score: number
   data: string
