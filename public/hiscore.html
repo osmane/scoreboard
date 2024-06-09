@@ -49,7 +49,7 @@
       details.append("ruletype", params.get("ruletype"))
       details.append("id", input.value)
       url.search = details.toString()
-      await postData(url, params.toString())
+      await postData(url, window.location.search)
       window.location.href = "/leaderboard.html"
     }
 
