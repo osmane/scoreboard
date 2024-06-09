@@ -16,7 +16,7 @@ export default async function handler(request: NextRequest) {
   console.log(`url.searchParams = ${url.searchParams}`)
   const raw = new URLSearchParams(body).get("state")
   console.log(raw)
-  const json = JSON.parse(JSONCrush.uncrush(raw))
+  const json = JSON.parse(JSONCrush.uncrush(decodeURIComponent(raw)))
   console.log(json)
   const ruletype = url.searchParams.get("ruletype")
   const base = new Date("2024").valueOf()
@@ -32,7 +32,7 @@ export default async function handler(request: NextRequest) {
     })
   ) {
     console.log("Add hiscore")
-    await scoretable.add(ruletype, score, player, url.search)
+    await scoretable.add(ruletype, score, player, body)
   }
 
   return Response.redirect(url.origin + "/leaderboard.html")
