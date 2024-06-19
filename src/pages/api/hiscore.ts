@@ -32,7 +32,7 @@ export default async function handler(request: NextRequest) {
     })
   ) {
     console.log("Add hiscore")
-    await scoretable.add(ruletype, score, player, encodeURI(body))
+    await scoretable.add(ruletype, score, player, body)
   }
 
   return Response.redirect(url.origin + "/leaderboard.html")
