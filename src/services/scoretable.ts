@@ -29,7 +29,7 @@ export class ScoreTable {
   }
 
   async trim(ruletype: string) {
-    return await this.store.zremrangebyscore(this.dbKey(ruletype), 0, -11)
+    return await this.store.zremrangebyrank(this.dbKey(ruletype), 0, -11)
   }
 
   async topTen(ruletype: string) {
