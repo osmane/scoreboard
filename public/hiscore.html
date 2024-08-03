@@ -5,12 +5,12 @@
     <link rel="icon" type="image/png" href="golden-cup.png" />
     <meta charset="utf-8" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <meta name="description" content="billiards scoreboard" />
+    <meta name="description" content="upload new hiscore for tailuge/billiards" />
   </head>
 
   <body>
     <h1>New Billiards High Score</h1>
-    <iframe id="embed"></iframe>
+    <iframe title="replay" id="embed"></iframe>
     <h2>Congratulations!</h2>
     <p id="info"></p>
     <p>Add your initials and upload break to leaderboard</p>
@@ -54,7 +54,13 @@
     }
 
     const button = document.getElementById("submit")
-
     button.onclick = hiscore
+
+    const replayurl = new URL("https://tailuge.github.io/billiards/dist/")
+    const params = new URLSearchParams(window.location.search)
+    replayurl.search = params.toString()
+    const iframe = document.getElementById("embed")
+    iframe.src = replayurl.toString()
+
   </script>
 </html>

@@ -22,7 +22,7 @@ export default async function handler(request: NextRequest) {
   const base = new Date("2024").valueOf()
   const score = json?.score + (new Date().valueOf() - base) / base
   const player = url.searchParams.get("id") || "***"
-  console.log(`Recieved ${ruletype} hiscore of ${score} for player ${player}`)
+  console.log(`Received ${ruletype} hiscore of ${score} for player ${player}`)
   const data = await scoretable.topTen(url.searchParams.get("ruletype"))
 
   if (
