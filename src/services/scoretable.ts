@@ -1,5 +1,3 @@
-import { VercelKV } from "@vercel/kv"
-
 export interface ScoreData {
   name: string
   score: number
@@ -7,13 +5,10 @@ export interface ScoreData {
 }
 
 export class ScoreTable {
-  readonly store: VercelKV
   readonly prefix = "hiscore"
   readonly replayUrl = "https://tailuge.github.io/billiards/dist/"
-
-  constructor(store: VercelKV) {
-    this.store = store
-  }
+  
+  constructor(private readonly store: any) {} 
 
   dbKey(ruletype) {
     return `${this.prefix}${ruletype}`
