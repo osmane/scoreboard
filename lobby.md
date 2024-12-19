@@ -22,18 +22,14 @@ I need a Next.js (Typescript) implementation for a lobby system with the followi
     *   **`PUT /api/tables/[tableId]/spectate`**: Allows a user to spectate a table.  Expects the user ID.
     *   **`DELETE /api/tables/[tableId]`**: Allows the creator of the table to delete it. Expects user ID for authentication.
 *   These API endpoints should handle the logic for manipulating the Redis store.
-*  Error handling: Provide appropriate http response codes with messages for user to debug.
 
 **Implementation Details:**
 
 *   **Technologies:** Next.js (Typescript), Redis (via `@vercel/kv`).
-*   **Data Structure:** Please define the data structure of a table that will be stored in Redis.
-*   **Concurrency:** Consider concurrency issues with Redis when updating table state.
 
 **Assumptions:**
 
 *   You have access to `kv` from "@vercel/kv" and it's correctly configured.
-*   The client-side ID generation is handled elsewhere (this prompt focuses on the backend implementation).
 
 **Desired Output:**
 
