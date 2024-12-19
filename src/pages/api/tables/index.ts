@@ -36,27 +36,11 @@ export default async function handler(
   res: NextApiResponse
 ) {
   if (req.method === "GET") {
-    try {
-      const tables = await getTables()
-      res.status(200).json(tables)
-    } catch (error) {
-      res.status(500).json({ error: "Failed to fetch tables" })
-    }
+    const tables = await getTables()
+    res.status(200).json(tables)
   } else if (req.method === "POST") {
-    try {
-      const { userId, userName } = req.body
-      if (!userId) {
-        res.status(400).json({ error: "User ID required" })
-        return
-      }
-
-      const newTable = await createTable(userId, userName)
-      res.status(201).json(newTable)
-    } catch (error) {
-      res.status(500).json({ error: "Failed to create table" })
-    }
-  } else {
-    res.setHeader("Allow", ["GET", "POST"])
-    res.status(405).end(`Method ${req.method} Not Allowed`)
+    const { userId, userName } = req.body
+    const newTable = await createTable(userId, userName)
+    res.status(201).json(newTable)
   }
 }
