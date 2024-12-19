@@ -6,9 +6,9 @@ import { CreateTable } from '@/components/createtable'
 export default function Lobby() {
   const [userId, setUserId] = useState('')
   const [userName, setUserName] = useState('')
+  const [refresh, setRefresh] = useState(false)
 
   useEffect(() => {
-    // Initialize persistent user ID
     const storedUserId = localStorage.getItem('userId') || uuidv4()
     const storedUserName = localStorage.getItem('userName') || 'Anonymous'
     setUserId(storedUserId)
@@ -33,6 +33,10 @@ export default function Lobby() {
     })
   }
 
+  const handleCreate = () => {
+    setRefresh(prev => !prev)
+  }
+
   return (
     <main className="container p-8 mx-auto">
       <h1 className="mb-8 text-3xl font-bold">Game Lobby</h1>
@@ -40,13 +44,14 @@ export default function Lobby() {
         <CreateTable
           userId={userId}
           userName={userName}
-          onCreate={() => {/* Refresh tables */}}
+          onCreate={handleCreate}
         />
       </div>
       <TableList
         userId={userId}
         onJoin={handleJoin}
         onSpectate={handleSpectate}
+        refresh={refresh}
       />
     </main>
   )

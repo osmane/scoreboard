@@ -2,10 +2,11 @@
 import { useEffect, useState } from 'react'
 import { Table } from '@/interfaces'
 
-export function TableList({ userId, onJoin, onSpectate }: {
+export function TableList({ userId, onJoin, onSpectate, refresh }: {
   userId: string
   onJoin: (tableId: string) => void
   onSpectate: (tableId: string) => void
+  refresh: boolean
 }) {
   const [tables, setTables] = useState<Table[]>([])
 
@@ -22,12 +23,23 @@ export function TableList({ userId, onJoin, onSpectate }: {
     return () => clearInterval(interval)
   }, [])
 
+  useEffect(() => {
+    if (refresh) {
+      const fetchTables = async () => {
+        const res = await fetch('/api/tables')
+        const data = await res.json()
+        setTables(data)
+      }
+      fetchTables()
+    }
+  }, [refresh])
+
   return (
     <div className="space-y-4">
       <h2 className="text-xl font-bold">Active Tables</h2>
       <div className="grid gap-4 md:grid-cols-2">
         {tables.map(table => (
-          <div key={table.id} className="p-4 border rounded-lg">
+          <div key={table.id} className="p-4 border rounded-lg bg-green-800 text-white">
             <div className="flex justify-between">
               <div>
                 <p>Created by: {table.creator.name}</p>
