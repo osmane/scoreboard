@@ -37,10 +37,9 @@ I need a Next.js (Typescript) implementation for a lobby system with the followi
 
 **Desired Output:**
 
-*   I am looking for the backend logic in the `/pages/api/tables` folder.
-*   Please suggest any data structure or common functions I should implement.
-*   I would like error handling for bad requests.
-*  I would like a status code for every call.
+*  I am looking for the backend logic in the `/pages/api/tables` folder.
+*  Please suggest any data structure or common functions I should implement.
+*  Aim for minimal well structured maintainable code without too many comments.
 *  A table that has not been used for 1 minute should be closed and not be visible to users in the lobby
 *  The table object in kv will have the users who have joined and creation and last used timestamp
 
