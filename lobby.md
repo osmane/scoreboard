@@ -45,3 +45,20 @@ I need a Next.js (Typescript) implementation for a lobby system with the followi
 *  The table object in kv will have the users who have joined and creation and last used timestamp
 
 **Important:** This is a starting point. Feel free to make sensible design decisions and suggestions. Prioritize clarity and maintainability in your code.
+
+**Data Structure:**
+
+```typescript
+export interface Player {
+  id: string;
+  name: string;
+}
+
+export interface Table {
+  id: string;
+  players: Player[];
+  createdAt: number;
+  lastUsedAt: number;
+  isActive: boolean;
+}
+```
