@@ -1,5 +1,4 @@
 import type { NextRequest } from "next/server"
-import JSONCrush from "jsoncrush"
 import { kv } from "@vercel/kv"
 import { ScoreTable } from "@/services/scoretable"
 

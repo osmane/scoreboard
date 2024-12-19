@@ -1,5 +1,5 @@
 import { VercelKV } from "@vercel/kv"
-import { dbdata } from "./dbdata"
+import { DbData } from "./dbdata"
 
 export class Shortener {
   readonly store: VercelKV
@@ -36,7 +36,7 @@ export class Shortener {
   async replay(key: string) {
     const full = this.dbKey(key)
     console.log(full)
-    const item: dbdata = await this.store.get(full)
+    const item: DbData = await this.store.get(full)
     console.log(item)
     if (item?.input) {
       return this.replayUrl + item.input

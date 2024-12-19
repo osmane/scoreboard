@@ -2,7 +2,7 @@ import RedisMock from "ioredis-mock"
 
 // Create an adapter class for Vercel KV
 export class MockVercelKVAdapter {
-  private mockRedis: RedisMock
+  private readonly mockRedis: RedisMock
 
   constructor() {
     this.mockRedis = new RedisMock()

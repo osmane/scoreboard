@@ -1,5 +1,5 @@
 import { MockVercelKVAdapter } from "./mockvercelkvadapter"
-import { ScoreTable } from "./scoretable"
+import { ScoreTable } from "../services/scoretable"
 import Redis from "ioredis-mock"
 
 describe("ScoreTable", () => {

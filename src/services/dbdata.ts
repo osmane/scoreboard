@@ -1,3 +1,3 @@
-export interface dbdata {
+export interface DbData {
   input: string
 }
