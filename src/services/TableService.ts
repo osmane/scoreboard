@@ -30,6 +30,25 @@ class TableService {
     await kv.hset(TABLES_KEY, { [tableId]: newTable })
     return newTable
   }
+
+  async joinTable(tableId: string, userId: string, userName: string) {
+    const table = await kv.hget<Table>(TABLES_KEY, tableId)
+
+    if (!table) {
+      throw new Error("Table not found")
+    }
+
+    if (table.players.length >= 2) {
+      throw new Error("Table is full")
+    }
+
+    const player: Player = { id: userId, name: userName || "Anonymous" }
+    table.players.push(player)
+    table.lastUsedAt = Date.now()
+
+    await kv.hset(TABLES_KEY, { [tableId]: table })
+    return table
+  }
 }
 
 export default TableService
