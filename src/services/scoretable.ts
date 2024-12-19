@@ -7,8 +7,8 @@ export interface ScoreData {
 export class ScoreTable {
   readonly prefix = "hiscore"
   readonly replayUrl = "https://tailuge.github.io/billiards/dist/"
-  
-  constructor(private readonly store: any) {} 
+
+  constructor(private readonly store: any) {}
 
   dbKey(ruletype) {
     return `${this.prefix}${ruletype}`
