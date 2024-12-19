@@ -12,6 +12,12 @@ I need a Next.js (Typescript) implementation for a lobby system with the followi
     *   The table creator is the only user who can delete a table.
 *   **Data Persistence:** Active table information (including the creator, list of players, and the table's current status) must be stored in a persistent Redis key-value store using `@vercel/kv`.
 
+**Frontend:**
+*   Implement a minimal front end following best practices
+    *   A way to create a new table
+    *   A way to join or spectate an existing table
+    *   The main screen should show available active tables
+
 **Backend (API):**
 
 *   Implement API routes under `/api/tables` for the following actions:
@@ -25,7 +31,7 @@ I need a Next.js (Typescript) implementation for a lobby system with the followi
 
 **Implementation Details:**
 
-*   **Technologies:** Next.js (Typescript), Redis (via `@vercel/kv`).
+*   **Technologies:** Next.js (Typescript), React, Redis (via `@vercel/kv`).
 
 **Assumptions:**
 
@@ -34,14 +40,14 @@ I need a Next.js (Typescript) implementation for a lobby system with the followi
 **Desired Output:**
 
 *  I am looking for the backend logic in the `/pages/api/tables` folder.
-*  Please suggest any data structure or common functions I should implement.
+*  Front end web page should follow standard nextjs react pattern
 *  Aim for minimal well structured maintainable code without too many comments.
 *  A table that has not been used for 1 minute should be closed and not be visible to users in the lobby
 *  The table object in kv will have the users who have joined and creation and last used timestamp
 
 **Important:** This is a starting point. Feel free to make sensible design decisions and suggestions. Prioritize clarity and maintainability in your code.
 
-**Data Structure:**
+Suggested Data Structure:
 
 ```typescript
 export interface Player {
@@ -56,4 +62,14 @@ export interface Table {
   lastUsedAt: number;
   isActive: boolean;
 }
+```
+suggested [id].ts style:
+
+```typescript
+import { NextApiRequest, NextApiResponse } from 'next';
+
+export async function GET(req: NextApiRequest, res: NextApiResponse) 
+export async function POST(req: NextApiRequest, res: NextApiResponse) 
+export async function PUT(req: NextApiRequest, res: NextApiResponse) 
+export async function DELETE(req: NextApiRequest, res: NextApiResponse) 
 ```

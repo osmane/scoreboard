@@ -5,7 +5,9 @@ export interface Player {
 
 export interface Table {
   id: string
+  creator: Player
   players: Player[]
+  spectators: Player[]
   createdAt: number
   lastUsedAt: number
   isActive: boolean
