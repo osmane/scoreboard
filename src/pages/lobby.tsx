@@ -26,12 +26,7 @@ export default function Lobby() {
         const fetchOptions: RequestInit = {
           method: "GET",
           cache: "no-store",
-        }
-        if (
-          window.location.hostname === "localhost" ||
-          window.location.hostname === "127.0.0.1"
-        ) {
-          fetchOptions.mode = "no-cors"
+          mode: "no-cors"
         }
         const response = await fetch(statusPage, fetchOptions)
         if (response?.type === "opaque" || response?.ok) {
