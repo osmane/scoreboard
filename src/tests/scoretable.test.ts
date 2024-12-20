@@ -3,7 +3,7 @@ import { ScoreTable } from "../services/scoretable"
 import Redis from "ioredis-mock"
 
 describe("ScoreTable", () => {
-  let mockRedis: Redis
+  let mockRedis: InstanceType<typeof Redis>
   let mockStore: MockVercelKVAdapter
 
   beforeEach(() => {
