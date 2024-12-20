@@ -1,18 +1,15 @@
 import { MockVercelKVAdapter } from "./mockvercelkvadapter"
 import { ScoreTable } from "../services/scoretable"
-import Redis from "ioredis-mock"
 
 describe("ScoreTable", () => {
-  let mockRedis: InstanceType<typeof Redis>
   let mockStore: MockVercelKVAdapter
 
   beforeEach(() => {
-    mockRedis = new Redis()
     mockStore = new MockVercelKVAdapter()
   })
 
   afterEach(async () => {
-    await mockRedis.flushall()
+    await mockStore.flushall()
   })
 
   it("should add a score", async () => {

@@ -124,4 +124,8 @@ export class MockVercelKVAdapter {
       console.error("Error retrieving data from mockRedis:", error)
     }
   }
+
+  async flushall(): Promise<string> {
+    return this.mockRedis.flushall()
+  }
 }
