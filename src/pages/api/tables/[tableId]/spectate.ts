@@ -1,28 +1,27 @@
-import { NextRequest } from "next/server"
-import { kv } from "@vercel/kv"
-import { Table, Player } from "@/interfaces"
+import { NextApiRequest, NextApiResponse } from "next"
+import TableService from "@/services/TableService"
 
-const TABLES_KEY = "tables"
+const tableService = new TableService()
 
-export async function PUT(
-  request: NextRequest,
-  { params }: { params: { tableId: string } }
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
 ) {
-  try {
-    const { userId, userName } = await request.json()
-    const table = await kv.hget<Table>(TABLES_KEY, params.tableId)
+  const { tableId } = req.query
 
-    if (!table) {
-      return Response.json({ error: "Table not found" }, { status: 404 })
+  if (req.method === "PUT") {
+    try {
+      const { userId, userName } = req.body
+      const table = await tableService.spectateTable(
+        tableId as string,
+        userId,
+        userName
+      )
+      res.status(200).json(table)
+    } catch (error) {
+      res.status(400).json({ error: error.message })
     }
-
-    const spectator: Player = { id: userId, name: userName || "Anonymous" }
-    table.spectators.push(spectator)
-    table.lastUsedAt = Date.now()
-
-    await kv.hset(TABLES_KEY, { [params.tableId]: table })
-    return Response.json(table)
-  } catch (error) {
-    return Response.json({ error: "Failed to spectate table" }, { status: 500 })
+  } else {
+    res.status(405).json({ error: "Method not allowed" })
   }
 }

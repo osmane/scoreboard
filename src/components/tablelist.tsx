@@ -11,29 +11,18 @@ export function TableList({ userId, onJoin, onSpectate, refresh }: {
 }) {
   const [tables, setTables] = useState<Table[]>([])
 
-  useEffect(() => {
-    const fetchTables = async () => {
-      const res = await fetch('/api/tables')
-      const data = await res.json()
-      setTables(data)
-    }
+  const fetchTables = async () => {
+    const res = await fetch('/api/tables')
+    const data = await res.json()
+    setTables(data)
+  }
 
+  useEffect(() => {
     fetchTables()
     // Poll for updates every 10 seconds
     const interval = setInterval(fetchTables, 10000)
     return () => clearInterval(interval)
-  }, [])
-
-  useEffect(() => {
-    if (refresh) {
-      const fetchTables = async () => {
-        const res = await fetch('/api/tables')
-        const data = await res.json()
-        setTables(data)
-      }
-      fetchTables()
-    }
-  }, [refresh])
+  }, [refresh]) // Add refresh to dependencies
 
   return (
     <div className="space-y-4">

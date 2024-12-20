@@ -23,6 +23,7 @@ export default function Lobby() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ userId, userName })
     })
+    setRefresh(prev => !prev)
   }
 
   const handleSpectate = async (tableId: string) => {
@@ -31,6 +32,7 @@ export default function Lobby() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ userId, userName })
     })
+    setRefresh(prev => !prev)
   }
 
   const handleCreate = () => {

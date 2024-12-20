@@ -49,6 +49,21 @@ class TableService {
     await kv.hset(TABLES_KEY, { [tableId]: table })
     return table
   }
+
+  async spectateTable(tableId: string, userId: string, userName: string) {
+    const table = await kv.hget<Table>(TABLES_KEY, tableId)
+
+    if (!table) {
+      throw new Error("Table not found")
+    }
+
+    const spectator: Player = { id: userId, name: userName || "Anonymous" }
+    table.spectators.push(spectator)
+    table.lastUsedAt = Date.now()
+
+    await kv.hset(TABLES_KEY, { [tableId]: table })
+    return table
+  }
 }
 
 export default TableService
