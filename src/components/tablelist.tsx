@@ -1,9 +1,14 @@
 // src/components/TableList.tsx
-import { useEffect, useState } from 'react'
-import { Table } from '@/interfaces'
-import { FiUserPlus, FiEye } from 'react-icons/fi' // Import icons
+import { useEffect, useState } from "react"
+import { Table } from "@/interfaces"
+import { FiUserPlus, FiEye } from "react-icons/fi" // Import icons
 
-export function TableList({ userId, onJoin, onSpectate, refresh }: {
+export function TableList({
+  userId,
+  onJoin,
+  onSpectate,
+  refresh,
+}: {
   userId: string
   onJoin: (tableId: string) => void
   onSpectate: (tableId: string) => void
@@ -12,7 +17,7 @@ export function TableList({ userId, onJoin, onSpectate, refresh }: {
   const [tables, setTables] = useState<Table[]>([])
 
   const fetchTables = async () => {
-    const res = await fetch('/api/tables')
+    const res = await fetch("/api/tables")
     const data = await res.json()
     setTables(data)
   }
@@ -28,19 +33,30 @@ export function TableList({ userId, onJoin, onSpectate, refresh }: {
     <div className="space-y-4">
       <h2 className="text-xl font-bold">Active Tables</h2>
       <div className="grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-        {tables.map(table => (
-          <div key={table.id} className="relative rounded-xl shadow-md overflow-hidden bg-green-700 border-4 border-green-900">
+        {tables.map((table) => (
+          <div
+            key={table.id}
+            className="relative rounded-xl shadow-md overflow-hidden bg-green-700 border-4 border-green-900"
+          >
             {/* Aspect Ratio Container */}
-            <div className="relative" style={{ paddingTop: '50%' }}>
+            <div className="relative" style={{ paddingTop: "50%" }}>
               <div className="absolute inset-0 flex flex-col p-4">
                 {/* Felt surface */}
                 <div className="absolute inset-1 bg-green-500 rounded-lg shadow-inner"></div>
                 <div className="relative z-10 flex flex-col justify-between h-full">
                   <div>
-                    <p className="text-white font-semibold">Table #{table.id.split('-')[0]}</p>
-                    <p className="text-gray-200 text-sm">Created by: {table.creator.name}</p>
-                    <p className="text-gray-200 text-sm">Players: {table.players.length}/2</p>
-                    <p className="text-gray-200 text-sm">Spectators: {table.spectators.length}</p>
+                    <p className="text-white font-semibold">
+                      Table #{table.id.split("-")[0]}
+                    </p>
+                    <p className="text-gray-200 text-sm">
+                      Created by: {table.creator.name}
+                    </p>
+                    <p className="text-gray-200 text-sm">
+                      Players: {table.players.length}/2
+                    </p>
+                    <p className="text-gray-200 text-sm">
+                      Spectators: {table.spectators.length}
+                    </p>
                   </div>
                   <div className="flex space-x-2">
                     {table.players.length < 2 && (
