@@ -12,17 +12,19 @@ describe("ScoreTable", () => {
     await mockStore.flushall()
   })
 
-  it("should add a score", async () => {
+  it("should add a new high score and like it", async () => {
     const scoreTable = new ScoreTable(mockStore)
-    await scoreTable.add("nineball", 100, "testuser", { some: "data" })
-
-    const result = await mockStore.zrange("hiscorenineball", 0, -1)
-
-    expect(result).toHaveLength(1)
-    expect(result[0]).toEqual({
-      name: "testuser",
-      score: 100,
-      data: { some: "data" },
-    })
+    await scoreTable.add("nineball", 100, "user", { some: "data" })
+    mockStore.printMockRedisData()
+    const items = await scoreTable.topTen("nineball")
+    console.log(items)
+    expect(items).toHaveLength(1)
+    const item = items[0]
+    expect(item.name).toEqual("user")
+    expect(item.score).toEqual(100)
+    expect(item.likes).toEqual(0)
+    await scoreTable.like("nineball", item.id)
+    const likedItem = await scoreTable.getById("nineball", item.id)
+    expect(likedItem.likes).toEqual(1)
   })
 })

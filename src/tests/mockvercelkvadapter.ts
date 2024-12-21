@@ -87,6 +87,20 @@ export class MockVercelKVAdapter {
     return this.mockRedis.zremrangebyrank(key, start, stop)
   }
 
+  /**
+   * Adapter function to match @vercel/kv's zrem signature using ioredis-mock's zrem.
+   * @param key - The name of the sorted set.
+   * @param members - Members to remove from the sorted set.
+   * @returns A promise that resolves to the number of members removed.
+   */
+  async zrem(key: string, ...members: any[]): Promise<number> {
+    // Convert members to strings to match ioredis-mock format
+    const stringMembers = members.map((member) => JSON.stringify(member))
+
+    // Call ioredis-mock's zrem with the prepared arguments
+    return this.mockRedis.zrem(key, ...stringMembers)
+  }
+
   async printMockRedisData() {
     try {
       // Retrieve all keys

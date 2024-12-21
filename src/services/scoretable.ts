@@ -2,7 +2,8 @@ export interface ScoreData {
   name: string
   score: number
   data: string
-  likes?: number
+  likes: number
+  id: string
 }
 
 export class ScoreTable {
@@ -17,7 +18,13 @@ export class ScoreTable {
   }
 
   async add(ruletype: string, score: number, name: string, data: any) {
-    const scoreData: ScoreData = { name: name, score: score, data: data }
+    const scoreData: ScoreData = {
+      name: name,
+      score: score,
+      data: data,
+      likes: 0,
+      id: this.generateUID(),
+    }
     await this.store.zadd(this.dbKey(ruletype), {
       score: score,
       member: scoreData,
@@ -38,14 +45,21 @@ export class ScoreTable {
     return data.map((row: ScoreData) => ({
       name: row.name,
       likes: row.likes ?? 0,
+      id: row.id,
       score: Math.floor(row.score),
     }))
   }
 
-  async like(ruletype: string, index: number) {
-    const data = await this.store.zrange(this.dbKey(ruletype), index, index)
-    if (data.length === 0) return this.notFound
-    const item = data[0] as ScoreData
+  async getById(ruletype: string, id: string): Promise<ScoreData> {
+    const data = await this.store.zrange(this.dbKey(ruletype), 0, 9)
+    return data.find((item: ScoreData) => item.id === id)
+  }
+
+  async like(ruletype: string, id: string) {
+    console.log("like", ruletype, id)
+    const item = await this.getById(ruletype, id)
+    console.log("item", item)
+    await this.store.zrem(this.dbKey(ruletype), item)
     item.likes = (item.likes ?? 0) + 1
     await this.store.zadd(this.dbKey(ruletype), {
       score: item.score,
@@ -54,10 +68,16 @@ export class ScoreTable {
     return item.likes
   }
 
-  async get(ruletype: string, index: number) {
-    const data = await this.store.zrange(this.dbKey(ruletype), index, index)
-    if (data.length === 0) return this.notFound
-    const item = data[0] as ScoreData
+  async get(ruletype: string, id: string) {
+    const item = await this.getById(ruletype, id)
     return this.formatReplayUrl(item.data)
+  }
+
+  generateUID() {
+    const a = (Math.random() * 46656) | 0
+    const b = (Math.random() * 46656) | 0
+    return (
+      ("000" + a.toString(36)).slice(-3) + ("000" + b.toString(36)).slice(-3)
+    )
   }
 }

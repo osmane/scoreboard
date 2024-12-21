@@ -115,8 +115,8 @@
       async function updateLikes(likeButton) {
         try {
           const ruletype = likeButton.dataset.ruletype
-          const index = likeButton.dataset.index
-          const url = `/api/rank/${index}?ruletype=${ruletype}`
+          const id = likeButton.dataset.id
+          const url = `/api/rank/${id}?ruletype=${ruletype}`
           const response = await fetch(url, { method: "PUT" })
           const currentLikes = parseInt(likeButton.textContent || "0")
           likeButton.textContent = currentLikes + 1
@@ -125,12 +125,12 @@
         }
       }
 
-      function createLikeButton(ruletype, index, likes) {
+      function createLikeButton(ruletype, id, likes) {
         const button = document.createElement("button")
         button.classList.add("like-button")
         button.textContent = likes
         button.dataset.ruletype = ruletype // Store ruletype for updateLikes
-        button.dataset.index = index // Store index for updateLikes
+        button.dataset.id = id
         button.addEventListener("click", () => updateLikes(button)) // Pass the button
         return button
       }
@@ -151,7 +151,7 @@
       async function renderLeaderboard(ruletype) {
         try {
           const params = new URLSearchParams({ ruletype })
-          const url = `/api/topten?${params.toString()}`
+          const url = `/api/rank?${params.toString()}`
           const data = await getData(url)
           const scoreboard = document.getElementById(ruletype)
           scoreboard.innerHTML = ""
@@ -177,12 +177,12 @@
 
             // Replay link cell
             const replayCell = row.insertCell()
-            replayCell.innerHTML = `<a href="/api/rank/${index}?${params.toString()}">📺</a>`
+            replayCell.innerHTML = `<a href="/api/rank/${item.id}?${params.toString()}">📺</a>`
 
             // Like button cell
             const likeCell = row.insertCell()
             likeCell.appendChild(
-              createLikeButton(ruletype, index, item.likes || 0)
+              createLikeButton(ruletype, item.id, item.likes || 0)
             )
           })
         } catch (error) {
