@@ -13,14 +13,16 @@ export function ServerStatus({ statusPage }: ServerStatusProps) {
       try {
         const fetchOptions: RequestInit = {
           method: "GET",
-          cache: "no-store"
+          cache: "no-store",
         }
         const response = await fetch(statusPage, fetchOptions)
         if (response?.type === "opaque" || response?.ok) {
           setServerStatus("Server OK")
           setIsOnline(true)
         } else {
-          setServerStatus(`Server Issue: ${response.status} ${response.statusText}`)
+          setServerStatus(
+            `Server Issue: ${response.status} ${response.statusText}`
+          )
           setIsOnline(false)
         }
       } catch (error: any) {
@@ -35,16 +37,16 @@ export function ServerStatus({ statusPage }: ServerStatusProps) {
   }, [statusPage])
 
   return (
-    <div 
+    <div
       className={`flex items-center gap-1 text-sm px-2 py-1 rounded-md ${
-        serverStatus === null 
-          ? 'bg-gray-200' 
-          : isOnline 
-            ? 'bg-green-200' 
-            : 'bg-red-200'
+        serverStatus === null
+          ? "bg-gray-200"
+          : isOnline
+            ? "bg-green-200"
+            : "bg-red-200"
       }`}
     >
-      <span className={`${isOnline ? 'text-green-500' : 'text-gray-400'}`}>
+      <span className={`${isOnline ? "text-green-500" : "text-gray-400"}`}>
         💻
       </span>
       {!isOnline && <span className="text-gray-500">{serverStatus}</span>}

@@ -40,6 +40,7 @@
     async function hiscore(ruletype) {
       const params = new URLSearchParams()
       const url = new URL("/api/topten", window.location.origin)
+
       params.append("ruletype", ruletype)
       url.search = params.toString()
       const data = await getData(url)
@@ -47,12 +48,15 @@
       let scoreboard = document.getElementById(ruletype)
 
       let ul = `<ol>${data
-        .map(
-          (data) =>
-            `<li><b>${data.name}</b> scored ${data.score} <a href="${data.data}">replay</a></li>`
-        )
+        .map((data, i) => {
+          console.log(data)
+          console.log(i)
+          const link = new URL(`/api/rank/${i}`, window.location.origin)
+          link.search = params.toString()
+          return `<li><b>${data.name}</b> scored ${data.score} <a href="${link.toString()}">replay</a></li>`
+        })
         .join("")}
-                  </ol>`
+      </ol>`
 
       scoreboard.innerHTML = ul
     }
