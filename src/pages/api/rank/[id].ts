@@ -12,12 +12,22 @@ export default async function handler(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams
   const ruletype = searchParams.get("ruletype")
   const id = Number(searchParams.get("id"))
-  const url = await scoretable.get(ruletype, id)
-  console.log(`redirecting ${ruletype} rank ${id} to ${url}`)
-  return new Response(null, {
-    status: 302,
-    headers: {
-      Location: url,
-    },
-  })
+
+  if (request.method === "GET") {
+    const url = await scoretable.get(ruletype, id)
+    console.log(`redirecting ${ruletype} rank ${id} to ${url}`)
+    return new Response(null, {
+      status: 302,
+      headers: {
+        Location: url,
+      },
+    })
+  }
+
+  if (request.method === "PUT") {
+    await scoretable.like(ruletype, id)
+    console.log(`liked ${ruletype} rank ${id}`)
+  }
+
+  return new Response(null, { status: 200 })
 }

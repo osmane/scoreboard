@@ -2,6 +2,7 @@ export interface ScoreData {
   name: string
   score: number
   data: string
+  likes?: number
 }
 
 export class ScoreTable {
@@ -36,8 +37,21 @@ export class ScoreTable {
     const data = (await this.store.zrange(this.dbKey(ruletype), 0, 9)).reverse()
     return data.map((row: ScoreData) => ({
       name: row.name,
+      likes: row.likes ?? 0,
       score: Math.floor(row.score),
     }))
+  }
+
+  async like(ruletype: string, index: number) {
+    const data = await this.store.zrange(this.dbKey(ruletype), index, index)
+    if (data.length === 0) return this.notFound
+    const item = data[0] as ScoreData
+    item.likes = (item.likes ?? 0) + 1
+    await this.store.zadd(this.dbKey(ruletype), {
+      score: item.score,
+      member: item,
+    })
+    return item.likes
   }
 
   async get(ruletype: string, index: number) {
