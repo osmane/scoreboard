@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react"
 import { useSearchParams } from "next/navigation"
-import { v4 as uuidv4 } from "uuid"
 import { TableList } from "@/components/tablelist"
 import { CreateTable } from "@/components/createtable"
 import { ServerStatus } from "@/components/ServerStatus"
+import { UserPill } from "@/components/UserPill"
 
 export default function Lobby() {
   const [userId, setUserId] = useState("")
@@ -13,7 +13,7 @@ export default function Lobby() {
   const statusPage = "https://billiards.onrender.com"
 
   useEffect(() => {
-    const storedUserId = localStorage.getItem("userId") || uuidv4()
+    const storedUserId = crypto.randomUUID().slice(0, 8)
     const urlUserName = searchParams.get("username")
     const storedUserName =
       urlUserName || localStorage.getItem("userName") || "Anonymous"
@@ -48,13 +48,16 @@ export default function Lobby() {
 
   return (
     <main className="container p-2 mx-auto">
-      <div className="flex items-stretch gap-1 mb-1 h-8">
-        <ServerStatus statusPage={statusPage} />
-        <CreateTable
-          userId={userId}
-          userName={userName}
-          onCreate={handleCreate}
-        />
+      <div className="flex items-stretch justify-between gap-1 mb-1 h-8">
+        <div className="flex items-stretch gap-1">
+          <ServerStatus statusPage={statusPage} />
+          <CreateTable
+            userId={userId}
+            userName={userName}
+            onCreate={handleCreate}
+          />
+        </div>
+        <UserPill userName={userName} userId={userId} />
       </div>
       <TableList
         userId={userId}

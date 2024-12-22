@@ -4,15 +4,21 @@ export function TableItem({
   table,
   onJoin,
   onSpectate,
+  userId,
 }: {
   table: Table
   onJoin: (tableId: string) => void
   onSpectate: (tableId: string) => void
+  userId: string
 }) {
+  const isCreator = table.creator.id === userId
+
   return (
     <div
       key={table.id}
-      className="relative rounded-xl shadow-lg shadow-black overflow-hidden bg-green-700 border-4 border-green-900"
+      className={`relative rounded-xl shadow-lg shadow-black overflow-hidden bg-green-700 border-4 ${
+        isCreator ? "border-yellow-400" : "border-green-900"
+      }`}
       style={{ maxWidth: "250px", fontSize: "0.6rem" }}
     >
       {/* Aspect Ratio Container */}
@@ -36,22 +42,26 @@ export function TableItem({
               </p>
             </div>
             <div className="flex space-x-2">
-              {table.players.length < 2 && (
-                <button
-                  onClick={() => onJoin(table.id)}
-                  className="flex-1 px-3 py-2 text-white bg-green-600 rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
-                  aria-label="Join Table"
-                >
-                  👤➕ {/* Unicode Plus for "Join" */}
-                </button>
+              {!isCreator && (
+                <>
+                  {table.players.length < 2 && (
+                    <button
+                      onClick={() => onJoin(table.id)}
+                      className="flex-1 px-3 py-2 text-white bg-green-600 rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+                      aria-label="Join Table"
+                    >
+                      👤➕
+                    </button>
+                  )}
+                  <button
+                    onClick={() => onSpectate(table.id)}
+                    className="flex-1 px-3 py-2 text-white bg-green-600 rounded hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-opacity-50"
+                    aria-label="Spectate Table"
+                  >
+                    👁️
+                  </button>
+                </>
               )}
-              <button
-                onClick={() => onSpectate(table.id)}
-                className="flex-1 px-3 py-2 text-white bg-green-600 rounded hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-opacity-50"
-                aria-label="Spectate Table"
-              >
-                👁️ {/* Unicode Eye for "Spectate" */}
-              </button>
             </div>
           </div>
           {/* Corner Pockets */}

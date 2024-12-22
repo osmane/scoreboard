@@ -37,6 +37,7 @@ export function TableList({
             table={table}
             onJoin={onJoin}
             onSpectate={onSpectate}
+            userId={userId}
           />
         ))}
       </div>
