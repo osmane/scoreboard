@@ -1,0 +1,87 @@
+body {
+    font-family: 'Roboto', sans-serif; /* Set Roboto as the default font */
+    font-weight: 300; /* Light font weight */
+    margin: 0;
+    padding: 20px;
+    background-color: #f8f8f8; /* Soft background */
+    color: #333; /* Neutral text color */
+  }
+  
+  h1, h2 {
+    font-weight: 320; /* Slightly bolder for headings */
+    text-align: center;
+    margin-bottom: 15px;
+  }
+  
+  .leaderboards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+  }
+  
+  .leaderboard {
+    background-color: #fff;
+    padding: 10px; /* Slightly more padding for aesthetic spacing */
+    border-radius: 4px; /* Slightly rounder corners */
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.08); /* Subtle shadow for a crisp, elevated card look */
+    font-weight: 325; /* Readable body font weight */
+  }
+  
+  .leaderboard h2 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    text-align: center;
+    font-weight: 320; /* Medium weight for subheadings */
+    font-size: 1.25rem;
+    color: #444; /* Subtle gray for a soft look */
+  }
+  
+  .leaderboard table {
+    width: 100%;
+    border-collapse: collapse; /* Clean table design */
+  }
+  
+  .leaderboard th,
+  .leaderboard td {
+    padding: 4px; /* More padding for breathing space */
+    text-align: left;
+    border-bottom: 1px solid #eee; /* Minimal borders */
+  }
+  
+  .leaderboard th {
+    font-weight: 300; /* Light font weight for a minimal design */
+    color: #555; /* Subtle gray */
+    font-size: 0.875rem;
+  }
+  
+  .like-button {
+    display: inline-flex;
+    align-items: center;
+    background-color: #fdfdfd;
+    color: #0969da;
+    border: 0.5px solid #c6e1ff;
+    border-radius: 20px;
+    padding: 4px 10px;
+    font-size: 12px;
+    font-weight: 300; /* Keep it consistent */
+    cursor: pointer;
+    transition: background-color 0.2s ease, box-shadow 0.2s ease;
+    margin-left: 10px;
+  }
+  
+  .like-button:hover {
+    background-color: #deebf7;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle hover effect */
+  }
+  
+  .like-button::before {
+    content: "👍";
+    font-family: "Segoe UI Emoji", sans-serif;
+    margin-right: 5px;
+  }
+  
+  .trophy {
+    text-align: center;
+    font-size: 1.5rem; /* Larger size for emphasis */
+    color: gold; /* Add vibrancy to trophy */
+  }

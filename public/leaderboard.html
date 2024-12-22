@@ -6,83 +6,8 @@
     <meta charset="utf-8" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="description" content="billiards scoreboard" />
-    <style>
-      body {
-        font-family: sans-serif;
-        margin: 0;
-        padding: 20px;
-        background-color: #f8f8f8;
-      }
-
-      h1,
-      h2 {
-        text-align: center;
-        color: #333;
-      }
-
-      .leaderboards {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 20px;
-      }
-
-      .leaderboard {
-        background-color: #fff;
-        padding: 15px;
-        border-radius: 8px;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-      }
-
-      .leaderboard h2 {
-        margin-top: 0;
-        margin-bottom: 10px;
-        text-align: center;
-      }
-
-      .leaderboard table {
-        width: 100%;
-        border-collapse: collapse;
-      }
-
-      .leaderboard th,
-      .leaderboard td {
-        padding: 4px;
-        text-align: left;
-        border-bottom: 1px solid #eee;
-      }
-
-      .leaderboard th {
-        font-weight: lighter;
-      }
-
-      .like-button {
-        display: inline-flex;
-        align-items: center;
-        background-color: #f1f8ff;
-        color: #0969da;
-        border: 0.5px solid #c6e1ff;
-        border-radius: 20px;
-        padding: 4px 10px;
-        font-size: 12px;
-        cursor: pointer;
-        transition: background-color 0.2s;
-        margin-left: 10px;
-      }
-
-      .like-button:hover {
-        background-color: #deebf7;
-      }
-
-      .like-button::before {
-        content: "👍";
-        font-family: "Segoe UI Emoji", sans-serif;
-        margin-right: 5px;
-      }
-
-      .trophy {
-        text-align: center;
-      }
-    </style>
+    <link rel="stylesheet" type="text/css" href="leaderboard.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
   </head>
 
   <body>
@@ -93,7 +18,7 @@
         <table id="snooker"></table>
       </div>
       <div class="leaderboard">
-        <h2>9-ball</h2>
+        <h2>9-Ball</h2>
         <table id="nineball"></table>
       </div>
       <div class="leaderboard">
@@ -177,7 +102,7 @@
 
             // Replay link cell
             const replayCell = row.insertCell()
-            replayCell.innerHTML = `<a href="/api/rank/${item.id}?${params.toString()}">📺</a>`
+            replayCell.innerHTML = `<a href="/api/rank/${item.id}?${params.toString()}">replay</a>`
 
             // Like button cell
             const likeCell = row.insertCell()
