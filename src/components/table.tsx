@@ -1,4 +1,3 @@
-import { FiUserPlus, FiEye } from "react-icons/fi"
 import { Table } from "@/interfaces"
 
 export function TableItem({
@@ -13,13 +12,13 @@ export function TableItem({
   return (
     <div
       key={table.id}
-      className="relative rounded-xl shadow-md overflow-hidden bg-green-700 border-4 border-green-900"
+      className="relative rounded-xl shadow-lg shadow-black overflow-hidden bg-green-700 border-4 border-green-900"
     >
       {/* Aspect Ratio Container */}
       <div className="relative" style={{ paddingTop: "50%" }}>
-        <div className="absolute inset-0 flex flex-col p-4">
+        <div className="absolute inset-0 flex flex-col p-6">
           {/* Felt surface */}
-          <div className="absolute inset-1 bg-green-500 rounded-lg shadow-inner"></div>
+          <div className="absolute inset-2 bg-green-500 rounded-lg shadow-inner"></div>
           <div className="relative z-10 flex flex-col justify-between h-full">
             <div>
               <p className="text-white font-semibold">
@@ -39,26 +38,29 @@ export function TableItem({
               {table.players.length < 2 && (
                 <button
                   onClick={() => onJoin(table.id)}
-                  className="flex-1 px-3 py-2 text-white bg-blue-600 rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+                  className="flex-1 px-3 py-2 text-white bg-green-600 rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
                   aria-label="Join Table"
                 >
-                  <FiUserPlus className="mx-auto h-5 w-5" />
+                  👤➕ {/* Unicode Plus for "Join" */}
                 </button>
               )}
               <button
                 onClick={() => onSpectate(table.id)}
-                className="flex-1 px-3 py-2 text-white bg-yellow-600 rounded hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-opacity-50"
+                className="flex-1 px-3 py-2 text-white bg-green-600 rounded hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-opacity-50"
                 aria-label="Spectate Table"
               >
-                <FiEye className="mx-auto h-5 w-5" />
+                👁️ {/* Unicode Eye for "Spectate" */}
               </button>
             </div>
           </div>
-          {/* Corner pockets (optional visual enhancement) */}
-          <div className="absolute top-0 left-0 w-4 h-4 bg-black rounded-full -mt-2 -ml-2 shadow-inner"></div>
-          <div className="absolute top-0 right-0 w-4 h-4 bg-black rounded-full -mt-2 -mr-2 shadow-inner"></div>
-          <div className="absolute bottom-0 left-0 w-4 h-4 bg-black rounded-full -mb-2 -ml-2 shadow-inner"></div>
-          <div className="absolute bottom-0 right-0 w-4 h-4 bg-black rounded-full -mb-2 -mr-2 shadow-inner"></div>
+          {/* Corner Pockets */}
+          <div className="absolute top-0 left-0 w-7 h-7 bg-black rounded-full -mt-3 -ml-3 shadow-inner"></div>
+          <div className="absolute top-0 right-0 w-7 h-7 bg-black rounded-full -mt-3 -mr-3 shadow-inner"></div>
+          <div className="absolute bottom-0 left-0 w-7 h-7 bg-black rounded-full -mb-3 -ml-3 shadow-inner"></div>
+          <div className="absolute bottom-0 right-0 w-7 h-7 bg-black rounded-full -mb-3 -mr-3 shadow-inner"></div>
+          {/* Middle Pockets */}
+          <div className="absolute left-1/2 top-0 transform -translate-x-1/2 w-6 h-6 bg-black rounded-full -mt-2.5 shadow-inner"></div>
+          <div className="absolute left-1/2 bottom-0 transform -translate-x-1/2 w-6 h-6 bg-black rounded-full -mb-2.5 shadow-inner"></div>{" "}
         </div>
       </div>
     </div>

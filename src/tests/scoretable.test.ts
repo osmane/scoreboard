@@ -3,7 +3,6 @@ import { ScoreTable } from "../services/scoretable"
 import { VercelKV } from "@vercel/kv"
 
 describe("ScoreTable", () => {
-
   afterEach(async () => {
     await mockKv.flushall()
   })

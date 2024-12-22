@@ -8,9 +8,11 @@ const TABLE_TIMEOUT = 60 * 1000 // 1 minute
 class TableService {
   async getTables() {
     const tables = await kv.hgetall<Record<string, Table>>(TABLES_KEY)
-    return Object.values(tables || {}).filter((table) => {
-      return table.isActive && Date.now() - table.lastUsedAt <= TABLE_TIMEOUT
-    })
+    return Object.values(tables || {})
+      .filter((table) => {
+        return table.isActive && Date.now() - table.lastUsedAt <= TABLE_TIMEOUT
+      })
+      .sort((a, b) => b.createdAt - a.createdAt)
   }
 
   async createTable(userId: string, userName: string) {

@@ -1,4 +1,4 @@
-import { VercelKV } from "@vercel/kv";
+import { VercelKV } from "@vercel/kv"
 
 export interface ScoreData {
   name: string
@@ -54,13 +54,15 @@ export class ScoreTable {
 
   async getById(ruletype: string, id: string): Promise<ScoreData> {
     const data = await this.store.zrange(this.dbKey(ruletype), 0, 9)
-    return data.map((item: any) => ({
-      name: item.name,
-      score: item.score,
-      data: item.data,
-      likes: item.likes,
-      id: item.id,
-    })).find((item: ScoreData) => item.id === id)
+    return data
+      .map((item: any) => ({
+        name: item.name,
+        score: item.score,
+        data: item.data,
+        likes: item.likes,
+        id: item.id,
+      }))
+      .find((item: ScoreData) => item.id === id)
   }
 
   async like(ruletype: string, id: string) {
