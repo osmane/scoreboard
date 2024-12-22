@@ -1,4 +1,5 @@
 import RedisMock from "ioredis-mock"
+import { VercelKV } from "@vercel/kv";
 
 // Create an adapter class for Vercel KV
 export class MockVercelKVAdapter {
@@ -14,18 +15,24 @@ export class MockVercelKVAdapter {
    * @param scoreMembers - An array of objects containing score and member.
    * @returns A promise that resolves to the number of elements added to the sorted set.
    */
-  async zadd(
-    key: string,
-    ...scoreMembers: { score: number; member: any }[]
+  async zadd<TData>(
+    ...args: [key: string, scoreMember: { score: number; member: TData }, ...scoreMemberPairs: { score: number; member: TData }[]] | [key: string, opts: any, scoreMember: { score: number; member: TData }, ...scoreMemberPairs: { score: number; member: TData }[]]
   ): Promise<number> {
-    // Prepare arguments for ioredis-mock's zadd
-    const args: (string | number)[] = []
-    for (const { score, member } of scoreMembers) {
-      args.push(score, JSON.stringify(member))
+    const [key, ...rest] = args;
+    let scoreMembers: { score: number; member: TData }[];
+
+    if (typeof rest[0] === 'object' && 'score' in rest[0]) {
+      scoreMembers = rest as { score: number; member: TData }[];
+    } else {
+      scoreMembers = rest.slice(1) as { score: number; member: TData }[];
     }
 
-    // Call ioredis-mock's zadd with the prepared arguments
-    return this.mockRedis.zadd(key, ...args)
+    const redisArgs: (string | number)[] = [];
+    for (const { score, member } of scoreMembers) {
+      redisArgs.push(score, JSON.stringify(member));
+    }
+
+    return this.mockRedis.zadd(key, ...redisArgs);
   }
 
   /**
@@ -41,7 +48,7 @@ export class MockVercelKVAdapter {
     start: number,
     stop: number,
     options?: { withScores?: boolean }
-  ): Promise<string[] | [string, number][]> {
+  ): Promise<any> {
     // Determine if scores should be included
     const withScores = options?.withScores ?? false
 
@@ -101,7 +108,7 @@ export class MockVercelKVAdapter {
     return this.mockRedis.zrem(key, ...stringMembers)
   }
 
-  async printMockRedisData() {
+   async printMockRedisData() {
     try {
       // Retrieve all keys
       const keys = await this.mockRedis.keys("*")
@@ -139,7 +146,9 @@ export class MockVercelKVAdapter {
     }
   }
 
-  async flushall(): Promise<string> {
-    return this.mockRedis.flushall()
+  async flushall(): Promise<"OK"> {
+    return this.mockRedis.flushall() as Promise<"OK">
   }
 }
+
+export const mockKv: Partial<VercelKV> = new MockVercelKVAdapter() 

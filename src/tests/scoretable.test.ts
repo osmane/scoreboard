@@ -1,21 +1,16 @@
-import { MockVercelKVAdapter } from "./mockvercelkvadapter"
+import { mockKv } from "./mockvercelkvadapter"
 import { ScoreTable } from "../services/scoretable"
+import { VercelKV } from "@vercel/kv"
 
 describe("ScoreTable", () => {
-  let mockStore: MockVercelKVAdapter
-
-  beforeEach(() => {
-    mockStore = new MockVercelKVAdapter()
-  })
 
   afterEach(async () => {
-    await mockStore.flushall()
+    await mockKv.flushall()
   })
 
   it("should add a new high score and like it", async () => {
-    const scoreTable = new ScoreTable(mockStore)
+    const scoreTable = new ScoreTable(mockKv as VercelKV)
     await scoreTable.add("nineball", 100, "user", { some: "data" })
-    mockStore.printMockRedisData()
     const items = await scoreTable.topTen("nineball")
     console.log(items)
     expect(items).toHaveLength(1)

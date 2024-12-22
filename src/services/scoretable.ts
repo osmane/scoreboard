@@ -1,3 +1,5 @@
+import { VercelKV } from "@vercel/kv";
+
 export interface ScoreData {
   name: string
   score: number
@@ -11,7 +13,7 @@ export class ScoreTable {
   readonly replayUrl = "https://tailuge.github.io/billiards/dist/"
   readonly notFound = "https://scoreboard-tailuge.vercel.app/notfound.html"
 
-  constructor(private readonly store: any) {}
+  constructor(private readonly store: VercelKV) {}
 
   dbKey(ruletype) {
     return `${this.prefix}${ruletype}`
@@ -52,7 +54,13 @@ export class ScoreTable {
 
   async getById(ruletype: string, id: string): Promise<ScoreData> {
     const data = await this.store.zrange(this.dbKey(ruletype), 0, 9)
-    return data.find((item: ScoreData) => item.id === id)
+    return data.map((item: any) => ({
+      name: item.name,
+      score: item.score,
+      data: item.data,
+      likes: item.likes,
+      id: item.id,
+    })).find((item: ScoreData) => item.id === id)
   }
 
   async like(ruletype: string, id: string) {
