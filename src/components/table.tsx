@@ -13,24 +13,25 @@ export function TableItem({
     <div
       key={table.id}
       className="relative rounded-xl shadow-lg shadow-black overflow-hidden bg-green-700 border-4 border-green-900"
+      style={{ maxWidth: "250px", fontSize: "0.6rem" }}
     >
       {/* Aspect Ratio Container */}
       <div className="relative" style={{ paddingTop: "50%" }}>
-        <div className="absolute inset-0 flex flex-col p-6">
+        <div className="absolute inset-0 flex flex-col p-3">
           {/* Felt surface */}
           <div className="absolute inset-2 bg-green-500 rounded-lg shadow-inner"></div>
           <div className="relative z-10 flex flex-col justify-between h-full">
             <div>
-              <p className="text-white font-semibold">
+              <p className="text-white leading-tight">
                 Table #{table.id.split("-")[0]}
               </p>
-              <p className="text-gray-200 text-sm">
+              <p className="text-gray-200 text-sm leading-tight">
                 Created by: {table.creator.name}
               </p>
-              <p className="text-gray-200 text-sm">
+              <p className="text-gray-200 text-sm leading-tight">
                 Players: {table.players.length}/2
               </p>
-              <p className="text-gray-200 text-sm">
+              <p className="text-gray-200 text-sm leading-tight">
                 Spectators: {table.spectators.length}
               </p>
             </div>

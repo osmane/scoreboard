@@ -47,8 +47,8 @@ export default function Lobby() {
   }
 
   return (
-    <main className="container p-8 mx-auto">
-      <div className="flex items-stretch gap-4 mb-4 h-8">
+    <main className="container p-2 mx-auto">
+      <div className="flex items-stretch gap-1 mb-1 h-8">
         <ServerStatus statusPage={statusPage} />
         <CreateTable
           userId={userId}

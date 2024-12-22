@@ -45,7 +45,7 @@
           const ruletype = likeButton.dataset.ruletype
           const id = likeButton.dataset.id
           const url = `/api/rank/${id}?ruletype=${ruletype}`
-          const response = await fetch(url, { method: "PUT" })
+          await fetch(url, { method: "PUT" })
           const currentLikes = parseInt(likeButton.textContent || "0")
           likeButton.textContent = currentLikes + 1
         } catch (error) {
