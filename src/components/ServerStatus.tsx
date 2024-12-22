@@ -38,7 +38,7 @@ export function ServerStatus({ statusPage }: ServerStatusProps) {
 
   return (
     <div
-      className={`flex items-center gap-1 text-sm px-2 py-1 rounded-md ${
+      className={`inline-flex items-center gap-1 text-xs px-2 py-1.5 rounded ${
         serverStatus === null
           ? "bg-gray-200"
           : isOnline

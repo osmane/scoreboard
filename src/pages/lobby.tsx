@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import { useSearchParams } from "next/navigation"
 import { v4 as uuidv4 } from "uuid"
 import { TableList } from "@/components/tablelist"
 import { CreateTable } from "@/components/createtable"
@@ -8,16 +9,20 @@ export default function Lobby() {
   const [userId, setUserId] = useState("")
   const [userName, setUserName] = useState("")
   const [refresh, setRefresh] = useState(false)
+  const searchParams = useSearchParams()
   const statusPage = "https://billiards.onrender.com"
 
   useEffect(() => {
     const storedUserId = localStorage.getItem("userId") || uuidv4()
-    const storedUserName = localStorage.getItem("userName") || "Anonymous"
+    const urlUserName = searchParams.get("username")
+    const storedUserName =
+      urlUserName || localStorage.getItem("userName") || "Anonymous"
+
     setUserId(storedUserId)
     setUserName(storedUserName)
     localStorage.setItem("userId", storedUserId)
     localStorage.setItem("userName", storedUserName)
-  }, [])
+  }, [searchParams])
 
   const handleJoin = async (tableId: string) => {
     await fetch(`/api/tables/${tableId}/join`, {
@@ -43,11 +48,8 @@ export default function Lobby() {
 
   return (
     <main className="container p-8 mx-auto">
-      <h1 className="mb-8 text-3xl font-bold">Game Lobby</h1>
-      <div className="mb-4">
+      <div className="flex items-stretch gap-4 mb-4 h-8">
         <ServerStatus statusPage={statusPage} />
-      </div>
-      <div className="mb-8">
         <CreateTable
           userId={userId}
           userName={userName}

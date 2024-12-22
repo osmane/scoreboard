@@ -30,7 +30,7 @@ export function CreateTable({
     <button
       onClick={handleCreate}
       disabled={isLoading}
-      className="px-6 py-3 text-white bg-indigo-500 rounded-lg hover:bg-indigo-600 disabled:opacity-50"
+      className="px-6 py-1 text-white bg-indigo-500 rounded-lg hover:bg-indigo-600 disabled:opacity-50"
     >
       {isLoading ? "Creating..." : "Create New Table"}
     </button>

@@ -24,14 +24,12 @@ export function TableList({
 
   useEffect(() => {
     fetchTables()
-    // Poll for updates every 10 seconds
-    const interval = setInterval(fetchTables, 10000)
+    const interval = setInterval(fetchTables, 25000)
     return () => clearInterval(interval)
   }, [refresh]) // Add refresh to dependencies
 
   return (
     <div className="space-y-4">
-      <h2 className="text-xl font-bold">Active Tables</h2>
       <div className="grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {tables.map((table) => (
           <TableItem
