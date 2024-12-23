@@ -47,6 +47,11 @@ export default function Lobby() {
     setRefresh((prev) => !prev)
   }
 
+  const handleUserNameChange = (newUserName: string) => {
+    setUserName(newUserName)
+    localStorage.setItem("userName", newUserName)
+  }
+
   return (
     <main className="container p-2 mx-auto">
       <div className="flex items-stretch justify-between gap-1 mb-1 h-8">
@@ -58,7 +63,11 @@ export default function Lobby() {
             onCreate={handleCreate}
           />
         </div>
-        <User userName={userName} userId={userId} />
+        <User
+          userName={userName}
+          userId={userId}
+          onUserNameChange={handleUserNameChange}
+        />
       </div>
       <TableList
         userId={userId}
