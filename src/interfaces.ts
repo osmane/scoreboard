@@ -11,4 +11,5 @@ export interface Table {
   createdAt: number
   lastUsedAt: number
   isActive: boolean
+  ruleType: string
 }

@@ -14,7 +14,7 @@ class TableService {
       .sort((a, b) => b.createdAt - a.createdAt)
   }
 
-  async createTable(userId: string, userName: string) {
+  async createTable(userId: string, userName: string, ruleType: string) {
     const tableId = crypto.randomUUID().slice(0, 8)
     const creator: Player = { id: userId, name: userName || "Anonymous" }
 
@@ -26,6 +26,7 @@ class TableService {
       createdAt: Date.now(),
       lastUsedAt: Date.now(),
       isActive: true,
+      ruleType, // Add ruleType to newTable
     }
 
     await kv.hset(KEY, { [tableId]: newTable })

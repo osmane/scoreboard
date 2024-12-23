@@ -13,11 +13,24 @@ export function TableItem({
 }) {
   const isCreator = table.creator.id === userId
 
+  const getTableColor = (ruleType: string) => {
+    switch (ruleType) {
+      case "nineball":
+        return "bg-red-700 border-red-900"
+      case "snooker":
+        return "bg-green-700 border-green-900"
+      case "threecushion":
+        return "bg-blue-700 border-blue-900"
+      default:
+        return "bg-gray-700 border-gray-900"
+    }
+  }
+
   return (
     <div
       key={table.id}
-      className={`relative rounded-xl shadow-lg shadow-black overflow-hidden bg-green-700 border-4 ${
-        isCreator ? "border-yellow-400" : "border-green-900"
+      className={`relative rounded-xl shadow-lg shadow-black overflow-hidden ${getTableColor(table.ruleType)} border-4 ${
+        isCreator ? "border-yellow-400" : ""
       }`}
       style={{ maxWidth: "250px", fontSize: "0.6rem" }}
     >
@@ -29,7 +42,7 @@ export function TableItem({
           <div className="relative z-10 flex flex-col justify-between h-full">
             <div>
               <p className="text-white leading-tight">
-                Table #{table.id.split("-")[0]}
+                {table.ruleType}
               </p>
               <p className="text-gray-200 text-sm leading-tight">
                 Created by: {table.creator.name}

@@ -11,8 +11,8 @@ export default async function handler(
     const tables = await tableService.getTables()
     res.status(200).json(tables)
   } else if (req.method === "POST") {
-    const { userId, userName } = req.body
-    const newTable = await tableService.createTable(userId, userName)
+    const { userId, userName, ruleType } = req.body
+    const newTable = await tableService.createTable(userId, userName, ruleType)
     res.status(201).json(newTable)
   }
 }
