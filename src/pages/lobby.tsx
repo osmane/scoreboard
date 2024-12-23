@@ -25,12 +25,13 @@ export default function Lobby() {
   }, [searchParams])
 
   const handleJoin = async (tableId: string) => {
-    await fetch(`/api/tables/${tableId}/join`, {
+    const response = await fetch(`/api/tables/${tableId}/join`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ userId, userName }),
     })
     setRefresh((prev) => !prev)
+    return response.status === 200
   }
 
   const handleSpectate = async (tableId: string) => {

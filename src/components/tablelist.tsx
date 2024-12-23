@@ -1,7 +1,7 @@
-// src/components/TableList.tsx
 import { useEffect, useState } from "react"
 import { Table } from "@/interfaces"
-import { TableItem } from "./table" // Import the new TableItem component
+import { TableItem } from "./table" 
+import { PlayModal } from "./PlayModal"
 
 export function TableList({
   userId,
@@ -10,11 +10,12 @@ export function TableList({
   refresh,
 }: {
   userId: string
-  onJoin: (tableId: string) => void
+  onJoin: (tableId: string) => Promise<boolean>
   onSpectate: (tableId: string) => void
   refresh: boolean
 }) {
   const [tables, setTables] = useState<Table[]>([])
+  const [modalTableId, setModalTableId] = useState<string | null>(null)
 
   const fetchTables = async () => {
     const res = await fetch("/api/tables")
@@ -22,11 +23,26 @@ export function TableList({
     setTables(data)
   }
 
+  const handleJoin = async (tableId: string) => {
+    const success = await onJoin(tableId)
+    if (success) {
+      setModalTableId(tableId)
+    }
+  }
+
   useEffect(() => {
     fetchTables()
-    const interval = setInterval(fetchTables, 25000)
+    const interval = setInterval(fetchTables, 15000)
     return () => clearInterval(interval)
   }, [refresh]) // Add refresh to dependencies
+
+  useEffect(() => {
+    tables.forEach(table => {
+      if (table.creator.id === userId && table.players.length === 2) {
+        setModalTableId(table.id)
+      }
+    })
+  }, [tables, userId])
 
   return (
     <div className="space-y-4">
@@ -35,12 +51,17 @@ export function TableList({
           <TableItem
             key={table.id}
             table={table}
-            onJoin={onJoin}
+            onJoin={handleJoin}
             onSpectate={onSpectate}
             userId={userId}
           />
         ))}
       </div>
+      <PlayModal
+        isOpen={!!modalTableId}
+        onClose={() => setModalTableId(null)}
+        tableId={modalTableId || ''}
+      />
     </div>
   )
 }
