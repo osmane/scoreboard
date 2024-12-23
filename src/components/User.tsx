@@ -5,7 +5,7 @@ interface UserPillProps {
   userId: string
 }
 
-export function UserPill({ userName, userId }: UserPillProps) {
+export function User({ userName, userId }: UserPillProps) {
   return (
     <div
       className="hover:bg-gray-100 dark:hover:bg-gray-700 px-3 py-1 rounded 
@@ -18,4 +18,4 @@ export function UserPill({ userName, userId }: UserPillProps) {
   )
 }
 
-export default UserPill
+export default User

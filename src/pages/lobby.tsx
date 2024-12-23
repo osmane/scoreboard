@@ -3,7 +3,7 @@ import { useSearchParams } from "next/navigation"
 import { TableList } from "@/components/tablelist"
 import { CreateTable } from "@/components/createtable"
 import { ServerStatus } from "@/components/ServerStatus"
-import { UserPill } from "@/components/UserPill"
+import { User } from "@/components/User"
 
 export default function Lobby() {
   const [userId, setUserId] = useState("")
@@ -58,7 +58,7 @@ export default function Lobby() {
             onCreate={handleCreate}
           />
         </div>
-        <UserPill userName={userName} userId={userId} />
+        <User userName={userName} userId={userId} />
       </div>
       <TableList
         userId={userId}
