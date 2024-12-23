@@ -6,10 +6,14 @@ export function PlayModal({
   isOpen,
   onClose,
   tableId,
+  userName, // Add userName prop
+  userId, // Add userId prop
 }: {
   isOpen: boolean
   onClose: () => void
   tableId: string
+  userName: string // Add userName prop
+  userId: string // Add userId prop
 }) {
   useEffect(() => {
     if (isOpen) {
@@ -27,11 +31,8 @@ export function PlayModal({
   const target = new URL("https://tailuge.github.io/billiards/dist/")
   target.searchParams.append("websocketserver", WEBSOCKET_SERVER)
   target.searchParams.append("tableId", tableId)
-  target.searchParams.append("name", "Player") // This could be made dynamic
-  target.searchParams.append(
-    "clientId",
-    `p${Math.random().toString(16).slice(2, 8)}`
-  )
+  target.searchParams.append("name", userName) // Use userName
+  target.searchParams.append("clientId", userId) // Use userId
   target.searchParams.append("ruletype", "threecushion")
 
   return (

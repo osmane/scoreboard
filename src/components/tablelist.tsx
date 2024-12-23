@@ -5,11 +5,13 @@ import { PlayModal } from "./PlayModal"
 
 export function TableList({
   userId,
+  userName, // Add userName
   onJoin,
   onSpectate,
   refresh,
 }: {
   userId: string
+  userName: string // Add userName type
   onJoin: (tableId: string) => Promise<boolean>
   onSpectate: (tableId: string) => void
   refresh: boolean
@@ -61,6 +63,8 @@ export function TableList({
         isOpen={!!modalTableId}
         onClose={() => setModalTableId(null)}
         tableId={modalTableId || ""}
+        userName={userName} // Pass userName
+        userId={userId} // Pass userId
       />
     </div>
   )

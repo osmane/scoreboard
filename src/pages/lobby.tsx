@@ -71,6 +71,7 @@ export default function Lobby() {
       </div>
       <TableList
         userId={userId}
+        userName={userName} // Pass userName
         onJoin={handleJoin}
         onSpectate={handleSpectate}
         refresh={refresh}
