@@ -8,12 +8,14 @@ interface UserPillProps {
 export function UserPill({ userName, userId }: UserPillProps) {
   return (
     <div
-      className="hover:bg-gray-100 dark:hover:bg-gray-700 px-3 py-1 rounded-full 
+      className="hover:bg-gray-100 dark:hover:bg-gray-700 px-3 py-1 rounded 
                     bg-gray-50 dark:bg-gray-800 cursor-pointer transition-colors
                     text-sm font-medium text-gray-700 dark:text-gray-300"
-      title={`${userName} (${userId})`}
+      title={`${userName}\n${userId}`}
     >
       {userName}
     </div>
   )
 }
+
+export default UserPill
