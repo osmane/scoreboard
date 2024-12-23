@@ -31,7 +31,10 @@ export function CreateTable({
   // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
         setDropdownOpen(false)
       }
     }
@@ -49,7 +52,9 @@ export function CreateTable({
           onClick={handleCreate}
           disabled={isLoading}
           className={`px-4 py-1 text-white rounded-l-md flex items-center ${
-            isLoading ? "bg-gray-400 cursor-not-allowed" : "bg-indigo-500 hover:bg-indigo-600"
+            isLoading
+              ? "bg-gray-400 cursor-not-allowed"
+              : "bg-indigo-500 hover:bg-indigo-600"
           }`}
         >
           Create {ruleType.charAt(0).toUpperCase() + ruleType.slice(1)} Table

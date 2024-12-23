@@ -51,12 +51,12 @@ export function TableItem({
       <div className="relative" style={{ paddingTop: "50%" }}>
         <div className="absolute inset-0 flex flex-col p-3">
           {/* Felt surface */}
-          <div className={`absolute inset-2 ${getFeltColor(table.ruleType)} rounded-lg shadow-inner`}></div>
+          <div
+            className={`absolute inset-2 ${getFeltColor(table.ruleType)} rounded-lg shadow-inner`}
+          ></div>
           <div className="relative z-10 flex flex-col justify-between h-full">
             <div>
-              <p className="text-white leading-tight">
-                {table.ruleType}
-              </p>
+              <p className="text-white leading-tight">{table.ruleType}</p>
               <p className="text-gray-200 text-sm leading-tight">
                 Created by: {table.creator.name}
               </p>
