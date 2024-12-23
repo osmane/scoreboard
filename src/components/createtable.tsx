@@ -10,7 +10,7 @@ export function CreateTable({
   onCreate: () => void
 }) {
   const [isLoading, setIsLoading] = useState(false)
-  const [gameType, setGameType] = useState("nineball")
+  const [ruleType, setRuleType] = useState("nineball")
   const [dropdownOpen, setDropdownOpen] = useState(false)
   const dropdownRef = useRef<HTMLDivElement>(null)
 
@@ -20,7 +20,7 @@ export function CreateTable({
       await fetch("/api/tables", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ userId, userName, gameType }),
+        body: JSON.stringify({ userId, userName, ruleType }),
       })
       onCreate()
     } finally {
@@ -52,7 +52,7 @@ export function CreateTable({
             isLoading ? "bg-gray-400 cursor-not-allowed" : "bg-indigo-500 hover:bg-indigo-600"
           }`}
         >
-          Create {gameType.charAt(0).toUpperCase() + gameType.slice(1)} Table
+          Create {ruleType.charAt(0).toUpperCase() + ruleType.slice(1)} Table
         </button>
         <button
           onClick={() => setDropdownOpen((prev) => !prev)}
@@ -71,10 +71,10 @@ export function CreateTable({
               <li
                 key={type}
                 className={`px-4 py-2 text-gray-700 cursor-pointer hover:bg-gray-100 ${
-                  gameType === type ? "font-semibold" : ""
+                  ruleType === type ? "font-semibold" : ""
                 }`}
                 onClick={() => {
-                  setGameType(type)
+                  setRuleType(type)
                   setDropdownOpen(false)
                 }}
               >
