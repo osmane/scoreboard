@@ -56,18 +56,20 @@ export default function Lobby() {
     <main className="container p-2 mx-auto">
       <div className="flex items-stretch justify-between gap-1 mb-1 h-8">
         <div className="flex items-stretch gap-1">
-          <ServerStatus statusPage={statusPage} />
           <CreateTable
             userId={userId}
             userName={userName}
             onCreate={handleCreate}
           />
         </div>
-        <User
-          userName={userName}
-          userId={userId}
-          onUserNameChange={handleUserNameChange}
-        />
+        <div className="flex items-stretch gap-1">
+          <User
+            userName={userName}
+            userId={userId}
+            onUserNameChange={handleUserNameChange}
+          />
+          <ServerStatus statusPage={statusPage} />
+        </div>
       </div>
       <TableList
         userId={userId}

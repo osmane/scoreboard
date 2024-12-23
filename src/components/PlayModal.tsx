@@ -38,16 +38,14 @@ export function PlayModal({
   return (
     <div className="top-[-10vh] fixed inset-0 z-50 flex items-center justify-center backdrop-blur-[1px] bg-black/50">
       <div className="bg-white rounded-lg p-8 max-w-sm w-full m-4 text-center">
-        <h2 className="text-2xl font-bold mb-4">Opponent Found!</h2>
-        <p className="mb-6">
-          Your match is ready. Would you like to start the game now?
-        </p>
-        <div className="flex gap-4 justify-center">
+        <h2 className="text-2xl font-bold mb-4">Opponent Ready</h2>
+        <p className="mb-6">Your table is ready to play</p>
+        <div className="flex gap-2 justify-center">
           <button
             onClick={() => window.open(target.toString(), "_blank")}
             className="bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition-colors"
           >
-            Join Game
+            Start Game
           </button>
           <button
             onClick={onClose}

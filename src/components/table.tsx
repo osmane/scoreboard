@@ -1,4 +1,5 @@
 import { Table } from "@/interfaces"
+import { UserPlusIcon, EyeIcon } from "@heroicons/react/24/solid"
 
 export function TableItem({
   table,
@@ -55,16 +56,10 @@ export function TableItem({
             className={`absolute inset-2 ${getFeltColor(table.ruleType)} rounded-lg shadow-inner`}
           ></div>
           <div className="relative z-10 flex flex-col justify-between h-full">
-            <div>
+            <div className="text-center">
               <p className="text-white leading-tight">{table.ruleType}</p>
               <p className="text-gray-200 text-sm leading-tight">
-                Created by: {table.creator.name}
-              </p>
-              <p className="text-gray-200 text-sm leading-tight">
-                Players: {table.players.length}/2
-              </p>
-              <p className="text-gray-200 text-sm leading-tight">
-                Spectators: {table.spectators.length}
+                {table.creator.name} vs. ...
               </p>
             </div>
             <div className="flex space-x-2">
@@ -76,15 +71,18 @@ export function TableItem({
                       className="flex-1 px-3 py-2 border border-white rounded-lg bg-transparent hover:bg-gray-800/20 hover:text-white focus:outline-none focus:ring-2 focus:ring-gray-800 focus:ring-opacity-50"
                       aria-label="Join Table"
                     >
-                      👤➕
+                      <UserPlusIcon className="h-5 w-5 text-white" />
                     </button>
                   )}
                   <button
                     onClick={() => onSpectate(table.id)}
-                    className="flex-1 px-3 py-2 border border-white rounded-lg bg-transparent hover:bg-gray-800/20 hover:text-white focus:outline-none focus:ring-2 focus:ring-gray-800 focus:ring-opacity-50"
+                    className="flex-1 flex items-center px-3 py-2 border border-white rounded-lg bg-transparent hover:bg-gray-800/20 hover:text-white focus:outline-none focus:ring-2 focus:ring-gray-800 focus:ring-opacity-50"
                     aria-label="Spectate Table"
                   >
-                    👁️
+                    <EyeIcon className="h-5 w-5 text-white" />
+                    <span className="text-white text-lg ml-2">
+                      {table.spectators.length}
+                    </span>
                   </button>
                 </>
               )}
