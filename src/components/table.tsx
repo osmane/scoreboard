@@ -26,6 +26,19 @@ export function TableItem({
     }
   }
 
+  const getFeltColor = (ruleType: string) => {
+    switch (ruleType) {
+      case "nineball":
+        return "bg-red-500"
+      case "snooker":
+        return "bg-green-500"
+      case "threecushion":
+        return "bg-blue-500"
+      default:
+        return "bg-gray-500"
+    }
+  }
+
   return (
     <div
       key={table.id}
@@ -38,7 +51,7 @@ export function TableItem({
       <div className="relative" style={{ paddingTop: "50%" }}>
         <div className="absolute inset-0 flex flex-col p-3">
           {/* Felt surface */}
-          <div className="absolute inset-2 bg-green-500 rounded-lg shadow-inner"></div>
+          <div className={`absolute inset-2 ${getFeltColor(table.ruleType)} rounded-lg shadow-inner`}></div>
           <div className="relative z-10 flex flex-col justify-between h-full">
             <div>
               <p className="text-white leading-tight">
@@ -60,7 +73,7 @@ export function TableItem({
                   {table.players.length < 2 && (
                     <button
                       onClick={() => onJoin(table.id)}
-                      className="flex-1 px-3 py-2 text-white bg-green-600 rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+                      className="flex-1 px-3 py-2 border border-white rounded-lg bg-transparent hover:bg-gray-800/20 hover:text-white focus:outline-none focus:ring-2 focus:ring-gray-800 focus:ring-opacity-50"
                       aria-label="Join Table"
                     >
                       👤➕
@@ -68,7 +81,7 @@ export function TableItem({
                   )}
                   <button
                     onClick={() => onSpectate(table.id)}
-                    className="flex-1 px-3 py-2 text-white bg-green-600 rounded hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-opacity-50"
+                    className="flex-1 px-3 py-2 border border-white rounded-lg bg-transparent hover:bg-gray-800/20 hover:text-white focus:outline-none focus:ring-2 focus:ring-gray-800 focus:ring-opacity-50"
                     aria-label="Spectate Table"
                   >
                     👁️
