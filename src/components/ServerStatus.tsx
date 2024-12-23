@@ -84,7 +84,7 @@ export function ServerStatus({ statusPage }: ServerStatusProps) {
         <>
           <span className="text-gray-500">{serverStatus}</span>
           <div className="w-24 h-1 bg-gray-200 rounded overflow-hidden">
-            <div 
+            <div
               className="h-full bg-gray-400 transition-all duration-300 ease-linear"
               style={{ width: `${progress}%` }}
             />

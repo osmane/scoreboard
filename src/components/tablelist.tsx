@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { Table } from "@/interfaces"
-import { TableItem } from "./table" 
+import { TableItem } from "./table"
 import { PlayModal } from "./PlayModal"
 
 export function TableList({
@@ -37,7 +37,7 @@ export function TableList({
   }, [refresh]) // Add refresh to dependencies
 
   useEffect(() => {
-    tables.forEach(table => {
+    tables.forEach((table) => {
       if (table.creator.id === userId && table.players.length === 2) {
         setModalTableId(table.id)
       }
@@ -60,7 +60,7 @@ export function TableList({
       <PlayModal
         isOpen={!!modalTableId}
         onClose={() => setModalTableId(null)}
-        tableId={modalTableId || ''}
+        tableId={modalTableId || ""}
       />
     </div>
   )
