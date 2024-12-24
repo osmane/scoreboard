@@ -21,27 +21,14 @@ function useBodyOverflow(isOpen: boolean) {
 
 function createOverlay(target: URL, onClose: () => void) {
   const overlay = document.createElement("div");
-  overlay.style.position = "fixed";
-  overlay.style.top = "0";
-  overlay.style.left = "0";
-  overlay.style.width = "100%";
-  overlay.style.height = "100%";
-  overlay.style.backgroundColor = "rgba(0, 0, 0, 0.5)";
-  overlay.style.display = "flex";
-  overlay.style.justifyContent = "center";
-  overlay.style.alignItems = "center";
-  overlay.style.zIndex = "1000";
+  overlay.className = "fixed inset-0 bg-black/50 flex items-center justify-center z-50";
 
   const iframeContainer = document.createElement("div");
-  iframeContainer.style.width = "80%";
-  iframeContainer.style.height = "80%";
-  iframeContainer.style.backgroundColor = "white";
+  iframeContainer.className = "relative bg-white rounded-lg w-4/5 h-4/5 shadow-lg";
 
   const iframe = document.createElement("iframe");
   iframe.src = target.toString();
-  iframe.style.width = "100%";
-  iframe.style.height = "100%";
-  iframe.style.border = "none";
+  iframe.className = "w-full h-full border-none";
 
   iframeContainer.appendChild(iframe);
   overlay.appendChild(iframeContainer);
@@ -49,9 +36,7 @@ function createOverlay(target: URL, onClose: () => void) {
 
   const closeButton = document.createElement("button");
   closeButton.textContent = "Close";
-  closeButton.style.position = "absolute";
-  closeButton.style.top = "10px";
-  closeButton.style.right = "10px";
+  closeButton.className = "absolute top-2 right-2 bg-gray-300 text-gray-800 px-4 py-2 rounded hover:bg-gray-400 transition-colors";
   closeButton.onclick = () => {
     document.body.removeChild(overlay);
     onClose();
