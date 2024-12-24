@@ -2,7 +2,8 @@ import { useEffect, useState } from "react"
 import { Table } from "@/interfaces"
 import { TableItem } from "./table"
 import { PlayModal } from "./PlayModal"
-import { NchanClient } from "@/utils/nchanclient"
+import { NchanSub } from "@/nchan/nchansub"
+import { NchanPub } from "@/nchan/nchanpub"
 
 export function TableList({
   userId,
@@ -35,16 +36,14 @@ export function TableList({
       const table = tables.find((t) => t.id === tableId)
       setModalTable(table ? { id: table.id, ruleType: table.ruleType } : null)
     }
+    await new NchanPub("lobby").post({ action: "join" })
   }
 
   useEffect(() => {
     fetchTables()
-    const client = new NchanClient(
-      "wss://billiards-network.onrender.com/subscribe/lobby",
-      (event) => {
-        fetchTables()
-      }
-    )
+    const client = new NchanSub("lobby", (_) => {
+      fetchTables()
+    })
     client.start()
     return () => client.stop()
   }, [refresh]) // Add refresh to dependencies

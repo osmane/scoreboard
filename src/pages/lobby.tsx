@@ -4,6 +4,7 @@ import { TableList } from "@/components/tablelist"
 import { CreateTable } from "@/components/createtable"
 import { ServerStatus } from "@/components/ServerStatus"
 import { User } from "@/components/User"
+import { NchanPub } from "@/nchan/nchanpub"
 
 export default function Lobby() {
   const [userId, setUserId] = useState("")
@@ -40,6 +41,7 @@ export default function Lobby() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ userId, userName }),
     })
+    await new NchanPub("lobby").post({ action: "spectate" })
     setRefresh((prev) => !prev)
   }
 

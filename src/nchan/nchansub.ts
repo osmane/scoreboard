@@ -1,12 +1,18 @@
-export class NchanClient {
+export class NchanSub {
   private socket: WebSocket | null = null
-  private readonly url: string
+  private readonly subscribeUrl: string
   private readonly notify: (event: MessageEvent) => void = () => {}
   private shouldReconnect: boolean = false
   private reconnectTimeout: NodeJS.Timeout | null = null
+  private readonly base = "billiards-network.onrender.com"
+  private readonly channel: string
 
-  constructor(url: string, notify: (event: MessageEvent) => void = (_) => {}) {
-    this.url = url
+  constructor(
+    channel: string,
+    notify: (event: MessageEvent) => void = (_) => {}
+  ) {
+    this.channel = channel
+    this.subscribeUrl = `wss://${this.base}/subscribe/${this.channel}`
     this.notify = notify
   }
 
@@ -16,10 +22,10 @@ export class NchanClient {
   }
 
   private connect() {
-    this.socket = new WebSocket(this.url)
+    this.socket = new WebSocket(this.subscribeUrl)
 
     this.socket.onopen = () => {
-      console.log(`Connected to ${this.url}`)
+      console.log(`Connected to ${this.subscribeUrl}`)
     }
 
     this.socket.onmessage = (event: MessageEvent) => {
@@ -32,7 +38,7 @@ export class NchanClient {
     }
 
     this.socket.onclose = (event: CloseEvent) => {
-      console.log(`Disconnected from ${this.url}:`, event.reason)
+      console.log(`Disconnected from ${this.subscribeUrl}:`, event.reason)
       if (this.shouldReconnect) {
         this.reconnectTimeout = setTimeout(() => this.connect(), 30000)
       }
@@ -48,7 +54,7 @@ export class NchanClient {
     if (this.socket) {
       this.socket.close()
       this.socket = null
-      console.log(`Closed connection to ${this.url}`)
+      console.log(`Closed connection to ${this.subscribeUrl}`)
     }
   }
 }
