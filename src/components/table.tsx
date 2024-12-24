@@ -43,7 +43,7 @@ export function TableItem({
   return (
     <div
       key={table.id}
-      className={`relative rounded-xl shadow-lg shadow-black overflow-hidden ${getTableColor(table.ruleType)} border-4 ${
+      className={`relative rounded-xl shadow-lg shadow-black overflow-hidden ${getTableColor(table.ruleType)} border-2 ${
         isCreator ? "border-yellow-400" : ""
       }`}
       style={{ maxWidth: "250px", fontSize: "0.6rem" }}
@@ -53,13 +53,16 @@ export function TableItem({
         <div className="absolute inset-0 flex flex-col p-3">
           {/* Felt surface */}
           <div
-            className={`absolute inset-2 ${getFeltColor(table.ruleType)} rounded-lg shadow-inner`}
+            className={`absolute inset-2 ${getFeltColor(table.ruleType)} rounded-lg shadow-[inset_0_4px_5px_rgba(0,0,0,0.6)]`}
           ></div>
           <div className="relative z-10 flex flex-col justify-between h-full">
             <div className="text-center">
-              <p className="text-white leading-tight">{table.ruleType}</p>
-              <p className="text-gray-200 text-sm leading-tight">
-                {table.creator.name} vs. ...
+              <p className="text-white py-2 leading-tight">{table.ruleType}</p>
+              <p
+                className="text-white font-bold text-sm leading-tight"
+                style={{ textShadow: "1px 1px 2px rgba(0, 0, 0, 0.4)" }}
+              >
+                {table.creator.name} vs ...
               </p>
             </div>
             <div className="flex space-x-2">
@@ -68,7 +71,7 @@ export function TableItem({
                   {table.players.length < 2 && (
                     <button
                       onClick={() => onJoin(table.id)}
-                      className="flex-1 px-3 py-2 border border-white rounded-lg bg-transparent hover:bg-gray-800/20 hover:text-white focus:outline-none focus:ring-2 focus:ring-gray-800 focus:ring-opacity-50"
+                      className="flex-1 px-2 py-1 border border-white/50 rounded-lg bg-transparent hover:bg-gray-800/20 hover:text-white focus:outline-none focus:ring-2 focus:ring-gray-800 focus:ring-opacity-50"
                       aria-label="Join Table"
                     >
                       <UserPlusIcon className="h-5 w-5 text-white" />
@@ -76,7 +79,7 @@ export function TableItem({
                   )}
                   <button
                     onClick={() => onSpectate(table.id)}
-                    className="flex-1 flex items-center px-3 py-2 border border-white rounded-lg bg-transparent hover:bg-gray-800/20 hover:text-white focus:outline-none focus:ring-2 focus:ring-gray-800 focus:ring-opacity-50"
+                    className="flex-1 flex items-center px-2 py-2 border border-white/50 rounded-lg bg-transparent hover:bg-gray-800/20 hover:text-white focus:outline-none focus:ring-2 focus:ring-gray-800 focus:ring-opacity-50"
                     aria-label="Spectate Table"
                   >
                     <EyeIcon className="h-5 w-5 text-white" />

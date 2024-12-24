@@ -8,6 +8,7 @@ export function ServerStatus({ statusPage }: ServerStatusProps) {
   const [serverStatus, setServerStatus] = useState<string | null>(null)
   const [isOnline, setIsOnline] = useState(false)
   const [progress, setProgress] = useState(0)
+  const [showLogs, setShowLogs] = useState(false)
 
   useEffect(() => {
     const checkServerStatus = async () => {
@@ -68,28 +69,47 @@ export function ServerStatus({ statusPage }: ServerStatusProps) {
   }, [isOnline])
 
   return (
-    <div
-      className={`inline-flex items-center gap-1 text-xs px-2 py-1.5 rounded ${
-        serverStatus === null
-          ? "bg-gray-200"
-          : isOnline
-            ? "bg-green-200"
-            : "bg-red-200"
-      }`}
-    >
-      <span className={`${isOnline ? "text-green-500" : "text-gray-400"}`}>
-        💻
-      </span>
-      {!isOnline && (
-        <>
-          <span className="text-gray-500">{serverStatus}</span>
-          <div className="w-24 h-1 bg-gray-200 rounded overflow-hidden">
-            <div
-              className="h-full bg-gray-400 transition-all duration-300 ease-linear"
-              style={{ width: `${progress}%` }}
+    <div className="relative">
+      <div
+        className={`inline-flex items-center gap-1 text-xs px-2 py-2 rounded ${
+          serverStatus === null
+            ? "bg-gray-200"
+            : isOnline
+              ? "bg-green-200"
+              : "bg-red-200"
+        }`}
+        onClick={() => setShowLogs(true)}
+      >
+        <span className={`${isOnline ? "text-green-500" : "text-gray-400"}`}>
+          💻
+        </span>
+        {!isOnline && (
+          <>
+            <span className="text-gray-500">{serverStatus}</span>
+            <div className="w-24 h-1 bg-gray-200 rounded overflow-hidden">
+              <div
+                className="h-full bg-gray-400 transition-all duration-300 ease-linear"
+                style={{ width: `${progress}%` }}
+              />
+            </div>
+          </>
+        )}
+      </div>
+      {showLogs && (
+        <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 z-20 flex items-center justify-center">
+          <div className="relative w-3/4 h-3/4 bg-white shadow-lg">
+            <button
+              className="absolute top-2 right-2 text-black-500 text-xl"
+              onClick={() => setShowLogs(false)}
+            >
+              ✖
+            </button>
+            <iframe
+              src="https://billiards.onrender.com/logs"
+              className="w-full h-full"
             />
           </div>
-        </>
+        </div>
       )}
     </div>
   )

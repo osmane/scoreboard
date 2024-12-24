@@ -17,7 +17,10 @@ export function TableList({
   refresh: boolean
 }) {
   const [tables, setTables] = useState<Table[]>([])
-  const [modalTableId, setModalTableId] = useState<string | null>(null)
+  const [modalTable, setModalTable] = useState<{
+    id: string
+    ruleType: string
+  } | null>(null)
 
   const fetchTables = async () => {
     const res = await fetch("/api/tables")
@@ -28,7 +31,8 @@ export function TableList({
   const handleJoin = async (tableId: string) => {
     const success = await onJoin(tableId)
     if (success) {
-      setModalTableId(tableId)
+      const table = tables.find((t) => t.id === tableId)
+      setModalTable(table ? { id: table.id, ruleType: table.ruleType } : null)
     }
   }
 
@@ -41,7 +45,7 @@ export function TableList({
   useEffect(() => {
     tables.forEach((table) => {
       if (table.creator.id === userId && table.players.length === 2) {
-        setModalTableId(table.id)
+        setModalTable({ id: table.id, ruleType: table.ruleType })
       }
     })
   }, [tables, userId])
@@ -60,11 +64,12 @@ export function TableList({
         ))}
       </div>
       <PlayModal
-        isOpen={!!modalTableId}
-        onClose={() => setModalTableId(null)}
-        tableId={modalTableId || ""}
+        isOpen={!!modalTable}
+        onClose={() => setModalTable(null)}
+        tableId={modalTable?.id || ""}
         userName={userName} // Pass userName
-        userId={userId} // Pass userId
+        userId={userId}
+        ruleType={modalTable?.ruleType || "nineball"}
       />
     </div>
   )
