@@ -1,9 +1,11 @@
 export class NchanClient {
   private socket: WebSocket | null = null
-  private url: string
+  private readonly url: string
+  private readonly notify: (event: MessageEvent) => void = () => {}
 
-  constructor(url: string) {
+  constructor(url: string, notify: (event: MessageEvent) => void = (_) => {}) {
     this.url = url
+    this.notify = notify
   }
 
   start() {
@@ -15,6 +17,7 @@ export class NchanClient {
 
     this.socket.onmessage = (event: MessageEvent) => {
       console.log(`Received message: ${event.data}`)
+      this.notify(event)
     }
 
     this.socket.onerror = (error: Event) => {
