@@ -15,17 +15,19 @@ h2 {
 }
 
 .leaderboards {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  display: flex;
+  flex-wrap: wrap; /* Allow items to wrap onto the next line */
   gap: 20px;
+  justify-content: flex-start; /* Align items to the start of the container */
 }
 
 .leaderboard {
   background-color: #fff;
-  padding: 10px; /* Slightly more padding for aesthetic spacing */
-  border-radius: 4px; /* Slightly rounder corners */
-  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.08); /* Subtle shadow for a crisp, elevated card look */
-  font-weight: 325; /* Readable body font weight */
+  padding: 10px;
+  border-radius: 4px;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.08);
+  font-weight: 325;
+  flex: 1 0 300px; /* Allow items to grow, not shrink initially, and have a base width */
 }
 
 .leaderboard h2 {
@@ -87,4 +89,12 @@ h2 {
   text-align: center;
   font-size: 1.5rem; /* Larger size for emphasis */
   color: gold; /* Add vibrancy to trophy */
+}
+
+a {
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
 }

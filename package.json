@@ -16,7 +16,9 @@
     "next",
     "vercel.com",
     "billiards",
-    "express"
+    "express",
+    "llm",
+    "kv"
   ],
   "author": "tailuge",
   "license": "ISC",
