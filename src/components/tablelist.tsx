@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import { Table } from "@/interfaces"
 import { TableItem } from "./table"
 import { PlayModal } from "./PlayModal"
+import { NchanClient } from "@/utils/nchanclient"
 
 export function TableList({
   userId,
@@ -38,8 +39,14 @@ export function TableList({
 
   useEffect(() => {
     fetchTables()
-    const interval = setInterval(fetchTables, 15000)
-    return () => clearInterval(interval)
+    const client = new NchanClient(
+      "wss://billiards-network.onrender.com/subscribe/lobby",
+      (event) => {
+        fetchTables()
+      }
+    )
+    client.start()
+    return () => client.stop()
   }, [refresh]) // Add refresh to dependencies
 
   useEffect(() => {
