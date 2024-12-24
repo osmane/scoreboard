@@ -4,6 +4,7 @@ import { TableList } from "@/components/tablelist"
 import { CreateTable } from "@/components/createtable"
 import { ServerStatus } from "@/components/ServerStatus"
 import { User } from "@/components/User"
+import NchanSubscriber from "@/components/nchansubscriber"
 
 export default function Lobby() {
   const [userId, setUserId] = useState("")
@@ -78,6 +79,7 @@ export default function Lobby() {
         onSpectate={handleSpectate}
         refresh={refresh}
       />
+      <NchanSubscriber />
     </main>
   )
 }
