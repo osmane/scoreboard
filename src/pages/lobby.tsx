@@ -5,6 +5,7 @@ import { CreateTable } from "@/components/createtable"
 import { ServerStatus } from "@/components/ServerStatus"
 import { User } from "@/components/User"
 import { NchanPub } from "@/nchan/nchanpub"
+import Head from "next/head"
 
 export default function Lobby() {
   const [userId, setUserId] = useState("")
@@ -56,6 +57,9 @@ export default function Lobby() {
 
   return (
     <main className="container p-2 mx-auto">
+      <Head>
+        <link rel="icon" href="/favicon.png" />
+      </Head>
       <div className="flex items-stretch justify-between gap-1 mb-1 h-8">
         <div className="flex items-stretch gap-1">
           <CreateTable

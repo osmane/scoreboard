@@ -10,12 +10,12 @@ export function PlayModal({
   userId, // Add userId prop
   ruleType, // Add ruletype prop
 }: {
-  isOpen: boolean
-  onClose: () => void
-  tableId: string
-  userName: string // Add userName prop
-  userId: string // Add userId prop
-  ruleType: string // Add ruletype prop
+  readonly isOpen: boolean
+  readonly onClose: () => void
+  readonly tableId: string
+  readonly userName: string // Add userName prop
+  readonly userId: string // Add userId prop
+  readonly ruleType: string // Add ruletype prop
 }) {
   useEffect(() => {
     if (isOpen) {

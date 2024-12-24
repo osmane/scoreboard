@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import { NchanPub } from "../nchan/nchanpub" // Import NchanPub
 
 interface ServerStatusProps {
   statusPage: string
@@ -9,6 +10,7 @@ export function ServerStatus({ statusPage }: ServerStatusProps) {
   const [isOnline, setIsOnline] = useState(false)
   const [progress, setProgress] = useState(0)
   const [showLogs, setShowLogs] = useState(false)
+  const [activeUsers, setActiveUsers] = useState<number | null>(null) // New state for active users
 
   useEffect(() => {
     const checkServerStatus = async () => {
@@ -30,6 +32,14 @@ export function ServerStatus({ statusPage }: ServerStatusProps) {
       } catch (error: any) {
         setServerStatus(`Server Down: ${error.message}`)
         setIsOnline(false)
+      }
+
+      // Fetch active users
+      try {
+        const activeUsers = await new NchanPub("lobby").get()
+        setActiveUsers(activeUsers)
+      } catch (error: any) {
+        setActiveUsers(null)
       }
     }
 
@@ -83,6 +93,9 @@ export function ServerStatus({ statusPage }: ServerStatusProps) {
         <span className={`${isOnline ? "text-green-500" : "text-gray-400"}`}>
           💻
         </span>
+        {activeUsers !== null && (
+          <span className="text-gray-500">{activeUsers}</span>
+        )}
         {!isOnline && (
           <>
             <span className="text-gray-500">{serverStatus}</span>
