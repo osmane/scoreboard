@@ -1,5 +1,5 @@
 import { kv } from "@vercel/kv"
-import { Table, Player } from "@/interfaces"
+import { Table, Player } from "@/services/interfaces"
 
 const KEY = "tables"
 const TABLE_TIMEOUT = 60 * 1000 // 1 minute

@@ -4,7 +4,6 @@
 [![CodeFactor](https://www.codefactor.io/repository/github/tailuge/scoreboard/badge)](https://www.codefactor.io/repository/github/tailuge/scoreboard)
 [![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=tailuge_scoreboard&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=tailuge_scoreboard)
 [![Tests](https://github.com/tailuge/scoreboard/actions/workflows/main.yml/badge.svg)](https://github.com/tailuge/scoreboard/actions/workflows/main.yml)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/tailuge/scoreboard)
 
 [scoreboard](https://scoreboard-tailuge.vercel.app/leaderboard.html) and [lobby](https://scoreboard-tailuge.vercel.app/lobby) for [tailuge/billiards](https://github.com/tailuge/billiards) running on [vercel.com](https://vercel.com/tailuges-projects/scoreboard) with [nchan](https://billiards-network.onrender.com/) running on render.com.
 
@@ -13,6 +12,8 @@ This project is a work in progress experiment to get AI LLMs to code a complex t
 I have to intervene and untangle things now and then but these tools allowed me to get away with minimal understanding of react and nextjs. I am blown away with it all - could never have imagined this a couple of years ago. It is a thrill to witness these advances (being put use to nonsense).
 
 ## dev
+
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/tailuge/scoreboard)
 
 ```shell
 yarn dev
@@ -30,7 +31,3 @@ yarn docker:push
 yarn test
 yarn coverage
 ```
-
-## deployed
-
-vercel.com [admin](https://vercel.com/tailuges-projects/scoreboard)

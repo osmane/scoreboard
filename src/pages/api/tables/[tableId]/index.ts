@@ -1,6 +1,6 @@
 import { NextRequest } from "next/server"
 import { kv } from "@vercel/kv"
-import { Table } from "@/interfaces"
+import { Table } from "@/services/interfaces"
 
 const TABLES_KEY = "tables"
 
