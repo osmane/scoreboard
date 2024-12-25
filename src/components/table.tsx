@@ -14,7 +14,9 @@ export function TableItem({
 }) {
   const isCreator = table.creator.id === userId
 
-  const getTableColor = (ruleType: string) => {
+  const getTableColor = (ruleType: string, playerCount: number) => {
+    if (playerCount >= 2) return "bg-gray-700 border-gray-900"
+    
     switch (ruleType) {
       case "nineball":
         return "bg-red-700 border-red-900"
@@ -27,7 +29,9 @@ export function TableItem({
     }
   }
 
-  const getFeltColor = (ruleType: string) => {
+  const getFeltColor = (ruleType: string, playerCount: number) => {
+    if (playerCount >= 2) return "bg-gray-500"
+    
     switch (ruleType) {
       case "nineball":
         return "bg-red-500"
@@ -43,7 +47,7 @@ export function TableItem({
   return (
     <div
       key={table.id}
-      className={`relative rounded-xl shadow-lg shadow-black overflow-hidden ${getTableColor(table.ruleType)} border-2 ${
+      className={`relative rounded-xl shadow-lg shadow-black overflow-hidden ${getTableColor(table.ruleType, table.players.length)} border-2 ${
         isCreator ? "border-yellow-400" : ""
       }`}
       style={{ maxWidth: "250px", fontSize: "0.6rem" }}
@@ -53,7 +57,7 @@ export function TableItem({
         <div className="absolute inset-0 flex flex-col p-3">
           {/* Felt surface */}
           <div
-            className={`absolute inset-2 ${getFeltColor(table.ruleType)} rounded-lg shadow-[inset_0_4px_5px_rgba(0,0,0,0.6)]`}
+            className={`absolute inset-2 ${getFeltColor(table.ruleType, table.players.length)} rounded-lg shadow-[inset_0_4px_5px_rgba(0,0,0,0.6)]`}
           ></div>
           <div className="relative z-10 flex flex-col justify-between h-full">
             <div className="text-center">
@@ -62,7 +66,7 @@ export function TableItem({
                 className="text-white font-bold text-sm leading-tight"
                 style={{ textShadow: "1px 1px 2px rgba(0, 0, 0, 0.4)" }}
               >
-                {table.creator.name} vs ...
+                {table.creator.name} vs {table.players.length > 1 ? table.players.find(p => p.id !== table.creator.id)?.name : "..."}
               </p>
             </div>
             <div className="flex space-x-2">

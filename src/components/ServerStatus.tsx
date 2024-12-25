@@ -1,6 +1,10 @@
 import { useEffect, useState, useCallback } from "react"
 import { NchanPub } from "../nchan/nchanpub"
-import { UsersIcon, ComputerDesktopIcon, ArrowPathIcon } from "@heroicons/react/24/outline"
+import {
+  UsersIcon,
+  ComputerDesktopIcon,
+  ArrowPathIcon,
+} from "@heroicons/react/24/outline"
 
 interface ServerStatusProps {
   readonly statusPage: string
@@ -18,7 +22,11 @@ const getStatusIcon = (isConnecting: boolean, isOnline: boolean) => {
   if (isConnecting) {
     return <ArrowPathIcon className="h-4 w-4 text-yellow-500 animate-spin" />
   }
-  return <ComputerDesktopIcon className={`${isOnline ? "text-green-500" : "text-gray-400"} h-4 w-4`} />
+  return (
+    <ComputerDesktopIcon
+      className={`${isOnline ? "text-green-500" : "text-gray-400"} h-4 w-4`}
+    />
+  )
 }
 
 interface StatusIndicatorProps {
@@ -83,7 +91,10 @@ const LogsModal: React.FC<LogsModalProps> = ({ showLogs, onClose }) => {
   return (
     <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 z-20 flex items-center justify-center">
       <div className="relative w-3/4 h-3/4 bg-white shadow-lg">
-        <button className="absolute top-2 right-2 text-black-500 text-xl" onClick={onClose}>
+        <button
+          className="absolute top-2 right-2 text-black-500 text-xl"
+          onClick={onClose}
+        >
           ✖
         </button>
         <iframe
@@ -116,7 +127,9 @@ export function ServerStatus({ statusPage }: ServerStatusProps) {
         setServerStatus("Server OK")
         setIsOnline(true)
       } else {
-        setServerStatus(`Server Issue: ${response.status} ${response.statusText}`)
+        setServerStatus(
+          `Server Issue: ${response.status} ${response.statusText}`
+        )
         setIsOnline(false)
       }
     } catch (error: any) {
