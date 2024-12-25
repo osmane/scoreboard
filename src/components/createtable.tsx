@@ -1,4 +1,3 @@
-import { NchanPub } from "@/nchan/nchanpub"
 import { useState, useEffect, useRef } from "react"
 
 export function CreateTable({

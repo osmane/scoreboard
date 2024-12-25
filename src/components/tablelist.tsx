@@ -3,7 +3,6 @@ import { Table } from "@/services/interfaces"
 import { TableItem } from "./table"
 import { PlayModal } from "./PlayModal"
 import { NchanSub } from "@/nchan/nchansub"
-import { NchanPub } from "@/nchan/nchanpub"
 
 export function TableList({
   userId,
