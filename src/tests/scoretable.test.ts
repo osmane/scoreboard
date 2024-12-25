@@ -1,4 +1,4 @@
-import { mockKv } from "./mockvercelkvadapter"
+import { mockKv } from "./mockkv"
 import { ScoreTable } from "../services/scoretable"
 import { VercelKV } from "@vercel/kv"
 import { Table } from "@/services/interfaces"
@@ -23,19 +23,6 @@ describe("ScoreTable", () => {
     expect(likedItem.likes).toEqual(1)
   })
 
-  function makeTable(lastUsed: number, tableId: string): Table {
-    const newTable: Table = {
-      id: tableId,
-      creator: { id: "creator01", name: "user01" },
-      players: [{ id: "creator01", name: "user01" }],
-      spectators: [],
-      createdAt: lastUsed,
-      lastUsedAt: lastUsed,
-      isActive: true,
-      ruleType: "nineball",
-    }
-    return newTable
-  }
 
   /*
   const KEY= "tables"

@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next"
-import TableService from "@/services/TableService"
+import { TableService } from "@/services/TableService"
 
 const tableService = new TableService()
 

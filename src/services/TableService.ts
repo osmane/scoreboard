@@ -1,13 +1,18 @@
-import { kv } from "@vercel/kv"
+import { kv, VercelKV } from "@vercel/kv"
 import { Table, Player } from "@/services/interfaces"
 import { NchanPub } from "@/nchan/nchanpub"
 
 const KEY = "tables"
 const TABLE_TIMEOUT = 60 * 1000 // 1 minute
 
-class TableService {
+export class TableService {
+  constructor(
+    private readonly store: VercelKV = kv,
+    private readonly notify: (event: any) => Promise<void> = this.defaultNotify
+  ) {}
+
   async getTables() {
-    const tables = await kv.hgetall<Record<string, Table>>(KEY)
+    const tables = await this.store.hgetall<Record<string, Table>>(KEY)
     return Object.values(tables || {})
       .filter((table) => {
         return table.isActive && Date.now() - table.lastUsedAt <= TABLE_TIMEOUT
@@ -16,7 +21,7 @@ class TableService {
   }
 
   async expireTables() {
-    const tables = await kv.hgetall<Record<string, Table>>(KEY)
+    const tables = await this.store.hgetall<Record<string, Table>>(KEY)
     const expiredEntries = Object.entries(tables || {}).filter(
       ([, table]) => Date.now() - table.lastUsedAt > TABLE_TIMEOUT
     )
@@ -24,7 +29,7 @@ class TableService {
     if (expiredEntries.length > 0) {
       // Use hdel to remove multiple fields from the hash
       const keysToDelete = expiredEntries.map(([key, _]) => key)
-      await kv.hdel(KEY, ...keysToDelete)
+      await this.store.hdel(KEY, ...keysToDelete)
 
       console.log(`Expired and deleted ${expiredEntries.length} tables.`)
     } else {
@@ -47,14 +52,14 @@ class TableService {
       ruleType,
     }
 
-    await kv.hset(KEY, { [tableId]: newTable })
+    await this.store.hset(KEY, { [tableId]: newTable })
     await this.notify({ action: "spectate" })
 
     return newTable
   }
 
   async joinTable(tableId: string, userId: string, userName: string) {
-    const table = await kv.hget<Table>(KEY, tableId)
+    const table = await this.store.hget<Table>(KEY, tableId)
 
     if (!table) {
       throw new Error("Table not found")
@@ -68,13 +73,13 @@ class TableService {
     table.players.push(player)
     table.lastUsedAt = Date.now()
 
-    await kv.hset(KEY, { [tableId]: table })
+    await this.store.hset(KEY, { [tableId]: table })
     await this.notify({ action: "join" })
     return table
   }
 
   async spectateTable(tableId: string, userId: string, userName: string) {
-    const table = await kv.hget<Table>(KEY, tableId)
+    const table = await this.store.hget<Table>(KEY, tableId)
 
     if (!table) {
       throw new Error("Table not found")
@@ -84,14 +89,13 @@ class TableService {
     table.spectators.push(spectator)
     table.lastUsedAt = Date.now()
 
-    await kv.hset(KEY, { [tableId]: table })
+    await this.store.hset(KEY, { [tableId]: table })
     await this.notify({ action: "spectate" })
     return table
   }
 
-  async notify(event: any) {
+  async defaultNotify(event: any) {
     await new NchanPub("lobby").post(event)
   }
 }
 
-export default TableService

@@ -2,7 +2,7 @@ import RedisMock from "ioredis-mock"
 import { VercelKV } from "@vercel/kv"
 
 // Create an adapter class for Vercel KV
-export class MockVercelKVAdapter {
+export class MockKV {
   private readonly mockRedis: InstanceType<typeof RedisMock>
 
   constructor() {
@@ -162,4 +162,4 @@ export class MockVercelKVAdapter {
   }
 }
 
-export const mockKv: Partial<VercelKV> = new MockVercelKVAdapter()
+export const mockKv: Partial<VercelKV> = new MockKV()
