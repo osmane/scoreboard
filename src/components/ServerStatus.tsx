@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import { NchanPub } from "../nchan/nchanpub" // Import NchanPub
+import { UsersIcon, ComputerDesktopIcon } from "@heroicons/react/24/outline"
 
 interface ServerStatusProps {
   statusPage: string
@@ -90,11 +91,15 @@ export function ServerStatus({ statusPage }: ServerStatusProps) {
         }`}
         onClick={() => setShowLogs(true)}
       >
-        <span className={`${isOnline ? "text-green-500" : "text-gray-400"}`}>
-          💻
-        </span>
+        <ComputerDesktopIcon
+          className={`${isOnline ? "text-green-500" : "text-gray-400"} h-4 w-4`} // Added h-4 w-4 for size
+        />
         {activeUsers !== null && (
-          <span className="text-gray-500">{activeUsers}</span>
+          <>
+            <span className="text-gray-500">{activeUsers}</span>
+            <UsersIcon className="text-gray-500 h-4 w-4" />{" "}
+            {/* Added UsersIcon */}
+          </>
         )}
         {!isOnline && (
           <>

@@ -31,7 +31,7 @@ class TableService {
     }
 
     await kv.hset(KEY, { [tableId]: newTable })
-    await this.notify({ action: "spectate"})
+    await this.notify({ action: "spectate" })
 
     return newTable
   }
@@ -52,7 +52,7 @@ class TableService {
     table.lastUsedAt = Date.now()
 
     await kv.hset(KEY, { [tableId]: table })
-    await this.notify({ action: "join"})
+    await this.notify({ action: "join" })
     return table
   }
 
@@ -68,14 +68,13 @@ class TableService {
     table.lastUsedAt = Date.now()
 
     await kv.hset(KEY, { [tableId]: table })
-    await this.notify({ action: "spectate"})
+    await this.notify({ action: "spectate" })
     return table
   }
 
   async notify(event: any) {
     await new NchanPub("lobby").post(event)
   }
-
 }
 
 export default TableService

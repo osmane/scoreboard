@@ -39,15 +39,21 @@ export function TableList({
 
   return (
     <div className="space-y-4">
-      <div className="grid gap-3 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+      <div className="flex flex-wrap gap-3">
         {tables.map((table) => (
-          <TableItem
+          <div
             key={table.id}
-            table={table}
-            onJoin={handleJoin}
-            onSpectate={onSpectate}
-            userId={userId}
-          />
+            className="w-full sm:w-1/2 md:w-1/4 lg:w-1/6 xl:w-1/8"
+          >
+            {" "}
+            {/* Adjust widths as needed */}
+            <TableItem
+              table={table}
+              onJoin={handleJoin}
+              onSpectate={onSpectate}
+              userId={userId}
+            />
+          </div>
         ))}
       </div>
       <PlayModal
