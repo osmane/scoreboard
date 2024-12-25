@@ -85,9 +85,7 @@ export function PlayModal({
   return (
     <div className="top-[-10vh] fixed inset-0 z-50 flex items-center justify-center backdrop-blur-[1px] bg-black/50">
       <div
-        className={`bg-white rounded-lg p-8 ${
-          isInsideIframe() ? "w-full h-[80vh] max-w-none m-0" : "max-w-sm w-full m-4"
-        } text-center`}
+        className={`bg-white rounded-lg p-4 max-w-sm w-full m-4 text-center`}
       >
         <h2 className="text-2xl text-gray-800 font-bold mb-4">Opponent Ready</h2>
         <p className="mb-6 text-gray-800">Your table is ready to play</p>
