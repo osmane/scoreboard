@@ -42,7 +42,6 @@ export default function Lobby() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ userId, userName }),
     })
-    await new NchanPub("lobby").post({ action: "spectate" })
     setRefresh((prev) => !prev)
   }
 

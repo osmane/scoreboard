@@ -1,5 +1,6 @@
 import { kv } from "@vercel/kv"
 import { Table, Player } from "@/services/interfaces"
+import { NchanPub } from "@/nchan/nchanpub"
 
 const KEY = "tables"
 const TABLE_TIMEOUT = 60 * 1000 // 1 minute
@@ -30,6 +31,8 @@ class TableService {
     }
 
     await kv.hset(KEY, { [tableId]: newTable })
+    await this.notify({ action: "spectate"})
+
     return newTable
   }
 
@@ -49,6 +52,7 @@ class TableService {
     table.lastUsedAt = Date.now()
 
     await kv.hset(KEY, { [tableId]: table })
+    await this.notify({ action: "join"})
     return table
   }
 
@@ -64,8 +68,14 @@ class TableService {
     table.lastUsedAt = Date.now()
 
     await kv.hset(KEY, { [tableId]: table })
+    await this.notify({ action: "spectate"})
     return table
   }
+
+  async notify(event: any) {
+    await new NchanPub("lobby").post(event)
+  }
+
 }
 
 export default TableService

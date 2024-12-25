@@ -36,7 +36,6 @@ export function TableList({
       const table = tables.find((t) => t.id === tableId)
       setModalTable(table ? { id: table.id, ruleType: table.ruleType } : null)
     }
-    await new NchanPub("lobby").post({ action: "join" })
   }
 
   useEffect(() => {

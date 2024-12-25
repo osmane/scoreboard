@@ -23,7 +23,6 @@ export function CreateTable({
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ userId, userName, ruleType }),
       })
-      await new NchanPub("lobby").post({ action: "create" })
       onCreate()
     } finally {
       setIsLoading(false)
