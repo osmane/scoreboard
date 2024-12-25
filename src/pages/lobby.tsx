@@ -5,13 +5,21 @@ import { CreateTable } from "@/components/createtable"
 import { ServerStatus } from "@/components/ServerStatus"
 import { User } from "@/components/User"
 import Head from "next/head"
+import { Table } from "@/services/interfaces"
+import { NchanSub } from "@/nchan/nchansub"
 
 export default function Lobby() {
   const [userId, setUserId] = useState("")
   const [userName, setUserName] = useState("")
-  const [refresh, setRefresh] = useState(false)
+  const [tables, setTables] = useState<Table[]>([])
   const searchParams = useSearchParams()
   const statusPage = "https://billiards.onrender.com"
+
+  const fetchTables = async () => {
+    const res = await fetch("/api/tables")
+    const data = await res.json()
+    setTables(data)
+  }
 
   useEffect(() => {
     const storedUserId = crypto.randomUUID().slice(0, 8)
@@ -23,6 +31,13 @@ export default function Lobby() {
     setUserName(storedUserName)
     localStorage.setItem("userId", storedUserId)
     localStorage.setItem("userName", storedUserName)
+
+    fetchTables()
+    const client = new NchanSub("lobby", (_) => {
+      fetchTables()
+    })
+    client.start()
+    return () => client.stop()
   }, [searchParams])
 
   const handleJoin = async (tableId: string) => {
@@ -31,7 +46,7 @@ export default function Lobby() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ userId, userName }),
     })
-    setRefresh((prev) => !prev)
+    fetchTables()
     return response.status === 200
   }
 
@@ -41,11 +56,11 @@ export default function Lobby() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ userId, userName }),
     })
-    setRefresh((prev) => !prev)
+    fetchTables()
   }
 
   const handleCreate = () => {
-    setRefresh((prev) => !prev)
+    fetchTables()
   }
 
   const handleUserNameChange = (newUserName: string) => {
@@ -77,10 +92,10 @@ export default function Lobby() {
       </div>
       <TableList
         userId={userId}
-        userName={userName} // Pass userName
+        userName={userName}
         onJoin={handleJoin}
         onSpectate={handleSpectate}
-        refresh={refresh}
+        tables={tables}
       />
     </main>
   )

@@ -2,32 +2,24 @@ import { useEffect, useState } from "react"
 import { Table } from "@/services/interfaces"
 import { TableItem } from "./table"
 import { PlayModal } from "./PlayModal"
-import { NchanSub } from "@/nchan/nchansub"
 
 export function TableList({
   userId,
-  userName, // Add userName
+  userName,
   onJoin,
   onSpectate,
-  refresh,
+  tables,
 }: {
   userId: string
-  userName: string // Add userName type
+  userName: string
   onJoin: (tableId: string) => Promise<boolean>
   onSpectate: (tableId: string) => void
-  refresh: boolean
+  tables: Table[]
 }) {
-  const [tables, setTables] = useState<Table[]>([])
   const [modalTable, setModalTable] = useState<{
     id: string
     ruleType: string
   } | null>(null)
-
-  const fetchTables = async () => {
-    const res = await fetch("/api/tables")
-    const data = await res.json()
-    setTables(data)
-  }
 
   const handleJoin = async (tableId: string) => {
     const success = await onJoin(tableId)
@@ -36,15 +28,6 @@ export function TableList({
       setModalTable(table ? { id: table.id, ruleType: table.ruleType } : null)
     }
   }
-
-  useEffect(() => {
-    fetchTables()
-    const client = new NchanSub("lobby", (_) => {
-      fetchTables()
-    })
-    client.start()
-    return () => client.stop()
-  }, [refresh]) // Add refresh to dependencies
 
   useEffect(() => {
     tables.forEach((table) => {
@@ -71,7 +54,7 @@ export function TableList({
         isOpen={!!modalTable}
         onClose={() => setModalTable(null)}
         tableId={modalTable?.id || ""}
-        userName={userName} // Pass userName
+        userName={userName}
         userId={userId}
         ruleType={modalTable?.ruleType || "nineball"}
       />
