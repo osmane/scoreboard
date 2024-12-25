@@ -30,7 +30,7 @@ export class NchanSub {
 
     this.socket.onmessage = (event: MessageEvent) => {
       console.log(`Received message: ${event.data}`)
-      this.notify(event)
+      this.notify(event.data)
     }
 
     this.socket.onerror = (error: Event) => {

@@ -16,7 +16,7 @@ export function TableItem({
 
   const getTableColor = (ruleType: string, playerCount: number) => {
     if (playerCount >= 2) return "bg-gray-700 border-gray-900"
-    
+
     switch (ruleType) {
       case "nineball":
         return "bg-red-700 border-red-900"
@@ -31,7 +31,7 @@ export function TableItem({
 
   const getFeltColor = (ruleType: string, playerCount: number) => {
     if (playerCount >= 2) return "bg-gray-500"
-    
+
     switch (ruleType) {
       case "nineball":
         return "bg-red-500"
@@ -66,7 +66,8 @@ export function TableItem({
                 className="text-white font-bold text-sm leading-tight"
                 style={{ textShadow: "1px 1px 2px rgba(0, 0, 0, 0.4)" }}
               >
-                {table.creator.name} vs {table.players.length > 1 ? table.players.find(p => p.id !== table.creator.id)?.name : "..."}
+                {table.creator.name} vs{" "}
+                {table.players.length > 1 ? table.players[1].name : "..."}
               </p>
             </div>
             <div className="flex space-x-2">

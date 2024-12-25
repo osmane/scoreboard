@@ -33,8 +33,8 @@ export class NchanPub {
     // Parse the active connections from the response
     const activeConnectionsMatch = textData.match(/Active connections:\s+(\d+)/)
     const activeConnections = activeConnectionsMatch
-      ? parseInt(activeConnectionsMatch[1], 10)
-      : null
+      ? parseInt(activeConnectionsMatch[1], 10) - 1
+      : 0
 
     console.log("Active Connections:", activeConnections)
     return activeConnections

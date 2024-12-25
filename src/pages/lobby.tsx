@@ -33,7 +33,8 @@ export default function Lobby() {
     localStorage.setItem("userName", storedUserName)
 
     fetchTables()
-    const client = new NchanSub("lobby", (_) => {
+    const client = new NchanSub("lobby", (e) => {
+      console.log("Received nchan message:", e)
       fetchTables()
     })
     client.start()
