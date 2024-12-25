@@ -10,11 +10,11 @@ export function TableList({
   onSpectate,
   tables,
 }: {
-  userId: string
-  userName: string
-  onJoin: (tableId: string) => Promise<boolean>
-  onSpectate: (tableId: string) => void
-  tables: Table[]
+  readonly userId: string
+  readonly userName: string
+  readonly onJoin: (tableId: string) => Promise<boolean>
+  readonly onSpectate: (tableId: string) => void
+  readonly tables: Table[]
 }) {
   const [modalTable, setModalTable] = useState<{
     id: string

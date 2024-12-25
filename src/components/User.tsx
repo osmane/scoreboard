@@ -2,9 +2,9 @@ import React, { useState, useRef, useEffect } from "react"
 import { UserIcon } from "@heroicons/react/24/solid"
 
 interface UserPillProps {
-  userName: string
-  userId: string
-  onUserNameChange: (newUserName: string) => void
+  readonly userName: string
+  readonly userId: string
+  readonly onUserNameChange: (newUserName: string) => void
 }
 
 export function User({ userName, userId, onUserNameChange }: UserPillProps) {

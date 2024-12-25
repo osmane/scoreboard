@@ -3,7 +3,7 @@ import { NchanPub } from "../nchan/nchanpub" // Import NchanPub
 import { UsersIcon, ComputerDesktopIcon } from "@heroicons/react/24/outline"
 
 interface ServerStatusProps {
-  statusPage: string
+  readonly statusPage: string
 }
 
 export function ServerStatus({ statusPage }: ServerStatusProps) {
