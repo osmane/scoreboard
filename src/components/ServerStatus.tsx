@@ -81,7 +81,7 @@ export function ServerStatus({ statusPage }: ServerStatusProps) {
 
   return (
     <div className="relative">
-      <div
+      <div role="button" 
         className={`inline-flex items-center gap-1 text-xs px-2 py-2 rounded ${
           serverStatus === null
             ? "bg-gray-200"
@@ -125,6 +125,7 @@ export function ServerStatus({ statusPage }: ServerStatusProps) {
             <iframe
               src="https://billiards.onrender.com/logs"
               className="w-full h-full"
+              title="Server Logs"
             />
           </div>
         </div>
