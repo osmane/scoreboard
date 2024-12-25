@@ -81,7 +81,8 @@ export function ServerStatus({ statusPage }: ServerStatusProps) {
 
   return (
     <div className="relative">
-      <div role="button" 
+      <div
+        role="button"
         className={`inline-flex items-center gap-1 text-xs px-2 py-2 rounded ${
           serverStatus === null
             ? "bg-gray-200"
