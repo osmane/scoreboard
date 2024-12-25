@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { NchanPub } from "../nchan/nchanpub" // Import NchanPub
-import { UsersIcon, ComputerDesktopIcon } from "@heroicons/react/24/outline"
+import { UsersIcon, ComputerDesktopIcon, ArrowPathIcon } from "@heroicons/react/24/outline"
 
 interface ServerStatusProps {
   readonly statusPage: string
@@ -12,9 +12,11 @@ export function ServerStatus({ statusPage }: ServerStatusProps) {
   const [progress, setProgress] = useState(0)
   const [showLogs, setShowLogs] = useState(false)
   const [activeUsers, setActiveUsers] = useState<number | null>(null) // New state for active users
+  const [isConnecting, setIsConnecting] = useState(true) // Add isConnecting state
 
   useEffect(() => {
     const checkServerStatus = async () => {
+      setIsConnecting(true) // Set connecting to true at the start of the check
       try {
         const fetchOptions: RequestInit = {
           method: "GET",
@@ -33,6 +35,8 @@ export function ServerStatus({ statusPage }: ServerStatusProps) {
       } catch (error: any) {
         setServerStatus(`Server Down: ${error.message}`)
         setIsOnline(false)
+      } finally {
+        setIsConnecting(false) // Set connecting to false after the check is complete
       }
 
       // Fetch active users
@@ -62,13 +66,14 @@ export function ServerStatus({ statusPage }: ServerStatusProps) {
       const newProgress = Math.min((elapsed / duration) * 100, 100)
       setProgress(newProgress)
 
-      if (elapsed < duration && !isOnline) {
+      if (elapsed < duration && !isOnline && !isConnecting) { // Don't animate if connecting
         animationFrame = requestAnimationFrame(animate)
       }
     }
 
-    if (!isOnline) {
+    if (!isOnline && !isConnecting) { // Start animation only if not online and not connecting
       setProgress(0)
+      startTime = undefined // Reset startTime when starting the animation
       animationFrame = requestAnimationFrame(animate)
     }
 
@@ -77,32 +82,36 @@ export function ServerStatus({ statusPage }: ServerStatusProps) {
         cancelAnimationFrame(animationFrame)
       }
     }
-  }, [isOnline])
+  }, [isOnline, isConnecting])
 
   return (
     <div className="relative">
       <div
         role="button"
         className={`inline-flex items-center gap-1 text-xs px-2 py-2 rounded ${
-          serverStatus === null
-            ? "bg-gray-200"
+          isConnecting
+            ? "bg-yellow-200"
             : isOnline
-              ? "bg-green-200"
-              : "bg-red-200"
+            ? "bg-green-200"
+            : "bg-red-200"
         }`}
         onClick={() => setShowLogs(true)}
       >
-        <ComputerDesktopIcon
-          className={`${isOnline ? "text-green-500" : "text-gray-400"} h-4 w-4`} // Added h-4 w-4 for size
-        />
-        {activeUsers !== null && (
+        {isConnecting ? (
+          <ArrowPathIcon className="h-4 w-4 text-yellow-500 animate-spin" />
+        ) : (
+          <ComputerDesktopIcon
+            className={`${isOnline ? "text-green-500" : "text-gray-400"} h-4 w-4`}
+          />
+        )}
+        {activeUsers !== null && !isConnecting && (
           <>
             <span className="text-gray-500">{activeUsers}</span>
-            <UsersIcon className="text-gray-500 h-4 w-4" />{" "}
-            {/* Added UsersIcon */}
+            <UsersIcon className="text-gray-500 h-4 w-4" />
           </>
         )}
-        {!isOnline && (
+        {isConnecting && <span className="text-gray-500">Connecting...</span>}
+        {!isOnline && !isConnecting && (
           <>
             <span className="text-gray-500">{serverStatus}</span>
             <div className="w-24 h-1 bg-gray-200 rounded overflow-hidden">
