@@ -5,6 +5,7 @@ import {
   ComputerDesktopIcon,
   ArrowPathIcon,
 } from "@heroicons/react/24/outline"
+import LogsModal from "./LogsModal"
 
 interface ServerStatusProps {
   readonly statusPage: string
@@ -46,6 +47,14 @@ const StatusIndicator: React.FC<StatusIndicatorProps> = ({
   progress,
   onClick,
 }) => {
+  const [firstConnection, setFirstConnection] = useState(true)
+
+  useEffect(() => {
+    if (isOnline) {
+      setFirstConnection(false)
+    }
+  }, [isOnline])
+
   return (
     <div
       role="button"
@@ -62,7 +71,9 @@ const StatusIndicator: React.FC<StatusIndicatorProps> = ({
           <UsersIcon className="text-gray-500 h-4 w-4" />
         </>
       )}
-      {isConnecting && <span className="text-gray-500">Connecting...</span>}
+      {isConnecting && firstConnection && (
+        <span className="text-gray-500">Connecting...</span>
+      )}
       {!isOnline && !isConnecting && (
         <>
           <span className="text-gray-500">{serverStatus}</span>
@@ -74,35 +85,6 @@ const StatusIndicator: React.FC<StatusIndicatorProps> = ({
           </div>
         </>
       )}
-    </div>
-  )
-}
-
-interface LogsModalProps {
-  showLogs: boolean
-  onClose: () => void
-}
-
-const LogsModal: React.FC<LogsModalProps> = ({ showLogs, onClose }) => {
-  if (!showLogs) {
-    return null
-  }
-
-  return (
-    <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 z-20 flex items-center justify-center">
-      <div className="relative w-3/4 h-3/4 bg-white shadow-lg">
-        <button
-          className="absolute top-2 right-2 text-black-500 text-xl"
-          onClick={onClose}
-        >
-          ✖
-        </button>
-        <iframe
-          src="https://billiards.onrender.com/logs"
-          className="w-full h-full"
-          title="Server Logs"
-        />
-      </div>
     </div>
   )
 }
