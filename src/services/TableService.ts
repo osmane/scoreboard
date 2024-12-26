@@ -12,12 +12,9 @@ export class TableService {
   ) {}
 
   async getTables() {
+    await this.expireTables()
     const tables = await this.store.hgetall<Record<string, Table>>(KEY)
-    return Object.values(tables || {})
-      .filter((table) => {
-        return table.isActive && Date.now() - table.lastUsedAt <= TABLE_TIMEOUT
-      })
-      .sort((a, b) => b.createdAt - a.createdAt)
+    return Object.values(tables || {}).sort((a, b) => b.createdAt - a.createdAt)
   }
 
   async expireTables() {

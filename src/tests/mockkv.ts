@@ -175,6 +175,17 @@ export class MockKV {
     return parsedResult as TData
   }
 
+  /**
+   * Adapter function to match @vercel/kv's hdel signature using ioredis-mock's hdel.
+   * @param key - The name of the hash.
+   * @param fields - The fields to delete from the hash.
+   * @returns A promise that resolves to the number of fields removed.
+   */
+  async hdel(key: string, ...fields: string[]): Promise<0 | 1> {
+    const result = await this.mockRedis.hdel(key, ...fields)
+    return result === 0 ? 0 : 1
+  }
+
   async printMockRedisData() {
     try {
       // Retrieve all keys

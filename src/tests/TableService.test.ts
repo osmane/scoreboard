@@ -30,16 +30,24 @@ describe("TableService", () => {
     return newTable
   }
 
+  const userId = "user1"
+  const userName = "luke"
+  const ruleType = "nineball"
+
   it("should create a new table", async () => {
-    const userId = "user1"
-    const userName = "User One"
-    const ruleType = "standard"
-
     const newTable = await tableService.createTable(userId, userName, ruleType)
-
     expect(newTable).toHaveProperty("id")
-    // Verify the table is stored in the mock Redis
     const tables = await tableService.getTables()
     expect(tables).toHaveLength(1)
+  })
+
+  it("should expire old tables", async () => {
+    const oldTable = makeTable(Date.now() - 61 * 1000, "oldId")
+    const currentTable = makeTable(Date.now(), "newId")
+    await mockKv.hset("tables", { [oldTable.id]: oldTable })
+    await mockKv.hset("tables", { [currentTable.id]: currentTable })
+    const tables = await tableService.getTables()
+    expect(tables).toHaveLength(1)
+    expect(tables[0].id).toBe(currentTable.id)
   })
 })
