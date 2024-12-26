@@ -137,7 +137,7 @@ export function ServerStatus({ statusPage }: ServerStatusProps) {
 
   useEffect(() => {
     checkServerStatus()
-    const intervalId = setInterval(checkServerStatus, 10000)
+    const intervalId = setInterval(checkServerStatus, 60000)
     return () => clearInterval(intervalId)
   }, [checkServerStatus])
 
