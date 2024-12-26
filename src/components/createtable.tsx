@@ -57,7 +57,7 @@ export function CreateTable({
               : "bg-indigo-500 hover:bg-indigo-600"
           }`}
         >
-          Create {ruleType.charAt(0).toUpperCase() + ruleType.slice(1)} Table
+          Play {ruleType.charAt(0).toUpperCase() + ruleType.slice(1)}
         </button>
         <button
           onClick={() => setDropdownOpen((prev) => !prev)}
