@@ -1,4 +1,4 @@
-import { Table } from "@/services/interfaces"
+import { Table } from "@/services/table"
 import { UserPlusIcon, EyeIcon } from "@heroicons/react/24/solid"
 
 export function TableItem({

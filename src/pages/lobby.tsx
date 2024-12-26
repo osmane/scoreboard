@@ -5,7 +5,7 @@ import { CreateTable } from "@/components/createtable"
 import { ServerStatus } from "@/components/ServerStatus"
 import { User } from "@/components/User"
 import Head from "next/head"
-import { Table } from "@/services/interfaces"
+import { Table } from "@/services/table"
 import { NchanSub } from "@/nchan/nchansub"
 
 export default function Lobby() {

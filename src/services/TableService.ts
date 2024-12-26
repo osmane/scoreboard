@@ -1,6 +1,8 @@
 import { kv, VercelKV } from "@vercel/kv"
-import { Table, Player } from "@/services/interfaces"
+import { Table } from "@/services/table"
+
 import { NchanPub } from "@/nchan/nchanpub"
+import { Player } from "./player"
 
 const KEY = "tables"
 const TABLE_TIMEOUT = 60 * 1000 // 1 minute
@@ -55,7 +57,6 @@ export class TableService {
   }
 
   async joinTable(tableId: string, userId: string, userName: string) {
-
     await this.expireTables()
 
     const table = await this.store.hget<Table>(KEY, tableId)

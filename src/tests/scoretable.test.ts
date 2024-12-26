@@ -1,7 +1,6 @@
 import { mockKv } from "./mockkv"
 import { ScoreTable } from "../services/scoretable"
 import { VercelKV } from "@vercel/kv"
-import { Table } from "@/services/interfaces"
 
 describe("ScoreTable", () => {
   afterEach(async () => {
@@ -22,18 +21,4 @@ describe("ScoreTable", () => {
     const likedItem = await scoreTable.getById("nineball", item.id)
     expect(likedItem.likes).toEqual(1)
   })
-
-  /*
-  const KEY= "tables"
-
-  it("should expire old table and keep recent one", async () => {
-    const scoreTable = new ScoreTable(mockKv as VercelKV)
-    const tableOld = makeTable(Date.now() - 1000 * 60 * 60 * 24, "old")
-    await mockKv.hset(KEY, { ["old"]: tableOld })
-    await scoreTable.add("nineball", 100, "user", { some: "data" })
-    const items = await scoreTable.topTen("nineball")
-    console.log(items)
-    expect(items).toHaveLength(2)
-  })
-*/
 })

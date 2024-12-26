@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { Table } from "@/services/interfaces"
+import { Table } from "@/services/table"
 import { TableItem } from "./table"
 import { PlayModal } from "./PlayModal"
 

@@ -1,4 +1,4 @@
-import { Table } from "@/services/interfaces"
+import { Table } from "@/services/table"
 import { TableService } from "../services/TableService"
 import { mockKv } from "./mockkv"
 import { VercelKV } from "@vercel/kv"
