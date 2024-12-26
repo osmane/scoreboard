@@ -135,36 +135,6 @@ export function ServerStatus({ statusPage }: ServerStatusProps) {
     return () => clearInterval(intervalId)
   }, [checkServerStatus])
 
-  useEffect(() => {
-    let animationFrame: number
-    let startTime: number
-
-    const animate = (timestamp: number) => {
-      if (!startTime) startTime = timestamp
-      const elapsed = timestamp - startTime
-      const duration = 30000
-
-      const newProgress = Math.min((elapsed / duration) * 100, 100)
-      setProgress(newProgress)
-
-      if (elapsed < duration && !isOnline && !isConnecting) {
-        animationFrame = requestAnimationFrame(animate)
-      }
-    }
-
-    if (!isOnline && !isConnecting) {
-      setProgress(0)
-      startTime = undefined
-      animationFrame = requestAnimationFrame(animate)
-    }
-
-    return () => {
-      if (animationFrame) {
-        cancelAnimationFrame(animationFrame)
-      }
-    }
-  }, [isOnline, isConnecting])
-
   const handleShowLogs = () => {
     setShowLogs(true)
   }
