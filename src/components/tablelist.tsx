@@ -67,6 +67,7 @@ export function TableList({
                 onJoin={handleJoin}
                 onSpectate={onSpectate}
                 userId={userId}
+                userName={userName}
               />
             </motion.div>
           ))}

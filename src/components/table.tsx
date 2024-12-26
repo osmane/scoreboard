@@ -1,16 +1,20 @@
 import { Table } from "@/services/table"
 import { UserPlusIcon, EyeIcon } from "@heroicons/react/24/solid"
+import { GameUrl } from "@/utils/GameUrl"
+import { createOverlay } from "@/components/PlayModal"
 
 export function TableItem({
   table,
   onJoin,
   onSpectate,
   userId,
+  userName,
 }: {
   table: Table
   onJoin: (tableId: string) => void
   onSpectate: (tableId: string) => void
   userId: string
+  userName: string
 }) {
   const isCreator = table.creator.id === userId
 
@@ -55,6 +59,18 @@ export function TableItem({
     }
   }
 
+  const handleSpectate = () => {
+    const target = GameUrl.create({
+      tableId: table.id,
+      userName,
+      userId,
+      ruleType: table.ruleType,
+      isSpectator: true,
+    })
+    createOverlay(target, () => {})
+    onSpectate(table.id)
+  }
+
   return (
     <div
       key={table.id}
@@ -94,7 +110,7 @@ export function TableItem({
                     </button>
                   )}
                   <button
-                    onClick={() => onSpectate(table.id)}
+                    onClick={handleSpectate}
                     className="flex-1 flex items-center px-2 py-2 border border-white/50 rounded-lg bg-transparent hover:bg-gray-800/20 hover:text-white focus:outline-none focus:ring-2 focus:ring-gray-800 focus:ring-opacity-50"
                     aria-label="Spectate Table"
                   >

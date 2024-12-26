@@ -1,4 +1,5 @@
 import { useEffect } from "react"
+import { GameUrl } from "@/utils/GameUrl"
 
 const WEBSOCKET_SERVER = "wss://billiards.onrender.com/ws"
 
@@ -25,7 +26,7 @@ async function markComplete(tableId: string) {
   })
 }
 
-function createOverlay(target: URL, onClose: () => void) {
+export function createOverlay(target: URL, onClose: () => void) {
   const overlay = document.createElement("div")
   overlay.className =
     "fixed inset-0 bg-black/50 flex items-center justify-center z-50"
@@ -73,12 +74,7 @@ export function PlayModal({
 
   if (!isOpen) return null
 
-  const target = new URL("https://tailuge.github.io/billiards/dist/")
-  target.searchParams.append("websocketserver", WEBSOCKET_SERVER)
-  target.searchParams.append("tableId", tableId)
-  target.searchParams.append("name", userName)
-  target.searchParams.append("clientId", userId)
-  target.searchParams.append("ruletype", ruleType)
+  const target = GameUrl.create({ tableId, userName, userId, ruleType })
 
   const handleStartGame = async () => {
     await markComplete(tableId)
