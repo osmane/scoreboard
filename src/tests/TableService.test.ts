@@ -26,6 +26,7 @@ describe("TableService", () => {
       lastUsedAt: lastUsed,
       isActive: true,
       ruleType: "nineball",
+      completed: false,
     }
     return newTable
   }

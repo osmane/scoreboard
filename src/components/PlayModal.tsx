@@ -19,6 +19,12 @@ function useBodyOverflow(isOpen: boolean) {
   }, [isOpen])
 }
 
+async function markComplete(tableId: string) {
+  const response = await fetch(`/api/tables/${tableId}/complete`, {
+    method: "PUT",
+  })
+}
+
 function createOverlay(target: URL, onClose: () => void) {
   const overlay = document.createElement("div")
   overlay.className =
@@ -74,7 +80,8 @@ export function PlayModal({
   target.searchParams.append("clientId", userId)
   target.searchParams.append("ruletype", ruleType)
 
-  const handleStartGame = () => {
+  const handleStartGame = async () => {
+    await markComplete(tableId)
     if (isInsideIframe()) {
       createOverlay(target, onClose)
     } else {
@@ -83,6 +90,11 @@ export function PlayModal({
     if (!isInsideIframe() && onClose) {
       onClose()
     }
+  }
+
+  const handleCancel = async () => {
+    await markComplete(tableId)
+    onClose()
   }
 
   return (
@@ -102,7 +114,7 @@ export function PlayModal({
             Start Game
           </button>
           <button
-            onClick={onClose}
+            onClick={handleCancel}
             className="bg-gray-200 text-gray-800 px-6 py-3 rounded-lg hover:bg-gray-300 transition-colors"
           >
             Cancel

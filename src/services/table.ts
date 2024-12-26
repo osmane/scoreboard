@@ -9,4 +9,5 @@ export interface Table {
   lastUsedAt: number
   isActive: boolean
   ruleType: string
+  completed: boolean
 }

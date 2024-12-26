@@ -48,6 +48,7 @@ export class TableService {
       lastUsedAt: Date.now(),
       isActive: true,
       ruleType,
+      completed: false,
     }
 
     await this.store.hset(KEY, { [tableId]: newTable })
@@ -91,6 +92,20 @@ export class TableService {
 
     await this.store.hset(KEY, { [tableId]: table })
     await this.notify({ action: "spectate" })
+    return table
+  }
+
+  async completeTable(tableId: string) {
+    const table = await this.store.hget<Table>(KEY, tableId)
+
+    if (!table) {
+      throw new Error("Table not found")
+    }
+
+    table.lastUsedAt = Date.now()
+    table.completed = true
+    await this.store.hset(KEY, { [tableId]: table })
+    await this.notify({ action: "complete" })
     return table
   }
 

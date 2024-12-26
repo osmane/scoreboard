@@ -25,13 +25,19 @@ export function TableList({
     const success = await onJoin(tableId)
     if (success) {
       const table = tables.find((t) => t.id === tableId)
-      setModalTable(table ? { id: table.id, ruleType: table.ruleType } : null)
+      if (table && !table.completed) {
+        setModalTable({ id: table.id, ruleType: table.ruleType })
+      }
     }
   }
 
   useEffect(() => {
     tables.forEach((table) => {
-      if (table.creator.id === userId && table.players.length === 2) {
+      if (
+        table.creator.id === userId &&
+        table.players.length === 2 &&
+        !table.completed
+      ) {
         setModalTable({ id: table.id, ruleType: table.ruleType })
       }
     })
