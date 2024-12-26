@@ -17,10 +17,12 @@ const statusColors = {
   offline: "bg-red-200",
 }
 
+let textConnect = "Connecting..."
+
 const ConnectingStatus: React.FC = () => (
   <span className="flex items-center">
     <ArrowPathIcon className="h-4 w-4 text-yellow-500 animate-spin" />
-    <span className="ml-1 text-gray-500">Connecting...</span>
+    <span className="text-gray-500">{textConnect}</span>
   </span>
 )
 
@@ -36,6 +38,9 @@ const UserCount: React.FC<{ activeUsers: number | null }> = ({
   if (activeUsers === null) {
     return null
   }
+
+  textConnect = ""
+
   return (
     <>
       <span className="text-gray-500">{activeUsers}</span>
@@ -132,7 +137,7 @@ export function ServerStatus({ statusPage }: ServerStatusProps) {
 
   useEffect(() => {
     checkServerStatus()
-    const intervalId = setInterval(checkServerStatus, 60000)
+    const intervalId = setInterval(checkServerStatus, 10000)
     return () => clearInterval(intervalId)
   }, [checkServerStatus])
 
