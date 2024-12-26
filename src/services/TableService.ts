@@ -98,4 +98,3 @@ export class TableService {
     await new NchanPub("lobby").post(event)
   }
 }
-

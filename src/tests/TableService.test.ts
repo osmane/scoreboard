@@ -1,19 +1,18 @@
 import { Table } from "@/services/interfaces"
-//import { TableService } from "../services/TableService"
+import { TableService } from "../services/TableService"
 import { mockKv } from "./mockkv"
-//import { VercelKV } from "@vercel/kv"
+import { VercelKV } from "@vercel/kv"
 
 describe("TableService", () => {
-  //let tableService: TableService
+  let tableService: TableService
 
   beforeAll(() => {
- //   tableService = new TableService(mockKv as VercelKV, (_) =>
- //     Promise.resolve()
- //   )
+    tableService = new TableService(mockKv as VercelKV, (_) =>
+      Promise.resolve()
+    )
   })
 
   afterEach(async () => {
-    // Clear the mock Redis data after each test
     await mockKv.flushall()
   })
 
@@ -36,12 +35,11 @@ describe("TableService", () => {
     const userName = "User One"
     const ruleType = "standard"
 
-    expect(makeTable(Date.now(), "table1")).toHaveProperty("id")
-//    const newTable = await tableService.createTable(userId, userName, ruleType)
+    const newTable = await tableService.createTable(userId, userName, ruleType)
 
-//    expect(newTable).toHaveProperty("id")
+    expect(newTable).toHaveProperty("id")
     // Verify the table is stored in the mock Redis
-    //    const storedTable = await mockKv.hget("tables", newTable.id)
-    //    expect(storedTable).toEqual(newTable)
+    const tables = await tableService.getTables()
+    expect(tables).toHaveLength(1)
   })
 })

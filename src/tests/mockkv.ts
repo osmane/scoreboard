@@ -119,6 +119,62 @@ export class MockKV {
     return this.mockRedis.zrem(key, ...stringMembers)
   }
 
+  /**
+   * Adapter function to match @vercel/kv's hset signature using ioredis-mock's hset.
+   * @param key - The name of the hash.
+   * @param field - The field to set.
+   * @param value - The value to set.
+   * @returns A promise that resolves to the number of fields added.
+   */
+  async hset<TData>(key: string, kv: Record<string, TData>): Promise<number> {
+    const fieldValuePairs: [string, string][] = Object.entries(kv).map(
+      ([field, value]) => [field, JSON.stringify(value)]
+    )
+    return this.mockRedis.hset(key, ...fieldValuePairs.flat())
+  }
+
+  /**
+   * Adapter function to match @vercel/kv's hget signature using ioredis-mock's hget.
+   * @param key - The name of the hash.
+   * @param field - The field to retrieve.
+   * @returns A promise that resolves to the value of the field.
+   */
+  async hget(key: string, field: string): Promise<any> {
+    // Call ioredis-mock's hget to retrieve the value
+    const value = await this.mockRedis.hget(key, field)
+
+    // Parse the stringified JSON back into an object
+    try {
+      return JSON.parse(value)
+    } catch (e) {
+      return value
+    }
+  }
+
+  /**
+   * Adapter function to match @vercel/kv's hgetall signature using ioredis-mock's hgetall.
+   * @param key - The name of the hash.
+   * @returns A promise that resolves to an object containing all fields and values.
+   */
+  async hgetall<
+    TData extends Record<string, unknown> = Record<string, unknown>,
+  >(key: string): Promise<TData> {
+    // Call ioredis-mock's hgetall to retrieve all fields and values
+    const result = await this.mockRedis.hgetall(key)
+
+    // Parse the stringified JSON values back into objects
+    const parsedResult: Record<string, unknown> = {}
+    for (const [field, value] of Object.entries(result)) {
+      try {
+        parsedResult[field] = JSON.parse(value)
+      } catch (e) {
+        parsedResult[field] = value
+      }
+    }
+
+    return parsedResult as TData
+  }
+
   async printMockRedisData() {
     try {
       // Retrieve all keys

@@ -23,7 +23,6 @@ describe("ScoreTable", () => {
     expect(likedItem.likes).toEqual(1)
   })
 
-
   /*
   const KEY= "tables"
 
