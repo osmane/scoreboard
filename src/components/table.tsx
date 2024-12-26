@@ -14,8 +14,15 @@ export function TableItem({
 }) {
   const isCreator = table.creator.id === userId
 
-  const getTableColor = (ruleType: string, playerCount: number, completed: boolean) => {
-    if (playerCount >= 2) return completed ? "bg-gray-400 border-gray-600" : "bg-gray-700 border-gray-900"
+  const getTableColor = (
+    ruleType: string,
+    playerCount: number,
+    completed: boolean
+  ) => {
+    if (playerCount >= 2)
+      return completed
+        ? "bg-gray-400 border-gray-600"
+        : "bg-gray-700 border-gray-900"
 
     switch (ruleType) {
       case "nineball":
@@ -29,7 +36,11 @@ export function TableItem({
     }
   }
 
-  const getFeltColor = (ruleType: string, playerCount: number, completed: boolean) => {
+  const getFeltColor = (
+    ruleType: string,
+    playerCount: number,
+    completed: boolean
+  ) => {
     if (playerCount >= 2) return completed ? "bg-gray-300" : "bg-gray-500"
 
     switch (ruleType) {

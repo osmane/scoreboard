@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import { Table } from "@/services/table"
 import { TableItem } from "./table"
 import { PlayModal } from "./PlayModal"
+import { AnimatePresence, motion } from "framer-motion"
 
 export function TableList({
   userId,
@@ -43,24 +44,33 @@ export function TableList({
     })
   }, [tables, userId])
 
+  const sortedTables = [...tables].sort(
+    (a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+  )
+
   return (
     <div className="space-y-4">
       <div className="flex flex-wrap gap-3">
-        {tables.map((table) => (
-          <div
-            key={table.id}
-            className="w-full sm:w-1/2 md:w-1/4 lg:w-1/6 xl:w-1/8"
-          >
-            {" "}
-            {/* Adjust widths as needed */}
-            <TableItem
-              table={table}
-              onJoin={handleJoin}
-              onSpectate={onSpectate}
-              userId={userId}
-            />
-          </div>
-        ))}
+        <AnimatePresence>
+          {sortedTables.map((table) => (
+            <motion.div
+              key={table.id}
+              className="w-full sm:w-1/2 md:w-1/4 lg:w-1/6 xl:w-1/8"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 20 }}
+              transition={{ duration: 1, ease: "easeInOut" }}
+              layout
+            >
+              <TableItem
+                table={table}
+                onJoin={handleJoin}
+                onSpectate={onSpectate}
+                userId={userId}
+              />
+            </motion.div>
+          ))}
+        </AnimatePresence>
       </div>
       <PlayModal
         isOpen={!!modalTable}
