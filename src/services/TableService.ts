@@ -28,10 +28,9 @@ export class TableService {
       const keysToDelete = expiredEntries.map(([key, _]) => key)
       await this.store.hdel(KEY, ...keysToDelete)
 
-      console.log(`Expired and deleted ${expiredEntries.length} tables.`)
-    } else {
-      console.log("No tables to expire.")
+      console.log(`Expired ${expiredEntries.length} tables.`)
     }
+    return expiredEntries.length
   }
 
   async createTable(userId: string, userName: string, ruleType: string) {
@@ -56,9 +55,12 @@ export class TableService {
   }
 
   async joinTable(tableId: string, userId: string, userName: string) {
-    const table = await this.store.hget<Table>(KEY, tableId)
 
+    await this.expireTables()
+
+    const table = await this.store.hget<Table>(KEY, tableId)
     if (!table) {
+      await this.notify({ action: "expired table" })
       throw new Error("Table not found")
     }
 
