@@ -10,11 +10,11 @@ export function TableItem({
   userId,
   userName,
 }: {
-  table: Table
-  onJoin: (tableId: string) => void
-  onSpectate: (tableId: string) => void
-  userId: string
-  userName: string
+  readonly table: Table
+  readonly onJoin: (tableId: string) => void
+  readonly onSpectate: (tableId: string) => void
+  readonly userId: string
+  readonly userName: string
 }) {
   const isCreator = table.creator.id === userId
 

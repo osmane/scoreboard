@@ -5,9 +5,9 @@ export function CreateTable({
   userName,
   onCreate,
 }: {
-  userId: string
-  userName: string
-  onCreate: () => void
+  readonly userId: string
+  readonly userName: string
+  readonly onCreate: () => void
 }) {
   const [isLoading, setIsLoading] = useState(false)
   const [ruleType, setRuleType] = useState("nineball")

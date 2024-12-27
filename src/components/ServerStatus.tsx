@@ -80,6 +80,7 @@ const StatusIndicator: React.FC<StatusIndicatorProps> = ({
       role="button"
       className={`inline-flex items-center gap-1 text-xs px-2 py-2 rounded ${statusColors[isConnecting ? "connecting" : isOnline ? "online" : "offline"]}`}
       onClick={onClick}
+      tabIndex={0}
     >
       {isConnecting ? (
         <ConnectingStatus />

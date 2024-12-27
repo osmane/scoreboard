@@ -21,7 +21,7 @@ function useBodyOverflow(isOpen: boolean) {
 }
 
 async function markComplete(tableId: string) {
-  const response = await fetch(`/api/tables/${tableId}/complete`, {
+  await fetch(`/api/tables/${tableId}/complete`, {
     method: "PUT",
   })
 }
