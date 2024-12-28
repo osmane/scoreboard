@@ -19,7 +19,7 @@ export function Title() {
       {clicked ? (
         <SolidStarIcon className="w-4 h-4 text-yellow-500 z-10" />
       ) : (
-        <OutlineStarIcon className="w-4 h-4 text-yellow-500 z-20 transition-all duration-300               hover:text-yellow-500               hover:scale-110               hover:drop-shadow-2xl " />
+        <OutlineStarIcon className="w-4 h-4 text-yellow-500 z-20 transition-all duration-300 hover:text-red-500" />
       )}
     </button>
   )
