@@ -25,7 +25,7 @@ export function User({ userName, userId, onUserNameChange }: UserPillProps) {
 
   return (
     <div
-      className="hover:bg-gray-100 dark:hover:bg-gray-700 px-3 py-1 rounded 
+      className="hover:bg-gray-100 dark:hover:bg-gray-700 px-2 py-1 rounded 
                     bg-green-200 dark:bg-green-900/10 cursor-pointer transition-colors
                     text-sm font-medium text-gray-700 dark:text-gray-300 flex items-center gap-2"
       title={`${userName}\n${userId}`}
