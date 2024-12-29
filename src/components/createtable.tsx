@@ -46,7 +46,7 @@ export function CreateTable({
   }, [])
 
   return (
-    <div className="inline-block text-left">
+    <div className="inline-block text-left relative">
       <div className="flex items-stretch">
         <button
           onClick={handleCreate}
@@ -69,7 +69,7 @@ export function CreateTable({
       {dropdownOpen && (
         <div
           ref={dropdownRef}
-          className="w-full mt-1 bg-indigo-500 rounded-md shadow-lg z-50"
+          className="absolute mt-1 bg-indigo-500 rounded-md shadow-lg z-[100] min-w-full"
         >
           <ul className="py-1">
             {["nineball", "snooker", "threecushion"].map((type) => (
