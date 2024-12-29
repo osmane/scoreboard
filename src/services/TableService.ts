@@ -52,8 +52,7 @@ export class TableService {
     }
 
     await this.store.hset(KEY, { [tableId]: newTable })
-    await this.notify({ action: "spectate" })
-
+    await this.notify({ action: "create" })
     return newTable
   }
 

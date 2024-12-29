@@ -35,7 +35,6 @@ export default function Lobby() {
 
     fetchTables()
     const client = new NchanSub("lobby", (e) => {
-      console.log("Received nchan message:", e)
       fetchTables()
     })
     client.start()

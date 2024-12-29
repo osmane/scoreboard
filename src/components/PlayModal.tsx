@@ -1,5 +1,6 @@
 import { useEffect } from "react"
 import { GameUrl } from "@/utils/GameUrl"
+import { Table } from "@/services/table"
 
 const WEBSOCKET_SERVER = "wss://billiards.onrender.com/ws"
 
@@ -21,9 +22,11 @@ function useBodyOverflow(isOpen: boolean) {
 }
 
 async function markComplete(tableId: string) {
-  await fetch(`/api/tables/${tableId}/complete`, {
+  const response = await fetch(`/api/tables/${tableId}/complete`, {
     method: "PUT",
   })
+  const table: Table = await response.json()
+  return table.creator.id
 }
 
 export function createOverlay(target: URL, onClose: () => void) {
@@ -74,10 +77,15 @@ export function PlayModal({
 
   if (!isOpen) return null
 
-  const target = GameUrl.create({ tableId, userName, userId, ruleType })
-
   const handleStartGame = async () => {
-    await markComplete(tableId)
+    const creator = await markComplete(tableId)
+    const target = GameUrl.create({
+      tableId,
+      userName,
+      userId,
+      ruleType,
+      isCreator: userId === creator,
+    })
     if (isInsideIframe()) {
       createOverlay(target, onClose)
     } else {

@@ -66,6 +66,7 @@ export function TableItem({
       userId,
       ruleType: table.ruleType,
       isSpectator: true,
+      isCreator: false,
     })
     createOverlay(target, () => {})
     onSpectate(table.id)
