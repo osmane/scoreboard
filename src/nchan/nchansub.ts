@@ -12,7 +12,7 @@ export class NchanSub {
     notify: (event: MessageEvent) => void = (_) => {}
   ) {
     this.channel = channel
-    this.subscribeUrl = `wss://${this.base}/subscribe/${this.channel}`
+    this.subscribeUrl = `wss://${this.base}/subscribe/lobby/${this.channel}`
     this.notify = notify
   }
 

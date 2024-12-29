@@ -6,7 +6,7 @@ export class NchanPub {
 
   constructor(channel: string) {
     this.channel = channel
-    this.publishUrl = `https://${this.base}/publish/${this.channel}`
+    this.publishUrl = `https://${this.base}/publish/lobby/${this.channel}`
   }
 
   async post(event: any) {
