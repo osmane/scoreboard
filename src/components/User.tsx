@@ -1,6 +1,5 @@
 import React, { useState, useRef, useEffect } from "react"
 import { UserIcon } from "@heroicons/react/24/solid"
-import "./User.css"
 
 interface UserPillProps {
   readonly userName: string
@@ -26,11 +25,13 @@ export function User({ userName, userId, onUserNameChange }: UserPillProps) {
 
   return (
     <div
-      className="user-pill"
+      className="hover:bg-gray-100 dark:hover:bg-gray-700 px-2 py-1 rounded 
+                    bg-green-200 dark:bg-green-900/10 cursor-pointer transition-colors
+                    text-sm font-medium text-gray-700 dark:text-gray-300 flex items-center gap-2"
       title={`${userName}\n${userId}`}
       onClick={() => setIsEditing(true)}
     >
-      <UserIcon className="user-pill-icon" />
+      <UserIcon className="h-4 w-4 text-gray-500 dark:text-gray-400" />
       {isEditing ? (
         <input
           ref={inputRef}
@@ -40,7 +41,7 @@ export function User({ userName, userId, onUserNameChange }: UserPillProps) {
           onChange={(e) => setNewUserName(e.target.value)}
           onBlur={handleSave}
           onKeyDown={(e) => e.key === "Enter" && handleSave()}
-          className="user-pill-input"
+          className="bg-transparent text-gray-700 dark:text-gray-300 outline-none w-full"
         />
       ) : (
         userName
