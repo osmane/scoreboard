@@ -23,8 +23,8 @@ export class TableService {
     const tables = await this.store.hgetall<Record<string, Table>>(KEY)
     const expiredEntries = Object.entries(tables || {}).filter(
       ([, table]) =>
-        Date.now() - table.lastUsedAt > TABLE_TIMEOUT &&
-        table.players.length !== 2
+        Date.now() - table.lastUsedAt >
+        (table.players.length > 1 ? TABLE_TIMEOUT * 10 : TABLE_TIMEOUT)
     )
     //delete these tables
     if (expiredEntries.length > 0) {
