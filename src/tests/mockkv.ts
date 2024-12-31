@@ -68,18 +68,6 @@ export class MockKV {
       ? await this.mockRedis.zrange(key, start, stop, "WITHSCORES")
       : await this.mockRedis.zrange(key, start, stop)
 
-    // If WITHSCORES was used, process the result into [member, score] tuples
-    if (withScores) {
-      const tuples: [string, number][] = []
-      for (let i = 0; i < result.length; i += 2) {
-        const member = result[i]
-        const score = parseFloat(result[i + 1])
-        tuples.push([member, score])
-      }
-      return tuples
-    }
-
-    // If no scores, parse the stringified JSON back into an object
     return result.map((item) => {
       try {
         return JSON.parse(item)
@@ -117,6 +105,17 @@ export class MockKV {
 
     // Call ioredis-mock's zrem with the prepared arguments
     return this.mockRedis.zrem(key, ...stringMembers)
+  }
+
+  async zscore<TData>(key: string, member: TData): Promise<number | null> {
+    // Convert member to string to match ioredis-mock format
+    const stringMember = JSON.stringify(member)
+
+    // Call ioredis-mock's zscore with the stringified member
+    const score = await this.mockRedis.zscore(key, stringMember)
+
+    // Return null if no score found, otherwise return the parsed number
+    return score === null ? null : parseFloat(score)
   }
 
   /**
