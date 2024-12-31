@@ -6,10 +6,16 @@
     <meta charset="utf-8" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="description" content="billiards usage" />
+    <link rel="stylesheet" type="text/css" href="leaderboard.css" />
   </head>
 
   <body>
-    <div id="lobby"></div>
+    <div class="leaderboards">
+      <div id="lobby" class="leaderboard"></div>
+      <div id="createTable" class="leaderboard"></div>
+      <div id="joinTable" class="leaderboard"></div>
+      <div id="game" class="leaderboard"></div>
+    </div>
 
     <script
       src="https://cdn.plot.ly/plotly-cartesian-3.0.0-rc.0.min.js"
@@ -19,6 +25,9 @@
 
     <script type="module">
       plotMetric("lobby")
+      plotMetric("createTable")
+      plotMetric("joinTable")
+      plotMetric("game")
 
       async function getData(url) {
         const response = await fetch(url)
@@ -51,7 +60,14 @@
         ]
 
         const layout = {
-          title: "Clicks Per Day",
+          title: {
+            text: metric,
+            font: {
+              family: "Arial, sans-serif",
+              size: 12,
+              color: "black",
+            },
+          },
           xaxis: {
             title: "Date",
             type: "category",

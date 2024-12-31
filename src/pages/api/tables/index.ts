@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next"
 import { TableService } from "@/services/TableService"
+import { markUsageFromServer } from "@/utils/usage"
 
 const tableService = new TableService()
 
@@ -14,6 +15,7 @@ export default async function handler(
     console.log("Create table request")
     const { userId, userName, ruleType } = req.body
     const newTable = await tableService.createTable(userId, userName, ruleType)
+    markUsageFromServer("createTable")
     res.status(201).json(newTable)
   }
 }

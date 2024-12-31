@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next"
 import { TableService } from "@/services/TableService"
+import { markUsageFromServer } from "@/utils/usage"
 
 const tableService = new TableService()
 
@@ -17,6 +18,7 @@ export default async function handler(
         userId,
         userName
       )
+      markUsageFromServer("joinTable")
       res.status(200).json(table)
     } catch (error) {
       res.status(400).json({ error: error.message })
