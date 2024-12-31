@@ -8,6 +8,7 @@ import Head from "next/head"
 import { Table } from "@/services/table"
 import { NchanSub } from "@/nchan/nchansub"
 import { Title } from "@/components/Title"
+import { markUsage } from "@/utils/usage"
 
 export default function Lobby() {
   const [userId, setUserId] = useState("")
@@ -23,6 +24,7 @@ export default function Lobby() {
   }
 
   useEffect(() => {
+    markUsage("lobby")
     const storedUserId = crypto.randomUUID().slice(0, 8)
     const urlUserName = searchParams.get("username")
     const storedUserName =
