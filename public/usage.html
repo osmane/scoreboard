@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Usage</title>
+    <link rel="icon" type="image/png" href="golden-cup.png" />
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="description" content="billiards usage" />
+  </head>
+
+  <body>
+    <div id="clicks"></div>
+
+    <script
+      src="https://cdn.plot.ly/plotly-cartesian-3.0.0-rc.0.min.js"
+      integrity="sha384-k9BNvphELWyBtQVTUBS5YYM9SAb3H4NoA6hxg6YARuWJqdp+yp8F3mJN405LN+KC"
+      crossorigin="anonymous"
+    ></script>
+
+    <script type="module">
+      async function getData(url = "") {
+        const response = await fetch(url)
+        return response.json()
+      }
+
+      async function showData(ruletype) {
+        const params = new URLSearchParams({ ruletype })
+        const url = `/api/usage/clicks`
+        const rawData = await getData(url)
+        // e.g rawData = [ { "date": "2024-12-30" }, 1, { "date": "2024-12-31" }, 3 ]
+        const data = []
+
+        // Convert raw data into a usable format for Plotly
+        for (let i = 0; i < rawData.length; i += 2) {
+          data.push({ date: rawData[i].date, clicks: rawData[i + 1] })
+        }
+
+        // Prepare data for Plotly
+        const dates = data.map((item) => item.date)
+        const clicks = data.map((item) => item.clicks)
+
+        const plotData = [
+          {
+            x: dates,
+            y: clicks,
+            type: "scatter",
+            mode: "lines+markers",
+            marker: { color: "blue" },
+          },
+        ]
+
+        const layout = {
+          title: "Clicks Per Day",
+          xaxis: {
+            title: "Date",
+            type: "category",
+          },
+          yaxis: {
+            title: "Clicks",
+          },
+        }
+
+        // Render the chart
+        Plotly.newPlot("clicks", plotData, layout)
+      }
+
+      showData()
+    </script>
+  </body>
+</html>
