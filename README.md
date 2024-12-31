@@ -32,3 +32,5 @@ yarn test
 yarn coverage
 ```
 [multi lobby](https://scoreboard-tailuge.vercel.app/test.html)
+
+[usage](https://scoreboard-tailuge.vercel.app/usage.html)
