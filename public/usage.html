@@ -45,6 +45,8 @@
           data.push({ date: rawData[i].date, clicks: rawData[i + 1] })
         }
 
+        data.sort((a, b) => new Date(a.date) - new Date(b.date))
+
         // Prepare data for Plotly
         const dates = data.map((item) => item.date)
         const clicks = data.map((item) => item.clicks)

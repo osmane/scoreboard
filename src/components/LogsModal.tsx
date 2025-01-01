@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react"
 import { useRouter } from "next/router"
 import { Table } from "@/services/table"
+import Link from "next/link"
 
 interface LogsModalProps {
   showLogs: boolean
@@ -36,12 +37,22 @@ const LogsModal: React.FC<LogsModalProps> = ({ showLogs, onClose }) => {
     <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 z-20 flex items-center justify-center">
       <div className="relative w-3/4 h-3/4 bg-white shadow-lg">
         <button
-          className="absolute top-2 right-2 text-black-500 text-xl"
+          className="absolute top-0 right-1 text-black text-l"
           onClick={onClose}
         >
           ✖
         </button>
         <div className="p-4 h-full overflow-auto">
+          <div className="flex justify-between items-center mb-4">
+            <h4 className="text-xs font-bold">Active Tables</h4>
+            <Link
+              href="./usage.html"
+              className="text-blue-600 text-xs hover:text-blue-800 underline"
+              target="_blank"
+            >
+              Usage
+            </Link>
+          </div>
           {tables.map((table) => (
             <div key={table.id} className="border rounded mb-1">
               <div

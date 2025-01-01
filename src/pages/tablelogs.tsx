@@ -19,36 +19,12 @@ export default function TableLogs() {
   )
 
   const filterConsecutiveAimMessages = (messages: string[]): string[] => {
-    return messages.reduce((acc: string[], message: string, index: number) => {
-      try {
-        const currentMsg = JSON.parse(message)
-        if (currentMsg.type !== "AIM") {
-          acc.push(message)
-          return acc
-        }
-
-        // Look ahead to see if next message is also AIM
-        const nextMessage = messages[index + 1]
-        if (!nextMessage) {
-          acc.push(message)
-          return acc
-        }
-
-        try {
-          const nextMsg = JSON.parse(nextMessage)
-          if (nextMsg.type !== "AIM") {
-            acc.push(message)
-          }
-        } catch {
-          acc.push(message)
-        }
-
-        return acc
-      } catch {
-        acc.push(message)
-        return acc
-      }
-    }, [])
+    return messages.filter((message, index) => {
+      const currentMsg = JSON.parse(message)
+      const nextMsg =
+        index + 1 < messages.length ? JSON.parse(messages[index + 1]) : null
+      return currentMsg.type !== "AIM" || !nextMsg || nextMsg.type !== "AIM"
+    })
   }
 
   useEffect(() => {
@@ -108,7 +84,7 @@ export default function TableLogs() {
               {parsedMessage.clientId} {parsedMessage.type}
             </div>
             {isExpanded && (
-              <div className="text-gray-600 pl-4">
+              <div className="text-black pl-4">
                 {JSON.stringify(parsedMessage, null, 2)}
               </div>
             )}
