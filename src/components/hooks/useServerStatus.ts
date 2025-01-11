@@ -71,5 +71,5 @@ export function useServerStatus(statusPage: string) {
     checkServerStatus()
   }, [checkServerStatus])
 
-  return state
+  return { ...state, fetchActiveUsers }
 }

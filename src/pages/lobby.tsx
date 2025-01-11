@@ -9,6 +9,7 @@ import { Table } from "@/services/table"
 import { NchanSub } from "@/nchan/nchansub"
 import { Title } from "@/components/Title"
 import { markUsage } from "@/utils/usage"
+import { useServerStatus } from "@/components/hooks/useServerStatus"
 
 export default function Lobby() {
   const [userId, setUserId] = useState("")
@@ -22,6 +23,8 @@ export default function Lobby() {
     const data = await res.json()
     setTables(data)
   }
+
+  const { fetchActiveUsers } = useServerStatus(statusPage)
 
   useEffect(() => {
     markUsage("lobby")
@@ -38,13 +41,14 @@ export default function Lobby() {
     fetchTables()
     const client = new NchanSub("lobby", (e) => {
       if (JSON.parse(e)?.action === "connected") {
+        fetchActiveUsers()
         return
       }
       fetchTables()
     })
     client.start()
     return () => client.stop()
-  }, [searchParams])
+  }, [searchParams, fetchActiveUsers])
 
   const handleJoin = async (tableId: string) => {
     const response = await fetch(`/api/tables/${tableId}/join`, {
