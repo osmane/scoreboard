@@ -19,3 +19,40 @@ body {
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* Server Status Component Styles */
+.status-indicator {
+  @apply inline-flex items-center gap-1 text-xs px-2 py-2 rounded;
+}
+
+.status-connecting {
+  @apply bg-yellow-200;
+}
+
+.status-online {
+  @apply bg-green-200;
+}
+
+.status-offline {
+  @apply bg-red-200;
+}
+
+.status-icon {
+  @apply h-4 w-4;
+}
+
+.status-icon-connecting {
+  @apply text-yellow-500 animate-spin;
+}
+
+.status-icon-online {
+  @apply text-green-500;
+}
+
+.status-icon-offline {
+  @apply text-gray-400;
+}
+
+.status-text {
+  @apply text-gray-500;
+}

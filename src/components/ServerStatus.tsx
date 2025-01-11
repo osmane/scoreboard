@@ -21,14 +21,14 @@ let textConnect = "Connecting..."
 
 const ConnectingStatus: React.FC = () => (
   <span className="flex items-center">
-    <ArrowPathIcon className="h-4 w-4 text-yellow-500 animate-spin" />
-    <span className="text-gray-500">{textConnect}</span>
+    <ArrowPathIcon className="status-icon status-icon-connecting" />
+    <span className="status-text">{textConnect}</span>
   </span>
 )
 
 const OnlineStatus: React.FC<{ isOnline: boolean }> = ({ isOnline }) => (
   <ComputerDesktopIcon
-    className={`${isOnline ? "text-green-500" : "text-gray-400"} h-4 w-4`}
+    className={`status-icon ${isOnline ? "status-icon-online" : "status-icon-offline"}`}
   />
 )
 
@@ -43,8 +43,8 @@ const UserCount: React.FC<{ activeUsers: number | null }> = ({
 
   return (
     <>
-      <span className="text-gray-500">{activeUsers}</span>
-      <UsersIcon className="text-gray-500 h-4 w-4" />
+      <span className="status-text">{activeUsers}</span>
+      <UsersIcon className="status-icon status-text" />
     </>
   )
 }
@@ -57,7 +57,7 @@ const ServerStatusText: React.FC<{
   if (isOnline || isConnecting) {
     return null
   }
-  return <span className="text-gray-500">{serverStatus}</span>
+  return <span className="status-text">{serverStatus}</span>
 }
 
 interface StatusIndicatorProps {
@@ -75,9 +75,15 @@ const StatusIndicator: React.FC<StatusIndicatorProps> = ({
   serverStatus,
   onClick,
 }) => {
+  const statusClass = isConnecting 
+    ? "status-connecting" 
+    : isOnline 
+      ? "status-online" 
+      : "status-offline"
+
   return (
     <button
-      className={`inline-flex items-center gap-1 text-xs px-2 py-2 rounded ${statusColors[isConnecting ? "connecting" : isOnline ? "online" : "offline"]}`}
+      className={`status-indicator ${statusClass}`}
       onClick={onClick}
     >
       {isConnecting ? (
