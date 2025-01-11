@@ -8,8 +8,7 @@ export const config = {
 export default async function handler(req: NextRequest) {
   if (req.method === "GET") {
     console.log(`connected`)
-    await new NchanPub("lobby").post({action:"connected"})      
+    await new NchanPub("lobby").post({ action: "connected" })
     return Response.json({ success: true })
   }
 }
-

@@ -16,6 +16,22 @@ export function useServerStatus(statusPage: string) {
     activeUsers: null,
   })
 
+  const fetchActiveUsers = useCallback(async () => {
+    try {
+      const users = await new NchanPub("lobby").get()
+      console.log("active users:", users)
+      setState((prev) => ({ ...prev, activeUsers: users }))
+    } catch {
+      setState((prev) => ({ ...prev, activeUsers: null }))
+    }
+  }, [])
+
+  const registerConnected = useCallback(async () => {
+    await fetch("/api/connected", {
+      method: "GET",
+    })
+  }, [])
+
   const checkServerStatus = useCallback(async () => {
     setState((prev) => ({ ...prev, isConnecting: true }))
 
@@ -31,7 +47,8 @@ export function useServerStatus(statusPage: string) {
           serverStatus: "Server OK",
           isOnline: true,
         }))
-        registerConnected()
+        await registerConnected()
+        fetchActiveUsers()
       } else {
         setState((prev) => ({
           ...prev,
@@ -48,26 +65,11 @@ export function useServerStatus(statusPage: string) {
     } finally {
       setState((prev) => ({ ...prev, isConnecting: false }))
     }
-
-    try {
-      const users = await new NchanPub("lobby").get()
-      setState((prev) => ({ ...prev, activeUsers: users }))
-    } catch {
-      setState((prev) => ({ ...prev, activeUsers: null }))
-    }
-  }, [statusPage])
+  }, [statusPage, registerConnected, fetchActiveUsers])
 
   useEffect(() => {
     checkServerStatus()
-    const intervalId = setInterval(checkServerStatus, 60000)
-    return () => clearInterval(intervalId)
   }, [checkServerStatus])
 
   return state
-}
-
-async function registerConnected() {
-  fetch("/api/connected", {
-    method: "GET",
-  })
 }
