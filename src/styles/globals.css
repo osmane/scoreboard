@@ -56,3 +56,44 @@ body {
 .status-text {
   @apply text-gray-500;
 }
+
+/* CreateTable Component Styles */
+.game-button-group {
+  @apply inline-block text-left relative;
+}
+
+.game-button {
+  @apply px-4 py-1 text-white flex items-center;
+}
+
+.game-button-main {
+  @apply game-button rounded-l-md;
+}
+
+.game-button-dropdown {
+  @apply game-button px-2 rounded-r-md border-l border-indigo-400;
+}
+
+.game-button-enabled {
+  @apply bg-indigo-500 hover:bg-indigo-600;
+}
+
+.game-button-disabled {
+  @apply bg-gray-400 cursor-not-allowed;
+}
+
+.game-dropdown {
+  @apply absolute mt-1 bg-indigo-500 rounded-md shadow-lg z-[100] min-w-full;
+}
+
+.game-dropdown-list {
+  @apply py-1;
+}
+
+.game-dropdown-item {
+  @apply px-4 py-2 text-white cursor-pointer hover:bg-indigo-600;
+}
+
+.game-dropdown-item-selected {
+  @apply font-semibold;
+}

@@ -46,37 +46,32 @@ export function CreateTable({
   }, [])
 
   return (
-    <div className="inline-block text-left relative">
+    <div className="game-button-group">
       <div className="flex items-stretch">
         <button
           onClick={handleCreate}
           disabled={isLoading}
-          className={`px-4 py-1 text-white rounded-l-md flex items-center ${
-            isLoading
-              ? "bg-gray-400 cursor-not-allowed"
-              : "bg-indigo-500 hover:bg-indigo-600"
+          className={`game-button-main ${
+            isLoading ? "game-button-disabled" : "game-button-enabled"
           }`}
         >
           Play {ruleType.charAt(0).toUpperCase() + ruleType.slice(1)}
         </button>
         <button
           onClick={() => setDropdownOpen((prev) => !prev)}
-          className="px-2 py-1 text-white bg-indigo-500 hover:bg-indigo-600 rounded-r-md flex items-center justify-center border-l border-indigo-400"
+          className="game-button-dropdown game-button-enabled"
         >
           ▼
         </button>
       </div>
       {dropdownOpen && (
-        <div
-          ref={dropdownRef}
-          className="absolute mt-1 bg-indigo-500 rounded-md shadow-lg z-[100] min-w-full"
-        >
-          <ul className="py-1">
+        <div ref={dropdownRef} className="game-dropdown">
+          <ul className="game-dropdown-list">
             {["nineball", "snooker", "threecushion"].map((type) => (
               <li
                 key={type}
-                className={`px-4 py-2 text-white cursor-pointer hover:bg-indigo-600 ${
-                  ruleType === type ? "font-semibold" : ""
+                className={`game-dropdown-item ${
+                  ruleType === type ? "game-dropdown-item-selected" : ""
                 }`}
                 onClick={() => {
                   setRuleType(type)
