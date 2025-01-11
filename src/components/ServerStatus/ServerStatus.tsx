@@ -1,7 +1,7 @@
-import { FC, useState } from 'react'
-import { StatusIndicator } from './StatusIndicator'
-import { LogsModal } from './LogsModal'
-import { useServerStatus } from '../hooks/useServerStatus'
+import { FC, useState } from "react"
+import { StatusIndicator } from "./StatusIndicator"
+import { LogsModal } from "./LogsModal"
+import { useServerStatus } from "../hooks/useServerStatus"
 
 interface ServerStatusProps {
   readonly statusPage: string
@@ -13,14 +13,8 @@ export const ServerStatus: FC<ServerStatusProps> = ({ statusPage }) => {
 
   return (
     <div className="relative">
-      <StatusIndicator
-        {...serverState}
-        onClick={() => setShowLogs(true)}
-      />
-      <LogsModal 
-        showLogs={showLogs} 
-        onClose={() => setShowLogs(false)} 
-      />
+      <StatusIndicator {...serverState} onClick={() => setShowLogs(true)} />
+      <LogsModal showLogs={showLogs} onClose={() => setShowLogs(false)} />
     </div>
   )
 }

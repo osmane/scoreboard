@@ -52,11 +52,13 @@ export function CreateTable({
     <div className="game-button-group">
       <div className="flex items-stretch">
         <button
-          key={isOnline ? 'online' : 'offline'} // Add key to force re-render
+          key={isOnline ? "online" : "offline"} // Add key to force re-render
           onClick={handleCreate}
           disabled={isLoading || !isOnline}
           className={`game-button-main ${
-            !isOnline || isLoading ? "game-button-disabled" : "game-button-enabled"
+            !isOnline || isLoading
+              ? "game-button-disabled"
+              : "game-button-enabled"
           }`}
           title={!isOnline ? "Server offline" : ""}
         >

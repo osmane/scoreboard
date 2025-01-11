@@ -1,10 +1,10 @@
-import { FC } from 'react'
+import { FC } from "react"
 import {
   ArrowPathIcon,
   ComputerDesktopIcon,
   UsersIcon,
 } from "@heroicons/react/24/outline"
-import type { ServerStatusState } from '../hooks/useServerStatus'
+import type { ServerStatusState } from "../hooks/useServerStatus"
 
 let textConnect = "Connecting..."
 
@@ -32,10 +32,11 @@ const UserCount: FC<{ activeUsers: number | null }> = ({ activeUsers }) => {
   )
 }
 
-const ServerStatusText: FC<Pick<ServerStatusState, 'serverStatus' | 'isOnline' | 'isConnecting'>> = 
-  ({ serverStatus, isOnline, isConnecting }) => {
-    if (isOnline || isConnecting) return null
-    return <span className="status-text">{serverStatus}</span>
+const ServerStatusText: FC<
+  Pick<ServerStatusState, "serverStatus" | "isOnline" | "isConnecting">
+> = ({ serverStatus, isOnline, isConnecting }) => {
+  if (isOnline || isConnecting) return null
+  return <span className="status-text">{serverStatus}</span>
 }
 
 interface StatusIndicatorProps extends ServerStatusState {
@@ -49,17 +50,14 @@ export const StatusIndicator: FC<StatusIndicatorProps> = ({
   serverStatus,
   onClick,
 }) => {
-  const statusClass = isConnecting 
-    ? "status-connecting" 
-    : isOnline 
-      ? "status-online" 
+  const statusClass = isConnecting
+    ? "status-connecting"
+    : isOnline
+      ? "status-online"
       : "status-offline"
 
   return (
-    <button
-      className={`status-indicator ${statusClass}`}
-      onClick={onClick}
-    >
+    <button className={`status-indicator ${statusClass}`} onClick={onClick}>
       {isConnecting ? (
         <ConnectingStatus />
       ) : (

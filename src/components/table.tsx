@@ -18,14 +18,23 @@ export function TableItem({
 }) {
   const isCreator = table.creator.id === userId
 
-  const getTableClass = (ruleType: string, playerCount: number, completed: boolean) => {
-    if (playerCount >= 2) return completed ? 'table-completed' : 'table-occupied'
-    return `table-${ruleType}` || 'table-default'
+  const getTableClass = (
+    ruleType: string,
+    playerCount: number,
+    completed: boolean
+  ) => {
+    if (playerCount >= 2)
+      return completed ? "table-completed" : "table-occupied"
+    return `table-${ruleType}` || "table-default"
   }
 
-  const getFeltClass = (ruleType: string, playerCount: number, completed: boolean) => {
-    if (playerCount >= 2) return completed ? 'felt-completed' : 'felt-default'
-    return `felt-${ruleType}` || 'felt-default'
+  const getFeltClass = (
+    ruleType: string,
+    playerCount: number,
+    completed: boolean
+  ) => {
+    if (playerCount >= 2) return completed ? "felt-completed" : "felt-default"
+    return `felt-${ruleType}` || "felt-default"
   }
 
   const handleSpectate = () => {
@@ -42,28 +51,43 @@ export function TableItem({
   }
 
   return (
-    <div className={`table-card ${getTableClass(table.ruleType, table.players.length, table.completed)} ${isCreator ? 'table-card-creator' : ''}`}>
+    <div
+      className={`table-card ${getTableClass(table.ruleType, table.players.length, table.completed)} ${isCreator ? "table-card-creator" : ""}`}
+    >
       <div className="table-container">
         <div className="table-inner">
-          <div className={`table-felt ${getFeltClass(table.ruleType, table.players.length, table.completed)}`}></div>
+          <div
+            className={`table-felt ${getFeltClass(table.ruleType, table.players.length, table.completed)}`}
+          ></div>
           <div className="table-content">
             <div className="text-center">
               <p className="table-title">{table.ruleType}</p>
               <p className="table-players">
-                {table.creator.name} vs {table.players.length > 1 ? table.players[1].name : "..."}
+                {table.creator.name} vs{" "}
+                {table.players.length > 1 ? table.players[1].name : "..."}
               </p>
             </div>
             <div className="table-actions">
               {!isCreator && (
                 <>
                   {table.players.length < 2 && (
-                    <button onClick={() => onJoin(table.id)} className="table-button" aria-label="Join Table">
+                    <button
+                      onClick={() => onJoin(table.id)}
+                      className="table-button"
+                      aria-label="Join Table"
+                    >
                       <UserPlusIcon className="h-5 w-5 text-white" />
                     </button>
                   )}
-                  <button onClick={handleSpectate} className="table-button" aria-label="Spectate Table">
+                  <button
+                    onClick={handleSpectate}
+                    className="table-button"
+                    aria-label="Spectate Table"
+                  >
                     <EyeIcon className="h-5 w-5 text-white" />
-                    <span className="table-spectator-count">{table.spectators.length}</span>
+                    <span className="table-spectator-count">
+                      {table.spectators.length}
+                    </span>
                   </button>
                 </>
               )}

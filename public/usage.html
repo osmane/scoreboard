@@ -13,7 +13,7 @@
         margin: 0;
         padding: 0;
         box-sizing: border-box;
-        font-family: 'Segoe UI', sans-serif;
+        font-family: "Segoe UI", sans-serif;
       }
 
       body {
@@ -44,7 +44,9 @@
         border-radius: 8px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         padding: 1px;
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        transition:
+          transform 0.3s ease,
+          box-shadow 0.3s ease;
         min-height: 360px; /* Ensure graphs are visible */
         overflow: hidden;
       }
@@ -97,8 +99,14 @@
   <body>
     <h1>Billiards Usage Dashboard</h1>
     <div class="server-stats-links">
-      <a href="https://vercel.com/tailuges-projects/~/usage" target="_blank">Vercel Server Stats</a>
-      <a href="https://dashboard.render.com/web/srv-ctk5bmtds78s73eteil0/metrics" target="_blank">Render Server Stats</a>
+      <a href="https://vercel.com/tailuges-projects/~/usage" target="_blank"
+        >Vercel Server Stats</a
+      >
+      <a
+        href="https://dashboard.render.com/web/srv-ctk5bmtds78s73eteil0/metrics"
+        target="_blank"
+        >Render Server Stats</a
+      >
     </div>
     <div class="leaderboards">
       <div id="lobby" class="leaderboard"></div>
@@ -114,32 +122,32 @@
     ></script>
 
     <script type="module">
-      plotMetric("lobby");
-      plotMetric("createTable");
-      plotMetric("joinTable");
-      plotMetric("game");
+      plotMetric("lobby")
+      plotMetric("createTable")
+      plotMetric("joinTable")
+      plotMetric("game")
 
       async function getData(url) {
-        const response = await fetch(url);
-        return response.json();
+        const response = await fetch(url)
+        return response.json()
       }
 
       async function plotMetric(metric) {
-        const url = `/api/usage/${metric}`;
-        const rawData = await getData(url);
+        const url = `/api/usage/${metric}`
+        const rawData = await getData(url)
         // e.g rawData = [ { "date": "2024-12-30" }, 1, { "date": "2024-12-31" }, 3 ]
-        const data = [];
+        const data = []
 
         // Convert raw data into a usable format for Plotly
         for (let i = 0; i < rawData.length; i += 2) {
-          data.push({ date: rawData[i].date, clicks: rawData[i + 1] });
+          data.push({ date: rawData[i].date, clicks: rawData[i + 1] })
         }
 
-        data.sort((a, b) => new Date(a.date) - new Date(b.date));
+        data.sort((a, b) => new Date(a.date) - new Date(b.date))
 
         // Prepare data for Plotly
-        const dates = data.map((item) => item.date);
-        const clicks = data.map((item) => item.clicks);
+        const dates = data.map((item) => item.date)
+        const clicks = data.map((item) => item.clicks)
 
         const plotData = [
           {
@@ -152,7 +160,7 @@
             hoverinfo: "x+y",
             hovertemplate: "<b>%{x}</b><br>Clicks: %{y}<extra></extra>",
           },
-        ];
+        ]
 
         const layout = {
           title: {
@@ -177,10 +185,10 @@
           paper_bgcolor: "#fff",
           hovermode: "closest",
           margin: { t: 40, r: 20, b: 60, l: 60 },
-        };
+        }
 
         // Render the chart
-        Plotly.newPlot(metric, plotData, layout);
+        Plotly.newPlot(metric, plotData, layout)
       }
     </script>
   </body>

@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from 'react'
+import { useState, useCallback, useEffect } from "react"
 import { NchanPub } from "../../nchan/nchanpub"
 
 export interface ServerStatusState {
@@ -13,11 +13,11 @@ export function useServerStatus(statusPage: string) {
     serverStatus: null,
     isOnline: false,
     isConnecting: true,
-    activeUsers: null
+    activeUsers: null,
   })
 
   const checkServerStatus = useCallback(async () => {
-    setState(prev => ({ ...prev, isConnecting: true }))
+    setState((prev) => ({ ...prev, isConnecting: true }))
 
     try {
       const response = await fetch(statusPage, {
@@ -26,33 +26,33 @@ export function useServerStatus(statusPage: string) {
       })
 
       if (response?.type === "opaque" || response?.ok) {
-        setState(prev => ({
+        setState((prev) => ({
           ...prev,
           serverStatus: "Server OK",
-          isOnline: true
+          isOnline: true,
         }))
       } else {
-        setState(prev => ({
+        setState((prev) => ({
           ...prev,
           serverStatus: `Server Issue: ${response.status} ${response.statusText}`,
-          isOnline: false
+          isOnline: false,
         }))
       }
     } catch (error: any) {
-      setState(prev => ({
+      setState((prev) => ({
         ...prev,
         serverStatus: `Server Down: ${error.message}`,
-        isOnline: false
+        isOnline: false,
       }))
     } finally {
-      setState(prev => ({ ...prev, isConnecting: false }))
+      setState((prev) => ({ ...prev, isConnecting: false }))
     }
 
     try {
       const users = await new NchanPub("lobby").get()
-      setState(prev => ({ ...prev, activeUsers: users }))
+      setState((prev) => ({ ...prev, activeUsers: users }))
     } catch {
-      setState(prev => ({ ...prev, activeUsers: null }))
+      setState((prev) => ({ ...prev, activeUsers: null }))
     }
   }, [statusPage])
 

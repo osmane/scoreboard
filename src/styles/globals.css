@@ -120,7 +120,7 @@ body {
 
 .table-felt {
   @apply absolute inset-2 rounded-lg;
-  box-shadow: inset 0 4px 5px rgba(0,0,0,0.6);
+  box-shadow: inset 0 4px 5px rgba(0, 0, 0, 0.6);
 }
 
 .table-content {

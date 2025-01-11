@@ -12,7 +12,10 @@
     "coverage": "jest --coverage --config src/tests/jest.config.js",
     "test": "jest --config src/tests/jest.config.js",
     "docker:build": "docker buildx build --platform linux/amd64 -f ./src/nchan/Dockerfile -t tailuge/billiards-network ./src/nchan",
-    "docker:push": "docker push tailuge/billiards-network"
+    "docker:push": "docker push tailuge/billiards-network",
+    "e2e": "playwright test",
+    "e2e:headed": "playwright test --headed",
+    "e2e:local": "TEST_URL=http://localhost:3001/ playwright test --headed"
   },
   "keywords": [
     "next",
@@ -35,6 +38,7 @@
     "react-dom": "latest"
   },
   "devDependencies": {
+    "@playwright/test": "^1.49.1",
     "@types/ioredis-mock": "^8.2.5",
     "@types/jest": "^29.5.14",
     "@types/react": "19.0.4",
