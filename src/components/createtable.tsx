@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react"
+import { useServerStatus } from "./hooks/useServerStatus"
 
 export function CreateTable({
   userId,
@@ -13,6 +14,8 @@ export function CreateTable({
   const [ruleType, setRuleType] = useState("nineball")
   const [dropdownOpen, setDropdownOpen] = useState(false)
   const dropdownRef = useRef<HTMLDivElement>(null)
+  const statusPage = "https://billiards-network.onrender.com/basic_status"
+  const { isOnline } = useServerStatus(statusPage)
 
   const handleCreate = async () => {
     setIsLoading(true)
@@ -49,17 +52,22 @@ export function CreateTable({
     <div className="game-button-group">
       <div className="flex items-stretch">
         <button
+          key={isOnline ? 'online' : 'offline'} // Add key to force re-render
           onClick={handleCreate}
-          disabled={isLoading}
+          disabled={isLoading || !isOnline}
           className={`game-button-main ${
-            isLoading ? "game-button-disabled" : "game-button-enabled"
+            !isOnline || isLoading ? "game-button-disabled" : "game-button-enabled"
           }`}
+          title={!isOnline ? "Server offline" : ""}
         >
           Play {ruleType.charAt(0).toUpperCase() + ruleType.slice(1)}
         </button>
         <button
           onClick={() => setDropdownOpen((prev) => !prev)}
-          className="game-button-dropdown game-button-enabled"
+          disabled={!isOnline}
+          className={`game-button-dropdown ${
+            !isOnline ? "game-button-disabled" : "game-button-enabled"
+          }`}
         >
           ▼
         </button>
