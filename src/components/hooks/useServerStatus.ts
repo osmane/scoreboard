@@ -31,6 +31,7 @@ export function useServerStatus(statusPage: string) {
           serverStatus: "Server OK",
           isOnline: true,
         }))
+        registerConnected()
       } else {
         setState((prev) => ({
           ...prev,
@@ -63,4 +64,10 @@ export function useServerStatus(statusPage: string) {
   }, [checkServerStatus])
 
   return state
+}
+
+async function registerConnected() {
+  fetch("/api/connected", {
+    method: "GET",
+  })
 }

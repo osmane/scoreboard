@@ -37,6 +37,9 @@ export default function Lobby() {
 
     fetchTables()
     const client = new NchanSub("lobby", (e) => {
+      if (JSON.parse(e)?.action === "connected") {
+        return
+      }
       fetchTables()
     })
     client.start()

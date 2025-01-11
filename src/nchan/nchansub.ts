@@ -1,7 +1,7 @@
 export class NchanSub {
   private socket: WebSocket | null = null
   private readonly subscribeUrl: string
-  private readonly notify: (event: MessageEvent) => void = () => {}
+  private readonly notify: (event: string) => void = () => {}
   private shouldReconnect: boolean = false
   private reconnectTimeout: NodeJS.Timeout | null = null
   private readonly base = "billiards-network.onrender.com"
@@ -9,7 +9,7 @@ export class NchanSub {
 
   constructor(
     channel: string,
-    notify: (event: MessageEvent) => void = (_) => {},
+    notify: (event: string) => void = (_) => {},
     channelType: string = "lobby"
   ) {
     this.channel = channel
