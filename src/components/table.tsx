@@ -79,16 +79,18 @@ export function TableItem({
                       <UserPlusIcon className="h-5 w-5 text-white" />
                     </button>
                   )}
-                  <button
-                    onClick={handleSpectate}
-                    className="table-button"
-                    aria-label="Spectate Table"
-                  >
-                    <EyeIcon className="h-5 w-5 text-white" />
-                    <span className="table-spectator-count">
-                      {table.spectators.length}
-                    </span>
-                  </button>
+                  {table.players.length >= 2 && (
+                    <button
+                      onClick={handleSpectate}
+                      className="table-button"
+                      aria-label="Spectate Table"
+                    >
+                      <EyeIcon className="h-5 w-5 text-white" />
+                      <span className="table-spectator-count">
+                        {table.spectators.length}
+                      </span>
+                    </button>
+                  )}
                 </>
               )}
             </div>
