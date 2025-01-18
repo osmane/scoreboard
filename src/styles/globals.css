@@ -238,3 +238,49 @@ body {
 .user-pill-input {
   @apply bg-transparent text-gray-700 dark:text-gray-300 outline-none w-full;
 }
+
+/* Play Modal Styles */
+.play-modal-overlay {
+  @apply fixed inset-0 z-50 flex items-center justify-center backdrop-blur-[1px] bg-black/50;
+  top: -10vh;
+}
+
+.play-modal-container {
+  @apply bg-white rounded-lg p-4 max-w-sm w-full m-4 text-center;
+}
+
+.play-modal-title {
+  @apply text-2xl text-gray-800 font-bold mb-4;
+}
+
+.play-modal-text {
+  @apply mb-6 text-gray-800;
+}
+
+.play-modal-buttons {
+  @apply flex gap-2 justify-center;
+}
+
+.play-modal-start-button {
+  @apply bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition-colors;
+}
+
+.play-modal-cancel-button {
+  @apply bg-gray-200 text-gray-800 px-6 py-3 rounded-lg hover:bg-gray-300 transition-colors;
+}
+
+.iframe-overlay {
+  @apply fixed inset-0 bg-black/50 flex items-center justify-center z-50;
+}
+
+.iframe-container {
+  @apply relative bg-white rounded-lg w-4/5 h-4/5 shadow-lg;
+}
+
+.iframe-element {
+  @apply w-full h-full border-none;
+}
+
+.iframe-close-button {
+  @apply absolute top-2 right-2 bg-gray-300 text-gray-800 px-4 py-2 rounded hover:bg-gray-400 transition-colors;
+}

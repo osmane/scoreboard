@@ -31,16 +31,14 @@ async function markComplete(tableId: string) {
 
 export function createOverlay(target: URL, onClose: () => void) {
   const overlay = document.createElement("div")
-  overlay.className =
-    "fixed inset-0 bg-black/50 flex items-center justify-center z-50"
+  overlay.className = "iframe-overlay"
 
   const iframeContainer = document.createElement("div")
-  iframeContainer.className =
-    "relative bg-white rounded-lg w-4/5 h-4/5 shadow-lg"
+  iframeContainer.className = "iframe-container"
 
   const iframe = document.createElement("iframe")
   iframe.src = target.toString()
-  iframe.className = "w-full h-full border-none"
+  iframe.className = "iframe-element"
 
   iframeContainer.appendChild(iframe)
   overlay.appendChild(iframeContainer)
@@ -48,8 +46,7 @@ export function createOverlay(target: URL, onClose: () => void) {
 
   const closeButton = document.createElement("button")
   closeButton.textContent = "Close"
-  closeButton.className =
-    "absolute top-2 right-2 bg-gray-300 text-gray-800 px-4 py-2 rounded hover:bg-gray-400 transition-colors"
+  closeButton.className = "iframe-close-button"
   closeButton.onclick = () => {
     document.body.removeChild(overlay)
     onClose()
@@ -102,24 +99,22 @@ export function PlayModal({
   }
 
   return (
-    <div className="top-[-10vh] fixed inset-0 z-50 flex items-center justify-center backdrop-blur-[1px] bg-black/50">
-      <div
-        className={`bg-white rounded-lg p-4 max-w-sm w-full m-4 text-center`}
-      >
-        <h2 className="text-2xl text-gray-800 font-bold mb-4">
+    <div className="play-modal-overlay">
+      <div className="play-modal-container">
+        <h2 className="play-modal-title">
           Opponent Ready
         </h2>
-        <p className="mb-6 text-gray-800">Your table is ready to play</p>
-        <div className="flex gap-2 justify-center">
+        <p className="play-modal-text">Your table is ready to play</p>
+        <div className="play-modal-buttons">
           <button
             onClick={handleStartGame}
-            className="bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition-colors"
+            className="play-modal-start-button"
           >
             Start Game
           </button>
           <button
             onClick={handleCancel}
-            className="bg-gray-200 text-gray-800 px-6 py-3 rounded-lg hover:bg-gray-300 transition-colors"
+            className="play-modal-cancel-button"
           >
             Cancel
           </button>
