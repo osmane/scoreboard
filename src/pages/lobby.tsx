@@ -50,8 +50,8 @@ export default function Lobby() {
     return () => client.stop()
   }, [searchParams, fetchActiveUsers])
 
-  const handleJoin = async (tableId: string) => {
-    const response = await fetch(`/api/tables/${tableId}/join`, {
+  const tableAction = async (tableId: string, action: 'join' | 'spectate') => {
+    const response = await fetch(`/api/tables/${tableId}/${action}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ userId, userName }),
@@ -60,13 +60,12 @@ export default function Lobby() {
     return response.status === 200
   }
 
+  const handleJoin = async (tableId: string) => {
+    return tableAction(tableId, 'join')
+  }
+
   const handleSpectate = async (tableId: string) => {
-    await fetch(`/api/tables/${tableId}/spectate`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ userId, userName }),
-    })
-    fetchTables()
+    return tableAction(tableId, 'spectate')
   }
 
   const handleCreate = () => {
