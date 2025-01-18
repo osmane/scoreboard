@@ -26,15 +26,12 @@ h2 {
   padding: 10px;
   border-radius: 4px;
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.08);
-  font-weight: 325;
   flex: 1 0 300px; /* Allow items to grow, not shrink initially, and have a base width */
 }
 
 .leaderboard h2 {
   margin-top: 0;
   margin-bottom: 10px;
-  text-align: center;
-  font-weight: 320; /* Medium weight for subheadings */
   font-size: 1.25rem;
   color: #444; /* Subtle gray for a soft look */
 }
@@ -52,7 +49,6 @@ h2 {
 }
 
 .leaderboard th {
-  font-weight: 300; /* Light font weight for a minimal design */
   color: #555; /* Subtle gray */
   font-size: 0.875rem;
 }
@@ -66,11 +62,8 @@ h2 {
   border-radius: 20px;
   padding: 4px 10px;
   font-size: 12px;
-  font-weight: 300; /* Keep it consistent */
   cursor: pointer;
-  transition:
-    background-color 0.2s ease,
-    box-shadow 0.2s ease;
+  transition: all 0.2s ease;
   margin-left: 10px;
 }
 
@@ -81,14 +74,23 @@ h2 {
 
 .like-button::before {
   content: "👍";
-  font-family: "Segoe UI Emoji", sans-serif;
   margin-right: 5px;
 }
 
 .trophy {
-  text-align: center;
-  font-size: 1.5rem; /* Larger size for emphasis */
-  color: gold; /* Add vibrancy to trophy */
+  font-size: 1.2em;
+}
+
+.trophy--gold {
+  color: gold;
+}
+
+.trophy--silver {
+  color: silver;
+}
+
+.trophy--bronze {
+  color: #CD7F32;
 }
 
 a {

@@ -4,7 +4,6 @@
     <title>High Break!</title>
     <link rel="icon" type="image/png" href="golden-cup.png" />
     <meta charset="utf-8" />
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="description" content="billiards scoreboard" />
     <link rel="stylesheet" type="text/css" href="leaderboard.css" />
     <link
@@ -71,11 +70,11 @@
       function getTrophyIcon(index) {
         switch (index) {
           case 0:
-            return `<span class="trophy" style="font-size: 1.2em;">🏆</span>`
+            return `<span class="trophy trophy--gold">🏆</span>`
           case 1:
-            return `<span class="trophy" style="font-size: 1.2em; color: silver;">🥈</span>`
+            return `<span class="trophy trophy--silver">🥈</span>`
           case 2:
-            return `<span class="trophy" style="font-size: 1.2em; color: #CD7F32;">🥉</span>`
+            return `<span class="trophy trophy--bronze">🥉</span>`
           default:
             return ""
         }
