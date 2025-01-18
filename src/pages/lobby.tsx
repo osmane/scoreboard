@@ -79,19 +79,19 @@ export default function Lobby() {
   }
 
   return (
-    <main className="container p-2 mx-auto">
+    <main className="lobby-container">
       <Head>
         <link rel="icon" href="/favicon.png" />
       </Head>
-      <div className="flex items-stretch justify-between gap-1 mb-1 h-8">
-        <div className="flex items-stretch gap-1">
+      <div className="lobby-header">
+        <div className="lobby-header-group">
           <CreateTable
             userId={userId}
             userName={userName}
             onCreate={handleCreate}
           />
         </div>
-        <div className="flex items-stretch gap-1">
+        <div className="lobby-header-group">
           <User
             userName={userName}
             userId={userId}

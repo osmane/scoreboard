@@ -284,3 +284,15 @@ body {
 .iframe-close-button {
   @apply absolute top-2 right-2 bg-gray-300 text-gray-800 px-4 py-2 rounded hover:bg-gray-400 transition-colors;
 }
+
+.lobby-container {
+  @apply container p-2 mx-auto;
+}
+
+.lobby-header {
+  @apply flex items-stretch justify-between gap-1 mb-1 h-8;
+}
+
+.lobby-header-group {
+  @apply flex items-stretch gap-1;
+}
