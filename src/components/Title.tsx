@@ -14,7 +14,7 @@ export function Title() {
     <button
       onClick={handleClick}
       onKeyDown={handleClick}
-      className={`star-button ${clicked ? 'star-button--clicked' : 'star-button--unclicked'}`}
+      className={`star-button ${clicked ? "star-button--clicked" : "star-button--unclicked"}`}
     >
       {clicked ? (
         <SolidStarIcon className="star-icon" />

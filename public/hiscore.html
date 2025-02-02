@@ -243,16 +243,18 @@
         details.append("ruletype", params.get("ruletype"))
         details.append("id", input.value)
         url.search = details.toString()
-        await postData(url, JSON.stringify(Object.fromEntries(params)))
+        await postData(url, window.location.search)
         window.location.href = "/leaderboard.html"
       }
 
-      document.getElementById("submit").onclick = hiscore
+      const button = document.getElementById("submit")
+      button.onclick = hiscore
 
-      const replayUrl = new URL("https://tailuge.github.io/billiards/dist/")
+      const replayurl = new URL("https://tailuge.github.io/billiards/dist/")
       const params = new URLSearchParams(window.location.search)
-      replayUrl.search = params.toString()
-      document.getElementById("embed").src = replayUrl.toString()
+      replayurl.search = params.toString()
+      const iframe = document.getElementById("embed")
+      iframe.src = replayurl.toString()
     </script>
   </body>
 </html>

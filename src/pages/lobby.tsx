@@ -50,7 +50,7 @@ export default function Lobby() {
     return () => client.stop()
   }, [searchParams, fetchActiveUsers])
 
-  const tableAction = async (tableId: string, action: 'join' | 'spectate') => {
+  const tableAction = async (tableId: string, action: "join" | "spectate") => {
     const response = await fetch(`/api/tables/${tableId}/${action}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
@@ -61,11 +61,11 @@ export default function Lobby() {
   }
 
   const handleJoin = async (tableId: string) => {
-    return tableAction(tableId, 'join')
+    return tableAction(tableId, "join")
   }
 
   const handleSpectate = async (tableId: string) => {
-    return tableAction(tableId, 'spectate')
+    return tableAction(tableId, "spectate")
   }
 
   const handleCreate = () => {

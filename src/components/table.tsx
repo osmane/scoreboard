@@ -12,14 +12,17 @@ const TablePockets = () => (
     <div className="table-pocket-middle table-pocket-top"></div>
     <div className="table-pocket-middle table-pocket-bottom"></div>
   </>
-);
+)
 
 const TableContent = ({ table, isCreator, onJoin, handleSpectate }) => (
   <div className="table-content">
     <div className="text-center">
       <p className="table-title">{table.ruleType}</p>
       <p className="table-players">
-        {table.creator.name} {table.players.length > 1 ? `vs ${table.players[1].name}` : "- waiting for opponent"}
+        {table.creator.name}{" "}
+        {table.players.length > 1
+          ? `vs ${table.players[1].name}`
+          : "- waiting for opponent"}
       </p>
     </div>
     <div className="table-actions">
@@ -50,7 +53,7 @@ const TableContent = ({ table, isCreator, onJoin, handleSpectate }) => (
       )}
     </div>
   </div>
-);
+)
 
 export function TableItem({
   table,
@@ -108,13 +111,13 @@ export function TableItem({
           <div
             className={`table-felt ${getFeltClass(table.ruleType, table.players.length, table.completed)}`}
           ></div>
-          <TableContent 
-            table={table} 
-            isCreator={isCreator} 
-            onJoin={onJoin} 
+          <TableContent
+            table={table}
+            isCreator={isCreator}
+            onJoin={onJoin}
             handleSpectate={handleSpectate}
           />
-          {table.ruleType !== 'threecushion' && <TablePockets />}
+          {table.ruleType !== "threecushion" && <TablePockets />}
         </div>
       </div>
     </div>

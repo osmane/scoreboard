@@ -101,21 +101,13 @@ export function PlayModal({
   return (
     <div className="play-modal-overlay">
       <div className="play-modal-container">
-        <h2 className="play-modal-title">
-          Opponent Ready
-        </h2>
+        <h2 className="play-modal-title">Opponent Ready</h2>
         <p className="play-modal-text">Your table is ready to play</p>
         <div className="play-modal-buttons">
-          <button
-            onClick={handleStartGame}
-            className="play-modal-start-button"
-          >
+          <button onClick={handleStartGame} className="play-modal-start-button">
             Start Game
           </button>
-          <button
-            onClick={handleCancel}
-            className="play-modal-cancel-button"
-          >
+          <button onClick={handleCancel} className="play-modal-cancel-button">
             Cancel
           </button>
         </div>
