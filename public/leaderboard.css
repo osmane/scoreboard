@@ -90,7 +90,7 @@ h2 {
 }
 
 .trophy--bronze {
-  color: #CD7F32;
+  color: #cd7f32;
 }
 
 a {
@@ -99,4 +99,22 @@ a {
 
 a:hover {
   text-decoration: underline;
+}
+
+/* Mobile-responsive adjustments */
+@media (max-width: 768px) {
+  .leaderboards {
+    flex-direction: column; /* Stack vertically */
+  }
+
+  .leaderboard {
+    flex: 1 0 100%; /* Take full width */
+    box-sizing: border-box; /* Include padding in width calculation */
+    margin-bottom: 15px; /* Add spacing between stacked leaderboards */
+  }
+
+  /* Optional: Adjust padding for smaller screens */
+  body {
+    padding: 15px;
+  }
 }

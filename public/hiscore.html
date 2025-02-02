@@ -1,68 +1,258 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <title>High Break!</title>
-    <link rel="icon" type="image/png" href="golden-cup.png" />
     <meta charset="utf-8" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta
       name="description"
-      content="upload new hiscore for tailuge/billiards"
+      content="Upload your new billiards high score and share your replay."
     />
+    <title>New high score</title>
+    <link rel="icon" type="image/png" href="golden-cup.png" />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Arial, sans-serif;
+        background: #f5f5f5;
+        color: #333;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        padding: 20px;
+      }
+
+      .container {
+        background: #ffffff;
+        border-radius: 10px;
+        max-width: 600px;
+        width: 100%;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+        overflow: hidden;
+        padding: 20px;
+      }
+
+      header {
+        background: linear-gradient(135deg, #004d40, #00796b);
+        color: #fff;
+        padding: 20px;
+        text-align: center;
+        border-radius: 8px 8px 0 0;
+        box-shadow: inset 0 -4px 10px rgba(0, 0, 0, 0.2);
+        transition: background 1.3s ease;
+      }
+
+      header:hover {
+        background: linear-gradient(135deg, #00796b, #004d40);
+      }
+
+      header h1 {
+        font-size: 1.5rem;
+      }
+
+      main {
+        padding: 20px;
+        background-color: darkseagreen;
+      }
+
+      main h2 {
+        font-size: 1.3rem;
+        margin-bottom: 10px;
+        color: #004d40;
+      }
+
+      main p {
+        margin-bottom: 15px;
+        line-height: 1.5;
+      }
+
+      /* Iframe Container */
+      .iframe-container {
+        position: relative;
+        width: 100%;
+        padding-bottom: 56.25%;
+        margin-bottom: 20px;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .iframe-container iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border: none;
+      }
+
+      /* Input and Button Group */
+      .input-group {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        margin-bottom: 20px;
+      }
+
+      .input-group input {
+        width: 60px;
+        height: 42px;
+        font-size: 1.2rem;
+        font-weight: bold;
+        text-align: center;
+        border: 2px solid #ccc;
+        border-radius: 6px;
+        outline: none;
+        transition:
+          border-color 0.3s ease,
+          box-shadow 0.3s ease;
+      }
+
+      .input-group input:focus {
+        border-color: #004d40;
+        box-shadow: 0 0 5px rgba(0, 77, 64, 0.3);
+      }
+
+      .input-group button {
+        height: 42px;
+        padding: 0 15px;
+        font-size: 1rem;
+        font-weight: bold;
+        color: #fff;
+        background: #004d40;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        transition:
+          background 0.3s ease,
+          transform 0.1s ease;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+      }
+
+      .input-group button:hover {
+        background: #00796b;
+      }
+
+      .input-group button:active {
+        transform: scale(0.98);
+      }
+
+      /* Footer */
+      footer {
+        background: #ececec;
+        padding: 12px;
+        text-align: center;
+        font-size: 0.9rem;
+        border-radius: 0 0 8px 8px;
+      }
+
+      footer a {
+        color: #004d40;
+        text-decoration: none;
+        font-weight: bold;
+        margin: 0 10px;
+      }
+
+      footer a:hover {
+        text-decoration: underline;
+      }
+
+      /* Responsive Tweaks */
+      @media (max-width: 600px) {
+        header h1 {
+          font-size: 1.3rem;
+        }
+
+        main h2 {
+          font-size: 1.2rem;
+        }
+
+        .input-group input,
+        .input-group button {
+          font-size: 1rem;
+        }
+      }
+    </style>
   </head>
 
   <body>
-    <h1>New Billiards High Score</h1>
-    <iframe title="replay" id="embed"></iframe>
-    <h2>Congratulations!</h2>
-    <p id="info"></p>
-    <p>Add your initials and upload break to leaderboard</p>
-    <input
-      id="initials"
-      type="text"
-      placeholder="XYZ"
-      autofocus
-      maxlength="3"
-    />
-    <button id="submit" type="button">upload</button>
-  </body>
+    <div class="container">
+      <header>
+        <h1>New high score</h1>
+      </header>
+      <main>
+        <div class="iframe-container">
+          <iframe title="Replay" id="embed"></iframe>
+        </div>
+        <h2>Congratulations!</h2>
+        <p id="info">Enter your initials below and join the leaderboard.</p>
+        <div class="input-group">
+          <input
+            id="initials"
+            type="text"
+            placeholder="XYZ"
+            autofocus
+            maxlength="3"
+          />
+          <button id="submit" type="button">Upload</button>
+        </div>
+      </main>
+      <footer>
+        <a href="https://github.com/tailuge/billiards" target="_blank"
+          >GitHub</a
+        >
+        |
+        <a
+          href="https://scoreboard-tailuge.vercel.app/leaderboard.html"
+          target="_blank"
+          >Leaderboard</a
+        >
+      </footer>
+    </div>
 
-  <script type="module">
-    async function postData(url = "", data = "") {
-      const response = await fetch(url, {
-        method: "POST",
-        mode: "cors",
-        cache: "no-cache",
-        credentials: "same-origin",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        redirect: "follow",
-        referrerPolicy: "no-referrer",
-        body: data,
-      })
-      return response
-    }
+    <script type="module">
+      async function postData(url = "", data = "") {
+        const response = await fetch(url, {
+          method: "POST",
+          mode: "cors",
+          cache: "no-cache",
+          credentials: "same-origin",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          redirect: "follow",
+          referrerPolicy: "no-referrer",
+          body: data,
+        })
+        return response
+      }
 
-    async function hiscore() {
-      const input = document.getElementById("initials")
+      async function hiscore() {
+        const input = document.getElementById("initials")
+        const params = new URLSearchParams(window.location.search)
+        const url = new URL("/api/hiscore", window.location.origin)
+        const details = new URLSearchParams()
+        details.append("ruletype", params.get("ruletype"))
+        details.append("id", input.value)
+        url.search = details.toString()
+        await postData(url, JSON.stringify(Object.fromEntries(params)))
+        window.location.href = "/leaderboard.html"
+      }
+
+      document.getElementById("submit").onclick = hiscore
+
+      const replayUrl = new URL("https://tailuge.github.io/billiards/dist/")
       const params = new URLSearchParams(window.location.search)
-      const url = new URL("/api/hiscore", window.location.origin)
-      const details = new URLSearchParams()
-      details.append("ruletype", params.get("ruletype"))
-      details.append("id", input.value)
-      url.search = details.toString()
-      await postData(url, window.location.search)
-      window.location.href = "/leaderboard.html"
-    }
-
-    const button = document.getElementById("submit")
-    button.onclick = hiscore
-
-    const replayurl = new URL("https://tailuge.github.io/billiards/dist/")
-    const params = new URLSearchParams(window.location.search)
-    replayurl.search = params.toString()
-    const iframe = document.getElementById("embed")
-    iframe.src = replayurl.toString()
-  </script>
+      replayUrl.search = params.toString()
+      document.getElementById("embed").src = replayUrl.toString()
+    </script>
+  </body>
 </html>
