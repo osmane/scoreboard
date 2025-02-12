@@ -18,6 +18,12 @@ export default async function handler(request: NextRequest) {
   console.log(raw)
   const json = JSON.parse(JSONCrush.uncrush(raw))
   console.log(json)
+
+  // require up to date client version
+  if (json?.v !== "1") {
+    return new Response("Please update your client or use version hosted at https://github.com/tailuge/billiards", { status: 400 })
+  }
+
   const ruletype = url.searchParams.get("ruletype")
   const base = new Date("2024").valueOf()
   const score = json?.score + (new Date().valueOf() - base) / base
