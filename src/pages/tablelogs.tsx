@@ -78,7 +78,7 @@ export default function TableLogs() {
               onKeyDown={(e) => {
                 // Trigger the same action for "Enter" or "Space" key
                 if (e.key === "Enter" || e.key === " ") {
-                  toggleMessage(index);
+                  toggleMessage(index)
                 }
               }}
               role="button" // Indicates that the div acts like a button

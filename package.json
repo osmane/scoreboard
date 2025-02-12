@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "prettify": "prettier --cache true --write --trailing-comma es5 --no-semi {src,public}/**/*.{ts,tsx,html,css} *.j*",
+    "prettify": "prettier --write --trailing-comma es5 --no-semi {src,public}/**/*.{ts,tsx,html,css} *.json",
     "deps": "npx yarn-check --skip-unused",
     "coverage": "jest --coverage --config src/tests/jest.config.js",
     "test": "jest --config src/tests/jest.config.js",

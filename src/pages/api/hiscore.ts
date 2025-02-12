@@ -21,7 +21,10 @@ export default async function handler(request: NextRequest) {
 
   // require up to date client version
   if (json?.v !== "1") {
-    return new Response("Please update your client or use version hosted at https://github.com/tailuge/billiards", { status: 400 })
+    return new Response(
+      "Please update your client or use version hosted at https://github.com/tailuge/billiards",
+      { status: 400 }
+    )
   }
 
   const ruletype = url.searchParams.get("ruletype")

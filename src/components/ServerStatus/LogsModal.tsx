@@ -60,7 +60,7 @@ export const LogsModal: React.FC<LogsModalProps> = ({ showLogs, onClose }) => {
                 onKeyDown={(e) => {
                   // Check if the key pressed is "Enter" or "Space" (standard keys for activating elements)
                   if (e.key === "Enter" || e.key === " ") {
-                    handleTableClick(table.id);
+                    handleTableClick(table.id)
                   }
                 }}
                 role="button" // Indicates that the div is acting as a button
