@@ -20,7 +20,8 @@ export default async function handler(request: NextRequest) {
   console.log(json)
 
   // require up to date client version
-  if (json?.v !== "1") {
+  if (json?.v !== 1) {
+    console.log("Client version is outdated")
     return new Response(
       "Please update your client or use version hosted at https://github.com/tailuge/billiards",
       { status: 400 }
