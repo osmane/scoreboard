@@ -77,7 +77,7 @@ export function TableItem({
   ) => {
     if (playerCount >= 2)
       return completed ? "table-completed" : "table-occupied"
-    return `table-${ruleType}` || "table-default"
+    return `table-${ruleType}`
   }
 
   const getFeltClass = (
@@ -86,7 +86,7 @@ export function TableItem({
     completed: boolean
   ) => {
     if (playerCount >= 2) return completed ? "felt-completed" : "felt-default"
-    return `felt-${ruleType}` || "felt-default"
+    return `felt-${ruleType}`
   }
 
   const handleSpectate = () => {
