@@ -5,7 +5,7 @@ export class NchanSub {
   private shouldReconnect: boolean = false
   private reconnectTimeout: NodeJS.Timeout | null = null
   // Sunucu adresini localhost:8081 olarak değiştirin
-  private readonly base = "localhost:8081"
+  private readonly base = "wss://osmane-billiards-network.onrender.com"
   private readonly channel: string
 
   constructor(

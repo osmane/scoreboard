@@ -16,7 +16,7 @@ export default async function handler(request: NextRequest) {
   }
 
   if (request.method === "PUT") {
-    await usageService.incrementCount(Date.now())
+    await usageService.incrementCount(new Date())
   }
 
   return new Response(null, { status: 200 })

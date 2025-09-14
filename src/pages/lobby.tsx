@@ -16,7 +16,7 @@ export default function Lobby() {
   const [userName, setUserName] = useState("")
   const [tables, setTables] = useState<Table[]>([])
   const searchParams = useSearchParams()
-  const statusPage = "http://localhost:8081/basic_status"
+  const statusPage = "https://osmane-billiards-network.onrender.com/basic_status"
 
   const fetchTables = async () => {
     const res = await fetch("/api/tables")

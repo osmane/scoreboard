@@ -8,5 +8,5 @@ export function markUsage(metric: string) {
 
 export async function markUsageFromServer(metric: string) {
   const usageService = new UsageService(metric)
-  await usageService.incrementCount(Date.now())
+  await usageService.incrementCount(new Date())
 }

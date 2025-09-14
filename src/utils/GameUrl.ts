@@ -1,4 +1,4 @@
-const WEBSOCKET_SERVER = "ws://localhost:8081"
+const WEBSOCKET_SERVER = "wss://osmane-billiards-network.onrender.com"
 
 export class GameUrl {
   static create({

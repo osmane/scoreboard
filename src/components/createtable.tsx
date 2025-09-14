@@ -14,7 +14,7 @@ export function CreateTable({
   const [ruleType, setRuleType] = useState("nineball")
   const [dropdownOpen, setDropdownOpen] = useState(false)
   const dropdownRef = useRef<HTMLDivElement>(null)
-  const statusPage = "https://billiards-network.onrender.com/basic_status"
+  const statusPage = "https://osmane-billiards-network.onrender.com/basic_status"
   const { isOnline } = useServerStatus(statusPage)
 
   const handleCreate = async () => {
