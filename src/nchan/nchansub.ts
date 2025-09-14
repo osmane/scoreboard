@@ -13,7 +13,7 @@ export class NchanSub {
     channelType: string = "lobby"
   ) {
     this.channel = channel;    
-    this.subscribeUrl = `wss://${this.base}/subscribe/lobby/${this.channel}`;
+    this.subscribeUrl = `wss://${this.base}/subscribe/${channelType}/${this.channel}`;
     this.notify = notify;
   }
 
