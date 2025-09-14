@@ -1,5 +1,5 @@
 FROM darkflib/nginx-nchan:latest
 
-COPY nchan.conf /etc/nginx/conf.d/
-COPY index.html /etc/nginx/html/index.html
+COPY src/nchan/nchan.conf /etc/nginx/conf.d/
+COPY src/nchan/index.html /etc/nginx/html/index.html
 EXPOSE 80

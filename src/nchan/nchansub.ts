@@ -4,7 +4,8 @@ export class NchanSub {
   private readonly notify: (event: string) => void = () => {}
   private shouldReconnect: boolean = false
   private reconnectTimeout: NodeJS.Timeout | null = null
-  private readonly base = "billiards-network.onrender.com"
+  // Sunucu adresini localhost:8081 olarak değiştirin
+  private readonly base = "localhost:8081"
   private readonly channel: string
 
   constructor(
@@ -13,7 +14,8 @@ export class NchanSub {
     channelType: string = "lobby"
   ) {
     this.channel = channel
-    this.subscribeUrl = `wss://${this.base}/subscribe/${channelType}/${this.channel}`
+    // Protokolü "ws" olarak değiştirin
+    this.subscribeUrl = `ws://${this.base}/subscribe/${channelType}/${this.channel}`
     this.notify = notify
   }
 

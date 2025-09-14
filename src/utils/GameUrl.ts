@@ -1,4 +1,4 @@
-const WEBSOCKET_SERVER = "wss://billiards.onrender.com/ws"
+const WEBSOCKET_SERVER = "ws://localhost:8081"
 
 export class GameUrl {
   static create({
@@ -16,7 +16,8 @@ export class GameUrl {
     isSpectator?: boolean
     isCreator?: boolean
   }): URL {
-    const target = new URL("https://osmane.github.io/billiards/")
+    
+    const target = new URL("http://localhost:8080/")
     target.searchParams.append("websocketserver", WEBSOCKET_SERVER)
     target.searchParams.append("tableId", tableId)
     target.searchParams.append("name", userName)

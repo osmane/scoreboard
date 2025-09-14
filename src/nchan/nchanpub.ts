@@ -1,12 +1,15 @@
 export class NchanPub {
   private readonly publishUrl: string
-  private readonly base = "billiards-network.onrender.com"
+  
+  private readonly base = "localhost:8081"
   private readonly channel: string
-  private readonly statusUrl = `https://${this.base}/basic_status`
+  
+  private readonly statusUrl = `http://${this.base}/basic_status`
 
   constructor(channel: string) {
     this.channel = channel
-    this.publishUrl = `https://${this.base}/publish/lobby/${this.channel}`
+    
+    this.publishUrl = `http://${this.base}/publish/lobby/${this.channel}`
   }
 
   async post(event: any) {
@@ -30,7 +33,6 @@ export class NchanPub {
     const textData = await response.text()
     console.log(textData)
 
-    // Parse the active connections from the response
     const activeConnectionsMatch = textData.match(/Active connections:\s+(\d+)/)
     const activeConnections = activeConnectionsMatch
       ? parseInt(activeConnectionsMatch[1], 10) - 1
