@@ -1,7 +1,7 @@
 export class NchanPub {
   private readonly publishUrl: string
 
-  private readonly base = "https://osmane-billiards-network.onrender.com"
+  private readonly base = "osmane-billiards-network.onrender.com"
   private readonly channel: string
               
   private readonly statusUrl = `https://${this.base}/basic_status`

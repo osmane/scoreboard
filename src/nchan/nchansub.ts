@@ -4,7 +4,7 @@ export class NchanSub {
   private readonly notify: (event: string) => void = () => { }
   private shouldReconnect: boolean = false
   private reconnectTimeout: NodeJS.Timeout | null = null  
-  private readonly base = "wss://osmane-billiards-network.onrender.com"
+  private readonly base = "osmane-billiards-network.onrender.com"
   private readonly channel: string
 
   constructor(
