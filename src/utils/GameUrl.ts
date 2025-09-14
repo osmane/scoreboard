@@ -17,7 +17,7 @@ export class GameUrl {
     isCreator?: boolean
   }): URL {
     
-    const target = new URL("http://localhost:8080/")
+    const target = new URL("https://osmane.github.io/billiards/")
     target.searchParams.append("websocketserver", WEBSOCKET_SERVER)
     target.searchParams.append("tableId", tableId)
     target.searchParams.append("name", userName)
