@@ -1,7 +1,7 @@
 export class NchanSub {
   private socket: WebSocket | null = null
   private readonly subscribeUrl: string
-  private readonly notify: (event: string) => void = () => {}
+  private readonly notify: (event: string) => void = () => { }
   private shouldReconnect: boolean = false
   private reconnectTimeout: NodeJS.Timeout | null = null
   // Sunucu adresini localhost:8081 olarak değiştirin
@@ -10,13 +10,13 @@ export class NchanSub {
 
   constructor(
     channel: string,
-    notify: (event: string) => void = (_) => {},
+    notify: (event: string) => void = (_) => { },
     channelType: string = "lobby"
   ) {
-    this.channel = channel
-    // Protokolü "ws" olarak değiştirin
-    this.subscribeUrl = `ws://${this.base}/subscribe/${channelType}/${this.channel}`
-    this.notify = notify
+    this.channel = channel;
+    // Protokolü "wss" olarak değiştirin ve base'den önce başka bir şey olmadığından emin olun
+    this.subscribeUrl = `wss://${this.base}/subscribe/${channelType}/${this.channel}`;
+    this.notify = notify;
   }
 
   start() {
