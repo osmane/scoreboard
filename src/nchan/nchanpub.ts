@@ -3,12 +3,12 @@ export class NchanPub {
 
   private readonly base = "https://osmane-billiards-network.onrender.com"
   private readonly channel: string
-
+              
   private readonly statusUrl = `https://${this.base}/basic_status`
 
   constructor(channel: string) {
     this.channel = channel;
-
+    
     this.publishUrl = `https://${this.base}/publish/lobby/${this.channel}`;
   }
 

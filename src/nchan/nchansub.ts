@@ -3,8 +3,7 @@ export class NchanSub {
   private readonly subscribeUrl: string
   private readonly notify: (event: string) => void = () => { }
   private shouldReconnect: boolean = false
-  private reconnectTimeout: NodeJS.Timeout | null = null
-  // Sunucu adresini localhost:8081 olarak değiştirin
+  private reconnectTimeout: NodeJS.Timeout | null = null  
   private readonly base = "wss://osmane-billiards-network.onrender.com"
   private readonly channel: string
 
@@ -13,9 +12,8 @@ export class NchanSub {
     notify: (event: string) => void = (_) => { },
     channelType: string = "lobby"
   ) {
-    this.channel = channel;
-    // Protokolü "wss" olarak değiştirin ve base'den önce başka bir şey olmadığından emin olun
-    this.subscribeUrl = `wss://${this.base}/subscribe/${channelType}/${this.channel}`;
+    this.channel = channel;    
+    this.subscribeUrl = `wss://${this.base}/subscribe/lobby/${this.channel}`;
     this.notify = notify;
   }
 
