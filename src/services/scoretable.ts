@@ -10,8 +10,8 @@ export interface ScoreData {
 
 export class ScoreTable {
   readonly prefix = "hiscore"
-  readonly replayUrl = "https://tailuge.github.io/billiards/dist/"
-  readonly notFound = "https://scoreboard-tailuge.vercel.app/notfound.html"
+  readonly replayUrl = "https://osmane.github.io/billiards/"
+  readonly notFound = "https://scoreboard-osmane.vercel.app/notfound.html"
 
   constructor(private readonly store: VercelKV) {}
 

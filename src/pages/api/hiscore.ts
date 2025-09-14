@@ -23,7 +23,7 @@ export default async function handler(request: NextRequest) {
   if (json?.v !== 1) {
     console.log("Client version is outdated")
     return new Response(
-      "Please update your client or use version hosted at https://github.com/tailuge/billiards",
+      "Please update your client or use version hosted at https://github.com/osmane/billiards/",
       { status: 400 }
     )
   }

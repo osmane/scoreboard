@@ -207,12 +207,12 @@
         </div>
       </main>
       <footer>
-        <a href="https://github.com/tailuge/billiards" target="_blank"
+        <a href="https://github.com/osmane/billiards/" target="_blank"
           >GitHub</a
         >
         |
         <a
-          href="https://scoreboard-tailuge.vercel.app/leaderboard.html"
+          href="https://scoreboard-osmane.vercel.app/leaderboard.html"
           target="_blank"
           >Leaderboard</a
         >
@@ -251,7 +251,7 @@
       const button = document.getElementById("submit")
       button.onclick = hiscore
 
-      const replayurl = new URL("https://tailuge.github.io/billiards/dist/")
+      const replayurl = new URL("https://osmane.github.io/billiards/")
       const params = new URLSearchParams(window.location.search)
       replayurl.search = params.toString()
       const iframe = document.getElementById("embed")

@@ -5,7 +5,7 @@ export default defineConfig({
   fullyParallel: false, 
   reporter: 'html', 
   use: {
-    baseURL: process.env.TEST_URL || 'https://scoreboard-tailuge.vercel.app/', 
+    baseURL: process.env.TEST_URL || 'https://scoreboard-osmane.vercel.app/', 
     trace: 'on-first-retry', 
   },
   projects: [

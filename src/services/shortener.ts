@@ -2,9 +2,9 @@ import { VercelKV } from "@vercel/kv"
 
 export class Shortener {
   readonly store: VercelKV
-  readonly replayUrl = "https://tailuge.github.io/billiards/dist/"
-  readonly shortUrl = "https://scoreboard-tailuge.vercel.app/api/replay/"
-  readonly notFound = "https://scoreboard-tailuge.vercel.app/notfound.html"
+  readonly replayUrl = "https://osmane.github.io/billiards/"
+  readonly shortUrl = "https://scoreboard-osmane.vercel.app/api/replay/"
+  readonly notFound = "https://scoreboard-osmane.vercel.app/notfound.html"
   readonly prefix = "urlkey"
 
   constructor(store: VercelKV) {

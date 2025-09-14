@@ -6,7 +6,7 @@ export function Title() {
   const [clicked, setClicked] = useState(false)
 
   const handleClick = () => {
-    window.open("https://github.com/tailuge/billiards", "_blank")
+    window.open("https://github.com/osmane/billiards/", "_blank")
     setClicked(true)
   }
 
