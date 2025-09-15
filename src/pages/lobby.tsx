@@ -9,7 +9,6 @@ import { Table } from "@/services/table"
 import { NchanSub } from "@/nchan/nchansub"
 import { Title } from "@/components/Title"
 import { markUsage } from "@/utils/usage"
-import { useServerStatus } from "@/components/hooks/useServerStatus"
 
 export default function Lobby() {
   const [userId, setUserId] = useState("")
@@ -24,8 +23,6 @@ export default function Lobby() {
     setTables(data)
   }
 
-  const { fetchActiveUsers } = useServerStatus(statusPage)
-
   useEffect(() => {
     markUsage("lobby")
     const storedUserId = crypto.randomUUID().slice(0, 8)
@@ -39,16 +36,12 @@ export default function Lobby() {
     localStorage.setItem("userName", storedUserName)
 
     fetchTables()
-    const client = new NchanSub("lobby", (e) => {
-      if (JSON.parse(e)?.action === "connected") {
-        fetchActiveUsers()
-        return
-      }
+    const client = new NchanSub("lobby", () => {
       fetchTables()
     })
     client.start()
     return () => client.stop()
-  }, [])
+  }, []) // Bağımlılık dizisi KESİNLİKLE boş olmalı
 
   const tableAction = async (tableId: string, action: "join" | "spectate") => {
     const response = await fetch(`/api/tables/${tableId}/${action}`, {
@@ -56,7 +49,7 @@ export default function Lobby() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ userId, userName }),
     })
-    fetchTables()
+    // fetchTables() burada çağrılmıyor, çünkü Nchan bildirimi bunu tetikleyecek
     return response.status === 200
   }
 
@@ -69,7 +62,7 @@ export default function Lobby() {
   }
 
   const handleCreate = () => {
-    fetchTables()
+    // fetchTables() burada da çağrılmıyor, Nchan halledecek
   }
 
   const handleUserNameChange = (newUserName: string) => {
