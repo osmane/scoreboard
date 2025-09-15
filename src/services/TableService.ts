@@ -4,7 +4,7 @@ import { NchanPub } from "@/nchan/nchanpub"
 import { Player } from "./player"
 
 const KEY = "tables"
-const TABLE_TIMEOUT = 60 * 1000 // 1 dakika
+const TABLE_TIMEOUT = 60 * 1000 // Eskimiş masaları 1 dakika sonra siler
 
 export class TableService {
   constructor(
