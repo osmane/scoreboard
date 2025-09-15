@@ -48,7 +48,7 @@ export default function Lobby() {
     })
     client.start()
     return () => client.stop()
-  }, [searchParams, fetchActiveUsers])
+  }, [])
 
   const tableAction = async (tableId: string, action: "join" | "spectate") => {
     const response = await fetch(`/api/tables/${tableId}/${action}`, {
