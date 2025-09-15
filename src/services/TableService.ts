@@ -1,151 +1,127 @@
-import { VercelKV, kv } from "@vercel/kv";
-import { NchanPub } from "../nchan/nchanpub";
-import { Table } from "./table";
-import { Player } from "./player"; // Player arayüzünü import ediyoruz
+import { kv, VercelKV } from "@vercel/kv"
+import { Table } from "@/services/table"
+import { NchanPub } from "@/nchan/nchanpub"
+import { Player } from "./player"
 
-const KEY = "tables";
-
-let devTables: Record<string, Table> = {};
-
-const rules = [
-  { id: "snooker", name: "Snooker" },
-  { id: "nineball", name: "9-Ball" },
-  { id: "eightball", name: "8-Ball" },
-  { id: "straight", name: "14.1" },
-  { id: "threecushion", name: "3-Cushion" },
-];
+const KEY = "tables"
+const TABLE_TIMEOUT = 60 * 1000 // 1 dakika
 
 export class TableService {
   constructor(
     private readonly store: VercelKV = kv,
-    private readonly notify: (event: any) => Promise<void> = new NchanPub(
-      "lobby"
-    ).post.bind(new NchanPub("lobby"))
+    private readonly notify: (event: any) => Promise<void> = this.defaultNotify
   ) {}
 
-  async getTables(): Promise<Table[]> {
-    if (process.env.NODE_ENV === 'development') {
-      return Object.values(devTables);
-    }
-    await this.expireTables();
-    const tables = await this.store.hgetall<Record<string, Table>>(KEY);
-    return Object.values(tables || {});
+  async getTables() {
+    await this.expireTables()
+    const tables = await this.store.hgetall<Record<string, Table>>(KEY)
+    return Object.values(tables || {}).sort((a, b) => b.createdAt - a.createdAt)
   }
 
-  // Önceki adımdaki createTable imzasını düzeltiyoruz ve içeriği koruyoruz
-  async createTable(userId: string, userName: string, ruleType: string): Promise<Table> {
+  async expireTables() {
+    const tables = await this.store.hgetall<Record<string, Table>>(KEY)
+    if (!tables) return 0;
+    
+    const expiredEntries = Object.entries(tables).filter(
+      ([, table]) =>
+        Date.now() - table.lastUsedAt >
+        (table.players.length > 1 ? TABLE_TIMEOUT * 10 : TABLE_TIMEOUT)
+    )
+    
+    if (expiredEntries.length > 0) {
+      const keysToDelete = expiredEntries.map(([key]) => key)
+      await this.store.hdel(KEY, ...keysToDelete)
+      console.log(`Expired ${expiredEntries.length} tables.`)
+    }
+    return expiredEntries.length
+  }
+
+  async createTable(userId: string, userName: string, ruleType: string) {
+    const tableId = crypto.randomUUID()
+    const creator: Player = { id: userId, name: userName || "Anonymous" }
+
     const newTable: Table = {
-        id: crypto.randomUUID(),
-        creator: { id: userId, name: userName },
-        players: [{ id: userId, name: userName }],
-        spectators: [],
-        createdAt: Date.now(),
-        lastUsedAt: Date.now(),
-        isActive: true,
-        ruleType: ruleType,
-        completed: false,
-    };
-
-    if (process.env.NODE_ENV === 'development') {
-      devTables[newTable.id] = newTable;
-    } else {
-      await this.store.hset(KEY, { [newTable.id]: newTable });
+      id: tableId,
+      creator,
+      players: [creator],
+      spectators: [],
+      createdAt: Date.now(),
+      lastUsedAt: Date.now(),
+      isActive: true,
+      ruleType,
+      completed: false,
     }
 
-    const ruleObject = rules.find(r => r.id === newTable.ruleType);
-
-    const plainTableObject = {
-        id: newTable.id,
-        players: newTable.players,
-        rule: ruleObject,
-        createdAt: newTable.createdAt,
-        lastUsedAt: newTable.lastUsedAt,
-        creator: newTable.creator,
-        spectators: newTable.spectators,
-        isActive: newTable.isActive,
-        completed: newTable.completed
-    };
-    
-    await this.notify({ type: "create", table: plainTableObject });
-    
-    return newTable;
+    await this.store.hset(KEY, { [tableId]: newTable })
+    await this.notify({ action: "create" })
+    return newTable
   }
 
-  async getTable(id: string): Promise<Table | null> {
-    if (process.env.NODE_ENV === 'development') {
-      return devTables[id] || null;
+  async joinTable(tableId: string, userId: string, userName: string) {
+    await this.expireTables()
+
+    const table = await this.store.hget<Table>(KEY, tableId)
+    if (!table) {
+      await this.notify({ action: "expired table" })
+      throw new Error("Table not found")
     }
-    return await this.store.hget(KEY, id);
+
+    if (table.players.length >= 2) {
+      throw new Error("Table is full")
+    }
+
+    if (!table.players.find(p => p.id === userId)) {
+        const player: Player = { id: userId, name: userName || "Anonymous" }
+        table.players.push(player)
+    }
+    
+    table.lastUsedAt = Date.now()
+
+    await this.store.hset(KEY, { [tableId]: table })
+    await this.notify({ action: "join" })
+    return table
   }
 
-  async updateTable(table: Table): Promise<Table> {
-    table.lastUsedAt = Date.now();
-    if (process.env.NODE_ENV === 'development') {
-      devTables[table.id] = table;
-    } else {
-      await this.store.hset(KEY, { [table.id]: table });
+  async spectateTable(tableId: string, userId: string, userName: string) {
+    const table = await this.store.hget<Table>(KEY, tableId)
+
+    if (!table) {
+      throw new Error("Table not found")
     }
-    await this.notify({ type: "update", table: table });
-    return table;
+    
+    if (!table.spectators.find(p => p.id === userId) && !table.players.find(p => p.id === userId)) {
+        const spectator: Player = { id: userId, name: userName || "Anonymous" }
+        table.spectators.push(spectator)
+    }
+
+    table.lastUsedAt = Date.now()
+
+    await this.store.hset(KEY, { [tableId]: table })
+    await this.notify({ action: "spectate" })
+    return table
+  }
+
+  async completeTable(tableId: string) {
+    const table = await this.store.hget<Table>(KEY, tableId)
+
+    if (!table) {
+      throw new Error("Table not found")
+    }
+
+    table.lastUsedAt = Date.now()
+    table.completed = true
+    await this.store.hset(KEY, { [tableId]: table })
+    await this.notify({ action: "complete" })
+    return table
   }
   
-  // YENİ EKLENEN METODLAR
-  async joinTable(tableId: string, userId: string, userName: string): Promise<Table> {
-    const table = await this.getTable(tableId);
-    if (!table) {
-      throw new Error("Table not found");
-    }
-    if (table.players.length >= 2) {
-      throw new Error("Table is full");
-    }
-    if (!table.players.find(p => p.id === userId)) {
-        table.players.push({ id: userId, name: userName });
-    }
-    return this.updateTable(table);
-  }
-
-  async spectateTable(tableId: string, userId: string, userName: string): Promise<Table> {
-      const table = await this.getTable(tableId);
-      if (!table) {
-          throw new Error("Table not found");
-      }
-      if (!table.spectators.find(p => p.id === userId) && !table.players.find(p => p.id === userId)) {
-          table.spectators.push({ id: userId, name: userName });
-      }
-      return this.updateTable(table);
-  }
-
-  async completeTable(tableId: string): Promise<Table> {
-      const table = await this.getTable(tableId);
-      if (!table) {
-          throw new Error("Table not found");
-      }
-      table.completed = true;
-      return this.updateTable(table);
-  }
-  // ---
-
   async deleteTable(id: string) {
-    if (process.env.NODE_ENV === 'development') {
-      delete devTables[id];
-    } else {
-      await this.store.hdel(KEY, id);
-    }
+    await this.store.hdel(KEY, id);
     await this.notify({ type: "delete", tableId: id });
   }
 
-  private async expireTables() {
-    if (process.env.NODE_ENV === "development") {
-      return;
-    }
-    const tables = await this.store.hgetall<Record<string, Table>>(KEY);
-    const expiredEntries = Object.entries(tables || {}).filter(
-      ([, table]) =>
-        Date.now() - table.lastUsedAt > 1000 * 60 * 60 * 24 * 7 // 1 week
-    );
-    if (expiredEntries.length > 0) {
-      await this.store.hdel(KEY, ...expiredEntries.map(([key]) => key));
-    }
+  async defaultNotify(event: any) {
+    await new NchanPub("lobby").post(event)
   }
 }
 
