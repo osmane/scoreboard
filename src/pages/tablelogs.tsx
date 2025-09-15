@@ -30,13 +30,13 @@ export default function TableLogs() {
   useEffect(() => {
     if (!tableId) return
 
-    // Hata veren NchanSub çağrısını düzeltiyoruz (üçüncü parametre kaldırıldı)
     const sub = new NchanSub(
       tableId as string,
       (message) => {
         const messageString = message.toString()
         setMessages((prev) => [...prev, messageString])
-      }
+      },
+      "table"
     )
 
     sub.start()
@@ -76,12 +76,13 @@ export default function TableLogs() {
               className="text-xs p-px cursor-pointer hover:bg-gray-100 flex items-center"
               onClick={() => toggleMessage(index)}
               onKeyDown={(e) => {
+                // Trigger the same action for "Enter" or "Space" key
                 if (e.key === "Enter" || e.key === " ") {
                   toggleMessage(index)
                 }
               }}
-              role="button"
-              tabIndex={0}
+              role="button" // Indicates that the div acts like a button
+              tabIndex={0} // Makes the div focusable
             >
               {isExpanded ? (
                 <ChevronDownIcon className="h-3 w-3 text-gray-500 mr-1" />

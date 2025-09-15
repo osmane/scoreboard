@@ -1,4 +1,4 @@
-const WEBSOCKET_SERVER = "wss://osmane-billiards-network.onrender.com"
+const WEBSOCKET_SERVER = "wss://osmane-billiards-network.onrender.com/ws" // Sonuna /ws ekleyin
 
 export class GameUrl {
   static create({

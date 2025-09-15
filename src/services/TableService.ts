@@ -37,7 +37,7 @@ export class TableService {
   }
 
   async createTable(userId: string, userName: string, ruleType: string) {
-    const tableId = crypto.randomUUID()
+    const tableId = crypto.randomUUID().slice(0, 8) // ID'yi 8 karaktere kısaltın
     const creator: Player = { id: userId, name: userName || "Anonymous" }
 
     const newTable: Table = {

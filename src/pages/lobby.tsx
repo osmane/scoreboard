@@ -9,19 +9,22 @@ import { Table } from "@/services/table"
 import { NchanSub } from "@/nchan/nchansub"
 import { Title } from "@/components/Title"
 import { markUsage } from "@/utils/usage"
+import { useServerStatus } from "@/components/hooks/useServerStatus"
 
 export default function Lobby() {
   const [userId, setUserId] = useState("")
   const [userName, setUserName] = useState("")
   const [tables, setTables] = useState<Table[]>([])
   const searchParams = useSearchParams()
-  const statusPage = "https://osmane-billiards-network.onrender.com/basic_status"
+  const statusPage = "https://billiards-network.onrender.com/basic_status"
 
   const fetchTables = async () => {
     const res = await fetch("/api/tables")
     const data = await res.json()
     setTables(data)
   }
+
+  const { fetchActiveUsers } = useServerStatus(statusPage)
 
   useEffect(() => {
     markUsage("lobby")
@@ -36,12 +39,16 @@ export default function Lobby() {
     localStorage.setItem("userName", storedUserName)
 
     fetchTables()
-    const client = new NchanSub("lobby", () => {
+    const client = new NchanSub("lobby", (e) => {
+      if (JSON.parse(e)?.action === "connected") {
+        fetchActiveUsers()
+        return
+      }
       fetchTables()
     })
     client.start()
     return () => client.stop()
-  }, []) // Bağımlılık dizisi KESİNLİKLE boş olmalı
+  }, [searchParams, fetchActiveUsers])
 
   const tableAction = async (tableId: string, action: "join" | "spectate") => {
     const response = await fetch(`/api/tables/${tableId}/${action}`, {
@@ -49,7 +56,7 @@ export default function Lobby() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ userId, userName }),
     })
-    // fetchTables() burada çağrılmıyor, çünkü Nchan bildirimi bunu tetikleyecek
+    fetchTables()
     return response.status === 200
   }
 
@@ -62,7 +69,7 @@ export default function Lobby() {
   }
 
   const handleCreate = () => {
-    // fetchTables() burada da çağrılmıyor, Nchan halledecek
+    fetchTables()
   }
 
   const handleUserNameChange = (newUserName: string) => {

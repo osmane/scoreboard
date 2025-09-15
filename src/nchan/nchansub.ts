@@ -1,21 +1,20 @@
 export class NchanSub {
   private socket: WebSocket | null = null
   private readonly subscribeUrl: string
-  private readonly notify: (event: string) => void = () => { }
+  private readonly notify: (event: string) => void = () => {}
   private shouldReconnect: boolean = false
-  private reconnectTimeout: NodeJS.Timeout | null = null  
-  private readonly base = "osmane-billiards-network.onrender.com"
+  private reconnectTimeout: NodeJS.Timeout | null = null
+  private readonly base = "osmane-billiards-network.onrender.com" // Burası doğru
   private readonly channel: string
 
   constructor(
     channel: string,
-    notify: (event: string) => void = (_) => { },
-    channelType: string = "lobby" // Bu parametreyi geri ekliyoruz
+    notify: (event: string) => void = (_) => {},
+    channelType: string = "lobby"
   ) {
-    this.channel = channel;    
-    // URL'yi sunucu yapılandırmanıza uygun olan "/subscribe/" yoluna geri döndürüyoruz
-    this.subscribeUrl = `wss://${this.base}/subscribe/${channelType}/${this.channel}`;
-    this.notify = notify;
+    this.channel = channel
+    this.subscribeUrl = `wss://${this.base}/subscribe/${channelType}/${this.channel}` // Bu satırı tailuge'deki gibi güncelleyin
+    this.notify = notify
   }
 
   start() {
@@ -42,8 +41,7 @@ export class NchanSub {
     this.socket.onclose = (event: CloseEvent) => {
       console.log(`Disconnected from ${this.subscribeUrl}:`, event.reason)
       if (this.shouldReconnect) {
-        // Yeniden bağlanma süresini 5 saniyeye düşürdüm
-        this.reconnectTimeout = setTimeout(() => this.connect(), 5000)
+        this.reconnectTimeout = setTimeout(() => this.connect(), 30000) // Yeniden bağlanma süresini 30 saniye yapın
       }
     }
   }
