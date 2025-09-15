@@ -1,16 +1,21 @@
 export class NchanSub {
   private socket: WebSocket | null = null
   private readonly subscribeUrl: string
-  private readonly notify: (event: string) => void = () => {}
+  private readonly notify: (event: string) => void = () => { }
   private shouldReconnect: boolean = false
-  private reconnectTimeout: NodeJS.Timeout | null = null
+  private reconnectTimeout: NodeJS.Timeout | null = null  
   private readonly base = "osmane-billiards-network.onrender.com"
   private readonly channel: string
 
-  constructor(channel: string, notify: (event: string) => void = (_) => {}) {
-    this.channel = channel
-    this.subscribeUrl = `wss://${this.base}/sub/${this.channel}` // Orijinal ve doğru URL yapısı
-    this.notify = notify
+  constructor(
+    channel: string,
+    notify: (event: string) => void = (_) => { },
+    channelType: string = "lobby" // Bu parametreyi geri ekliyoruz
+  ) {
+    this.channel = channel;    
+    // URL'yi sunucu yapılandırmanıza uygun olan "/subscribe/" yoluna geri döndürüyoruz
+    this.subscribeUrl = `wss://${this.base}/subscribe/${channelType}/${this.channel}`;
+    this.notify = notify;
   }
 
   start() {
@@ -37,7 +42,8 @@ export class NchanSub {
     this.socket.onclose = (event: CloseEvent) => {
       console.log(`Disconnected from ${this.subscribeUrl}:`, event.reason)
       if (this.shouldReconnect) {
-        this.reconnectTimeout = setTimeout(() => this.connect(), 5000) // Yeniden bağlanma süresini 5 saniyeye düşürdüm
+        // Yeniden bağlanma süresini 5 saniyeye düşürdüm
+        this.reconnectTimeout = setTimeout(() => this.connect(), 5000)
       }
     }
   }
