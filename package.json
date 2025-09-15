@@ -11,8 +11,8 @@
     "deps": "npx yarn-check --skip-unused",
     "coverage": "jest --coverage --config src/tests/jest.config.js",
     "test": "jest --config src/tests/jest.config.js",
-    "docker:build": "docker buildx build --platform linux/amd64 -f ./src/nchan/Dockerfile -t osmane/billiards-network ./src/nchan",
-    "docker:push": "docker push osmane/billiards-network",
+    "docker:build": "docker buildx build --platform linux/amd64 -f ./src/nchan/Dockerfile -t osmanertas76/billiards-network ./src/nchan",
+    "docker:push": "docker push osmanertas76/billiards-network",
     "e2e": "playwright test",
     "e2e:headed": "playwright test --headed",
     "e2e:local": "TEST_URL=http://localhost:3001/ playwright test --headed"
