@@ -6,7 +6,7 @@
         { "key": "Access-Control-Allow-Credentials", "value": "true" },
         {
           "key": "Access-Control-Allow-Origin",
-          "value": "https://osmane.github.io"
+          "value": "https://billiards-lime.vercel.app"
         },
         {
           "key": "Access-Control-Allow-Methods",

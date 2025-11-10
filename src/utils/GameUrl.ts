@@ -1,4 +1,5 @@
-const WEBSOCKET_SERVER = "wss://osmane-billiards-network.onrender.com/ws" // Sonuna /ws ekleyin
+const GAME_URL = process.env.NEXT_PUBLIC_GAME_URL || "https://billiards-lime.vercel.app/"
+const WEBSOCKET_SERVER = process.env.NEXT_PUBLIC_WEBSOCKET_SERVER || "wss://osmane-billiards-network.onrender.com/ws"
 
 export class GameUrl {
   static create({
@@ -16,8 +17,8 @@ export class GameUrl {
     isSpectator?: boolean
     isCreator?: boolean
   }): URL {
-    
-    const target = new URL("https://osmane.github.io/billiards/")
+
+    const target = new URL(GAME_URL)
     target.searchParams.append("websocketserver", WEBSOCKET_SERVER)
     target.searchParams.append("tableId", tableId)
     target.searchParams.append("name", userName)
